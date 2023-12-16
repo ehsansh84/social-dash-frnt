@@ -1,0 +1,11 @@
+{
+  "eslint.enable": true,
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.autoClosingBrackets": "always"
+},
+"[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.autoClosingBrackets": "always"
+},
+}
