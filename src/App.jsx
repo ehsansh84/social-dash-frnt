@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client"
+import { Shell } from "./Shell"
 export default function App() {
-  return <div>Social Dashboard</div>
+  return <Shell />
 }
 
 const container = document.getElementById("root")
