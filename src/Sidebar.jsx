@@ -11,11 +11,12 @@ const teams = [
 ]
 
 import { classNames } from "./utils"
+import { NavLink } from "react-router-dom"
 
 const navigation = [
-  { name: "Users", href: "/users", icon: FolderIcon, current: false },
-  { name: "Deployments", href: "#", icon: ServerIcon, current: true },
-  { name: "Settings", href: "#", icon: Cog6ToothIcon, current: false },
+  { name: "Users", href: "users", icon: FolderIcon, current: false },
+  { name: "Posts", href: "posts", icon: ServerIcon, current: true },
+  { name: "Settings", href: "settings", icon: Cog6ToothIcon, current: false },
 ]
 
 export function Sidebar() {
@@ -34,21 +35,16 @@ export function Sidebar() {
             <ul className="-mx-2 space-y-1">
               {navigation.map((item) => (
                 <li key={item.name}>
-                  <a
-                    href={item.href}
-                    className={classNames(
-                      item.current
-                        ? "bg-gray-50 text-indigo-600"
-                        : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600",
-                      "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
-                    )}
-                  >
+                  <NavLink
+                    to={item.href}
+                    className={navData => navData.isActive ? "bg-gray-50 text-indigo-600 group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6  hover:bg-gray-50 hover:text-indigo-600" : "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"}
+                    >
                     <item.icon
                       className="h-6 w-6 shrink-0"
                       aria-hidden="true"
                     />
                     {item.name}
-                  </a>
+                  </NavLink>
                 </li>
               ))}
             </ul>

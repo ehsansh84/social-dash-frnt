@@ -5,12 +5,13 @@ import { XMarkIcon } from "@heroicons/react/24/outline"
 import { Sidebar } from "./Sidebar"
 import { Header } from "./Header"
 import { Main } from "./Main"
+import { BrowserRouter } from "react-router-dom"
 
 export function Shell() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <>
+    <BrowserRouter>
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
@@ -79,6 +80,6 @@ export function Shell() {
           <Main />
         </div>
       </div>
-    </>
+    </BrowserRouter>
   )
 }

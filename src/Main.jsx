@@ -1,18 +1,14 @@
-import { PlusIcon } from "@heroicons/react/24/solid"
-import { Breadcrcumb } from "./Breadcrumb"
-import { SectionHeadingWithActionButton } from "./SectionHeadingWithActionButton"
-import { UserList } from "./UserList"
-import { Wrapper } from "./Wrapper"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { Users } from "./pages/Users"
 
 export function Main() {
   return (
     <main>
-      <Wrapper className="border-b">
-        <SectionHeadingWithActionButton actionText="Add user" Icon={PlusIcon}>
-          Users
-        </SectionHeadingWithActionButton>
-      </Wrapper>
-      <UserList />
+      <Routes>
+        <Route path="users" element={<Users />} />
+        <Route path="posts" element={<div>posts</div>} />
+        <Route path="settings" element={<div>settings</div>} />
+      </Routes>
     </main>
   )
 }
