@@ -1,10 +1,7 @@
 import {
-  ChartBarSquareIcon,
   Cog6ToothIcon,
   FolderIcon,
-  GlobeAltIcon,
   ServerIcon,
-  SignalIcon,
 } from "@heroicons/react/24/outline"
 
 const teams = [
@@ -16,11 +13,8 @@ const teams = [
 import { classNames } from "./utils"
 
 const navigation = [
-  { name: "Projects", href: "#", icon: FolderIcon, current: false },
+  { name: "Users", href: "/users", icon: FolderIcon, current: false },
   { name: "Deployments", href: "#", icon: ServerIcon, current: true },
-  { name: "Activity", href: "#", icon: SignalIcon, current: false },
-  { name: "Domains", href: "#", icon: GlobeAltIcon, current: false },
-  { name: "Usages", href: "#", icon: ChartBarSquareIcon, current: false },
   { name: "Settings", href: "#", icon: Cog6ToothIcon, current: false },
 ]
 
@@ -61,7 +55,7 @@ export function Sidebar() {
           </li>
           <li>
             <div className="text-xs font-semibold leading-6 text-gray-400">
-              Your teams
+              Secondary nav
             </div>
             <ul className="-mx-2 mt-2 space-y-1">
               {teams.map((team) => (
