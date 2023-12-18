@@ -1,8 +1,10 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid"
 import { Wrapper } from "./Wrapper"
+import { Link } from "react-router-dom"
 
 const people = [
   {
+    id: "1",
     name: "Leslie Alexander",
     email: "leslie.alexander@example.com",
     role: "Co-Founder / CEO",
@@ -13,6 +15,7 @@ const people = [
     lastSeenDateTime: "2023-01-23T13:23Z",
   },
   {
+    id: "2",
     name: "Michael Foster",
     email: "michael.foster@example.com",
     role: "Co-Founder / CTO",
@@ -23,6 +26,7 @@ const people = [
     lastSeenDateTime: "2023-01-23T13:23Z",
   },
   {
+    id: "3",
     name: "Dries Vincent",
     email: "dries.vincent@example.com",
     role: "Business Relations",
@@ -32,6 +36,7 @@ const people = [
     lastSeen: null,
   },
   {
+    id: "4",
     name: "Lindsay Walton",
     email: "lindsay.walton@example.com",
     role: "Front-end Developer",
@@ -42,6 +47,7 @@ const people = [
     lastSeenDateTime: "2023-01-23T13:23Z",
   },
   {
+    id: "5",
     name: "Courtney Henry",
     email: "courtney.henry@example.com",
     role: "Designer",
@@ -52,6 +58,7 @@ const people = [
     lastSeenDateTime: "2023-01-23T13:23Z",
   },
   {
+    id: "6",
     name: "Tom Cook",
     email: "tom.cook@example.com",
     role: "Director of Product",
@@ -79,10 +86,10 @@ export function UserList() {
             />
             <div className="min-w-0 flex-auto">
               <p className="text-sm font-semibold leading-6 text-gray-900">
-                <a href={person.href}>
+                <Link to={"/users/" + person.id + "/edit"}>
                   <span className="absolute inset-x-0 -top-px bottom-0" />
                   {person.name}
-                </a>
+                </Link>
               </p>
               <p className="mt-1 flex text-xs leading-5 text-gray-500">
                 <a

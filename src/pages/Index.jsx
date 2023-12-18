@@ -1,0 +1,35 @@
+import { PlusIcon } from "@heroicons/react/24/solid"
+import { SectionHeadingWithActionButton } from "../SectionHeadingWithActionButton"
+import { Wrapper } from "../Wrapper"
+import { UserList } from "../UserList"
+import { useNavigate } from "react-router-dom"
+import { ButtonWithLeadingIcon } from "../ButtonWithLeadingIcon"
+
+export function Index() {
+  const navigate = useNavigate()
+
+  const AddUserButton = () => {
+    return (
+      <ButtonWithLeadingIcon
+        Icon={PlusIcon}
+        onClick={() => {
+          console.log('clicked')
+          navigate("/users/create")
+        }}
+      >
+        Add user
+      </ButtonWithLeadingIcon>
+    )
+  }
+
+  return (
+    <>
+      <Wrapper className="border-b">
+        <SectionHeadingWithActionButton Button={AddUserButton}>
+          Users
+        </SectionHeadingWithActionButton>
+      </Wrapper>
+      <UserList />
+    </>
+  )
+}
