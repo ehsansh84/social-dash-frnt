@@ -1,11 +1,11 @@
 import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/20/solid"
 
-export function Header({setSidebarOpen}) {
+export function Header({ setSidebarOpen }) {
   return (
-    <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 border-b border-white/5 bg-gray-900 px-4 shadow-sm sm:px-6 lg:px-8">
+    <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 bg-white px-4 shadow-sm sm:px-6 lg:px-8">
       <button
         type="button"
-        className="-m-2.5 p-2.5 text-white xl:hidden"
+        className="-m-2.5 p-2.5 text-gray-700 xl:hidden"
         onClick={() => setSidebarOpen(true)}
       >
         <span className="sr-only">Open sidebar</span>
@@ -19,12 +19,12 @@ export function Header({setSidebarOpen}) {
           </label>
           <div className="relative w-full">
             <MagnifyingGlassIcon
-              className="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-500"
+              className="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-400"
               aria-hidden="true"
             />
             <input
               id="search-field"
-              className="block h-full w-full border-0 bg-transparent py-0 pl-8 pr-0 text-white focus:ring-0 sm:text-sm"
+              className="block h-full w-full border-0 bg-transparent py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
               placeholder="Search..."
               type="search"
               name="search"
