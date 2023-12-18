@@ -1,4 +1,5 @@
 import { Heading } from "./Heading"
+import { List } from "./List"
 import { Tabs } from "./Tabs"
 
 export function Main() {
@@ -7,6 +8,7 @@ export function Main() {
       <header>
         <Tabs />
         <Heading />
+        <List />
       </header>
     </main>
   )
