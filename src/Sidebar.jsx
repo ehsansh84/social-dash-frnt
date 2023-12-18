@@ -24,8 +24,8 @@ export function Sidebar() {
     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 ">
       <div className="flex h-16 shrink-0 items-center">
         <img
-          className="h-8 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+          className="h-16 w-auto"
+          src="/logo.svg"
           alt="Your Company"
         />
       </div>
