@@ -26,7 +26,7 @@ const navigation = [
 
 export function Sidebar() {
   return (
-    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 ring-1 ring-white/10">
+    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 ">
       <div className="flex h-16 shrink-0 items-center">
         <img
           className="h-8 w-auto"
@@ -44,9 +44,9 @@ export function Sidebar() {
                     href={item.href}
                     className={classNames(
                       item.current
-                        ? "bg-gray-800 text-white"
-                        : "text-gray-400 hover:text-white hover:bg-gray-800",
-                      "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold",
+                        ? "bg-gray-50 text-indigo-600"
+                        : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600",
+                      "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
                     )}
                   >
                     <item.icon
@@ -70,12 +70,19 @@ export function Sidebar() {
                     href={team.href}
                     className={classNames(
                       team.current
-                        ? "bg-gray-800 text-white"
-                        : "text-gray-400 hover:text-white hover:bg-gray-800",
-                      "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold",
+                        ? "bg-gray-50 text-indigo-600"
+                        : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600",
+                      "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
                     )}
                   >
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
+                    <span
+                      className={classNames(
+                        team.current
+                          ? "border-indigo-600 text-indigo-600"
+                          : "border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600",
+                        "flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium",
+                      )}
+                    >
                       {team.initial}
                     </span>
                     <span className="truncate">{team.name}</span>
@@ -87,10 +94,10 @@ export function Sidebar() {
           <li className="-mx-6 mt-auto">
             <a
               href="google.com"
-              className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
+              className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6  text-gray-900 hover:bg-gray-50"
             >
               <img
-                className="h-8 w-8 rounded-full bg-gray-800"
+                className="h-8 w-8 rounded-full bg-gray-50"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
               />
