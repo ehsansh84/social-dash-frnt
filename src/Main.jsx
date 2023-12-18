@@ -6,8 +6,6 @@ export function Main() {
   return (
     <main>
       <header>
-        <Tabs />
-        <Heading />
         <List />
       </header>
     </main>
