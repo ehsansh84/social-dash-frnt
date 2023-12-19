@@ -1,9 +1,9 @@
 import { PlusIcon } from "@heroicons/react/24/solid"
-import { SectionHeadingWithActionButton } from "../SectionHeadingWithActionButton"
-import { Wrapper } from "../Wrapper"
-import { UserList } from "../UserList"
+import { SectionHeadingWithActionButton } from "../../SectionHeadingWithActionButton"
+import { Wrapper } from "../../Wrapper"
+import { UserList } from "../../UserList"
 import { useNavigate } from "react-router-dom"
-import { ButtonWithLeadingIcon } from "../ButtonWithLeadingIcon"
+import { ButtonWithLeadingIcon } from "../../ButtonWithLeadingIcon"
 
 export function Index() {
   const navigate = useNavigate()

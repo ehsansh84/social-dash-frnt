@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom"
-import { Index } from "./pages/Index"
-import Create from "./pages/Create"
+import { Index } from "./pages/User/Index"
+import Create from "./pages/User/Create"
 
 export function Main() {
   return (
