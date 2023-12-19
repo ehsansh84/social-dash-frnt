@@ -2,7 +2,7 @@ import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/20/solid"
 
 export function Header({ setSidebarOpen }) {
   return (
-    <div className="bg-bg sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 px-4 shadow-sm sm:px-6 lg:px-8 dark:border-b dark:border-white/5">
+    <div className="bg-bg sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 px-4 shadow-sm sm:px-6 lg:px-8">
       <button
         type="button"
         className="-m-2.5 p-2.5 text-gray-700 xl:hidden dark:text-white"

@@ -4,12 +4,14 @@
 
 :root {
   --color-background: hsl(250deg 10% 100%);
+  --color-background-hover: hsl(250deg 10% 95%);
   --color-text: hsl(250deg 20% 20%);
   --color-primary: hsl(250deg 100% 50%);  
 }
 
 .dark {
   --color-background: hsl(250deg 10% 10%);
+  --color-background-hover: hsl(250deg 10% 15%);
   --color-text: hsl(250deg 20% 90%);
   --color-primary: hsl(250deg 100% 50%);
 }

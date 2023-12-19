@@ -24,7 +24,7 @@ export function Index() {
 
   return (
     <>
-      <Wrapper className="border-b">
+      <Wrapper as="header" className="dark:border-t dark:border-white/5">
         <SectionHeadingWithActionButton Button={AddUserButton}>
           Posts
         </SectionHeadingWithActionButton>

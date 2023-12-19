@@ -9,6 +9,7 @@ export default {
     extend: {
       colors: {
         'bg': 'var(--color-background)',
+        'bg-hover': 'var(--color-background-hover)',
         'text': 'var(--color-text)',
         'primary': 'var(--color-primary)',
       }

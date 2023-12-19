@@ -71,12 +71,12 @@ const people = [
 
 export function UserList() {
   return (
-    <ul className="divide-y divide-gray-100">
+    <ul className="divide-y divide-gray-100 dark:divide-gray-700 dark:border-t dark:border-white/5">
       {people.map((person) => (
         <Wrapper
           as="li"
           key={person.email}
-          className="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-100 sm:px-6 lg:px-8"
+          className="relative flex justify-between gap-x-6 py-5 hover:bg-bg-hover"
         >
           <div className="flex gap-x-4">
             <img
@@ -85,13 +85,13 @@ export function UserList() {
               alt=""
             />
             <div className="min-w-0 flex-auto">
-              <p className="text-sm font-semibold leading-6 text-gray-900">
+              <p className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
                 <Link to={"/users/" + person.id + "/edit"}>
                   <span className="absolute inset-x-0 -top-px bottom-0" />
                   {person.name}
                 </Link>
               </p>
-              <p className="mt-1 flex text-xs leading-5 text-gray-500">
+              <p className="mt-1 flex text-xs leading-5 text-gray-500 dark:text-gray-400">
                 <a
                   href={`mailto:${person.email}`}
                   className="relative truncate hover:underline"
@@ -103,7 +103,7 @@ export function UserList() {
           </div>
           <div className="flex items-center gap-x-4">
             <div className="hidden sm:flex sm:flex-col sm:items-end">
-              <p className="text-sm leading-6 text-gray-900">{person.role}</p>
+              <p className="text-sm leading-6 text-gray-900 dark:text-gray-100">{person.role}</p>
               {person.lastSeen ? (
                 <p className="mt-1 text-xs leading-5 text-gray-500">
                   Last seen{" "}
