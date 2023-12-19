@@ -1,9 +1,9 @@
 import { createRoot } from "react-dom/client"
 import { Shell } from "./Shell"
-// import useTheme from "./hooks/useLocalStorage"
+import useTheme from "./hooks/useTheme"
 
 export default function App() {
-  // const [setTheme] = useTheme()
+  useTheme()
   return <Shell />
 }
 

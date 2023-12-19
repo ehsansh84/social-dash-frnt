@@ -12,6 +12,7 @@ const teams = [
 
 import { classNames } from "./utils"
 import { NavLink } from "react-router-dom"
+import { ThemeToggle } from "./ThemeToggle"
 
 const navigation = [
   { name: "Users", href: "users", icon: FolderIcon, current: false },
@@ -21,14 +22,11 @@ const navigation = [
 
 export function Sidebar() {
   return (
-    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 ">
+    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-bg px-6 ">
       <div className="flex h-16 shrink-0 items-center">
-        <img
-          className="h-16 w-auto"
-          src="/logo.svg"
-          alt="Your Company"
-        />
+        <img className="h-16 w-auto" src="/logo.svg" alt="Your Company" />
       </div>
+      <ThemeToggle />
       <nav className="flex flex-1 flex-col">
         <ul className="flex flex-1 flex-col gap-y-7">
           <li>
@@ -37,8 +35,12 @@ export function Sidebar() {
                 <li key={item.name}>
                   <NavLink
                     to={item.href}
-                    className={navData => navData.isActive ? "bg-gray-50 text-indigo-600 group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6  hover:bg-gray-50 hover:text-indigo-600" : "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"}
-                    >
+                    className={(navData) =>
+                      navData.isActive
+                        ? "group flex gap-x-3 rounded-md bg-gray-50 p-2 text-sm font-semibold leading-6 text-indigo-600  hover:bg-gray-50 hover:text-indigo-600"
+                        : "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
+                    }
+                  >
                     <item.icon
                       className="h-6 w-6 shrink-0"
                       aria-hidden="true"
