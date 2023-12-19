@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import useTheme from './hooks/useTheme'
+import { useEffect, useState } from "react"
+import useTheme from "./hooks/useTheme"
 
 function ThemeIcon(props) {
   return (
@@ -14,17 +14,8 @@ function ThemeIcon(props) {
 }
 
 export function ThemeToggle() {
-  const [mounted, setMounted] = useState(false)
   const [theme, toggleTheme] = useTheme()
-  const otherTheme = theme === 'dark' ? 'light' : 'dark'
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return null
-  }
+  const otherTheme = theme === "dark" ? "light" : "dark"
 
   return (
     <button
@@ -33,7 +24,7 @@ export function ThemeToggle() {
       onClick={toggleTheme}
     >
       <span className="sr-only">Switch to {otherTheme} theme</span>
-      <ThemeIcon className="h-6 w-6 fill-white opacity-50 transition-opacity group-hover:opacity-100 lg:fill-gray-900 lg:dark:fill-white" />
+      <ThemeIcon className="h-6 w-6 fill-gray-900 opacity-50 transition-opacity group-hover:opacity-100 dark:fill-white" />
     </button>
   )
 }
