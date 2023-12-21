@@ -1,11 +1,12 @@
 import { PlusIcon } from "@heroicons/react/24/solid"
-import { SectionHeadingWithActionButton } from "../../SectionHeadingWithActionButton"
-import { Wrapper } from "../../Wrapper"
+import { SectionHeadingWithActionButton } from "./SectionHeadingWithActionButton"
+import { Wrapper } from "./Wrapper"
 import { useNavigate } from "react-router-dom"
-import { ButtonWithLeadingIcon } from "../../components/ButtonWithLeadingIcon" 
-import { PostList } from "./Components/PostList"
+import { ButtonWithLeadingIcon } from "./components/ButtonWithLeadingIcon"
+import pluralize from "pluralize"
+import { capitalize } from "./utils"
 
-export function Index() {
+export function IndexPage({ resourceName, children }) {
   const navigate = useNavigate()
 
   const AddUserButton = () => {
@@ -13,11 +14,10 @@ export function Index() {
       <ButtonWithLeadingIcon
         Icon={PlusIcon}
         onClick={() => {
-          console.log('clicked')
-          navigate("/users/create")
+          navigate(`/${pluralize(resourceName)}/create`)
         }}
       >
-        Add post
+        Add {resourceName}
       </ButtonWithLeadingIcon>
     )
   }
@@ -26,10 +26,10 @@ export function Index() {
     <>
       <Wrapper as="header" className="dark:border-t dark:border-white/5">
         <SectionHeadingWithActionButton Button={AddUserButton}>
-          Posts
+          {capitalize(resourceName)}
         </SectionHeadingWithActionButton>
       </Wrapper>
-      <PostList />
+      {children}
     </>
   )
 }
