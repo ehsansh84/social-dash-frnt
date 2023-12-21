@@ -23,7 +23,6 @@ function useTheme() {
   }, [])
 
   localStorage.getItem("theme")
-  console.log(theme)
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark'
     if (newTheme === "dark") {
