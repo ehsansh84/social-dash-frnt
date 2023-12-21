@@ -86,7 +86,7 @@ export function PostList() {
             />
             <div className="min-w-0 flex-auto">
               <p className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
-                <Link to={"/users/" + person.id + "/edit"}>
+                <Link to={"/posts/" + person.id + "/edit"}>
                   <span className="absolute inset-x-0 -top-px bottom-0" />
                   {person.name}
                 </Link>

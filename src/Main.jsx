@@ -12,7 +12,7 @@ export function Main() {
     <main>
       <Routes>
         <Route path="users/create" element={<CreateUser />} />
-        <Route path="users/:userId/edit" element={<div>edit</div>} />
+        <Route path="users/:userId/edit" element={<div>edit user</div>} />
         <Route
           path="users"
           element={
@@ -31,6 +31,7 @@ export function Main() {
             </IndexPage>
           }
         />
+        <Route path="sources/:sourceId/edit" element={<div>edit source</div>} />
 
         <Route path="posts/create" element={<CreatePost />} />
         <Route
@@ -41,6 +42,9 @@ export function Main() {
             </IndexPage>
           }
         />
+        <Route path="posts/:postId/edit" element={<div>edit post</div>} />
+
+
         <Route path="settings" element={<div>settings</div>} />
       </Routes>
     </main>
