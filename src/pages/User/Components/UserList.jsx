@@ -1,5 +1,5 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid"
-import { Wrapper } from "./Wrapper"
+import { Wrapper } from "../../../Wrapper"
 import { Link } from "react-router-dom"
 
 const people = [

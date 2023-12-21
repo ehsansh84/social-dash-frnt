@@ -1,9 +1,9 @@
 import { PlusIcon } from "@heroicons/react/24/solid"
 import { SectionHeadingWithActionButton } from "../../SectionHeadingWithActionButton"
 import { Wrapper } from "../../Wrapper"
-import { UserList } from "../../UserList"
 import { useNavigate } from "react-router-dom"
-import { ButtonWithLeadingIcon } from "../../ButtonWithLeadingIcon"
+import { ButtonWithLeadingIcon } from "../../components/ButtonWithLeadingIcon" 
+import { PostList } from "./Components/PostList"
 
 export function Index() {
   const navigate = useNavigate()
@@ -29,7 +29,7 @@ export function Index() {
           Posts
         </SectionHeadingWithActionButton>
       </Wrapper>
-      <UserList />
+      <PostList />
     </>
   )
 }

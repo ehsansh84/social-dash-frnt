@@ -5,7 +5,7 @@ import {
 } from "@heroicons/react/24/outline"
 
 import { NavLink } from "react-router-dom"
-import { ThemeToggle } from "./ThemeToggle"
+import { ThemeToggle } from "./components/ThemeToggle"
 
 const navigation = [
   { name: "Users", href: "users", icon: FolderIcon, current: false },
