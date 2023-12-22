@@ -6,7 +6,44 @@
   --color-background: hsl(250deg 10% 100%);
   --color-background-hover: hsl(250deg 10% 95%);
   --color-text: hsl(250deg 20% 20%);
-  --color-primary: hsl(250deg 100% 50%);  
+  --color-primary: hsl(250deg 100% 50%);
+
+  --instagram-text: hsl(348.66, 75.23%, 57.25%);
+  --instagram-bg: hsl(348.66, 75.23%, 87%);
+  --instagram-ring: hsla(348.66, 75.23%, 20%, 0.2);
+  
+  --telegram-text: hsl(204.2, 87.6%, 52.7%);
+  --telegram-bg: hsl(204.2, 87.6%, 82.7%);
+  --telegram-ring: hsla(204.2, 87.6%, 20%, 0.2);
+
+  --twitter-text: hsl(197, 100%, 47%);
+  --twitter-bg: hsl(197, 100%, 87%);
+  --twitter-ring: hsla(197, 100%, 20%, 0.2);
+
+  --linkedin-text: hsl(199, 85%, 36%);
+  --linkedin-bg: hsl(199, 85%, 86%);
+  --linkedin-ring: hsla(199, 85%, 20%, 0.2);
+
+  --youtube-text: hsl(2, 64%, 47%);
+  --youtube-bg: hsl(2, 64%, 87%);
+  --youtube-ring: hsla(2, 64%, 20%, 0.2);
+
+  --aparat-text: hsl(352, 92%, 36%);
+  --aparat-bg: hsl(352, 92%, 86%);
+  --aparat-ring: hsla(352, 92%, 20%, 0.2);
+
+  --facebook-text: hsl(221, 44%, 41%);
+  --facebook-bg: hsl(221, 44%, 91%);
+  --facebook-ring: hsla(221, 44%, 20%, 0.2);
+
+  --pinterest-text: hsl(352, 92%, 36%);
+  --pinterest-bg: hsl(352, 92%, 86%);
+  --pinterest-ring: hsla(352, 92%, 20%, 0.2);
+
+  --reddit-text: hsl(16, 100%, 47%);
+  --reddit-bg: hsl(16, 100%, 87%);
+  --reddit-ring: hsla(16, 100%, 20%, 0.2);
+
 }
 
 .dark {
@@ -14,4 +51,41 @@
   --color-background-hover: hsl(250deg 10% 15%);
   --color-text: hsl(250deg 20% 90%);
   --color-primary: hsl(250deg 100% 50%);
+
+  --instagram-text: hsl(221, 85%, 86%);
+  --instagram-bg: hsl(221, 85%, 36%);
+  --instagram-ring: hsla(221, 85%, 80%, 0.8);
+  
+  --telegram-text: hsl(204.2, 87.6%, 82.7%);
+  --telegram-bg: hsl(204.2, 87.6%, 52.7%);
+  --telegram-ring: hsla(204.2, 87.6%, 80%, 0.8);
+
+  --twitter-text: hsl(197, 100%, 87%);
+  --twitter-bg: hsl(197, 100%, 47%);
+  --twitter-ring: hsla(197, 100%, 80%, 0.8);
+
+  --linkedin-text: hsl(199, 85%, 86%);
+  --linkedin-bg: hsl(199, 85%, 36%);
+  --linkedin-ring: hsla(199, 85%, 80%, 0.8);
+
+  --youtube-text: hsl(2, 64%, 87%);
+  --youtube-bg: hsl(2, 64%, 47%);
+  --youtube-ring: hsla(2, 64%, 80%, 0.8);
+
+  --aparat-text: hsl(352, 92%, 86%);
+  --aparat-bg: hsl(352, 92%, 36%);
+  --aparat-ring: hsla(352, 92%, 80%, 0.8);
+
+  --facebook-text: hsl(221, 44%, 91%);
+  --facebook-bg: hsl(221, 44%, 41%);
+  --facebook-ring: hsla(221, 44%, 80%, 0.8);
+
+  --pinterest-text: hsl(352, 92%, 86%);
+  --pinterest-bg: hsl(352, 92%, 36%);
+  --pinterest-ring: hsla(352, 92%, 80%, 0.8);
+
+  --reddit-text: hsl(16, 100%, 87%);
+  --reddit-bg: hsl(16, 100%, 47%);
+  --reddit-ring: hsla(16, 100%, 80%, 0.8);
+
 }
