@@ -1,4 +1,51 @@
 /** @type {import('tailwindcss').Config} */
+
+function generateColorObject(baseName) {
+  let colorObject = {}
+  for (let i = 50; i <= 950; i += 50) {
+    if (i === 500) {
+      colorObject["DEFAULT"] = `var(--${baseName})`
+    }
+    colorObject[i.toString()] = `var(--${baseName}-${i})`
+  }
+  return colorObject
+}
+
+let colorNames = [
+  "instagram",
+  "telegram",
+  "twitter",
+  "linkedin",
+  "youtube",
+  "aparat",
+  "facebook",
+  "pinterest",
+  "reddit",
+]
+let safelist = []
+let socialMediaColors = {}
+
+for (let name of colorNames) {
+  socialMediaColors[`${name}-text`] = `var(--${name}-text)`
+  socialMediaColors[`${name}-bg`] = `var(--${name}-bg)`
+  socialMediaColors[`${name}-ring`] = `var(--${name}-ring)`
+
+  safelist.push(`text-${name}-text`)
+  safelist.push(`bg-${name}-bg`)
+  safelist.push(`ring-${name}-ring`)
+  safelist.push(`fill-${name}`)
+
+  safelist.push(`hover:text-${name}-text`)
+  safelist.push(`hover:bg-${name}-bg`)
+  safelist.push(`hover:ring-${name}-ring`)
+  safelist.push(`hover:fill-${name}`)
+
+  safelist.push(`group-hover:${name}-text`)
+  safelist.push(`group-hover:bg-${name}-bg`)
+  safelist.push(`group-hover:ring-${name}-ring`)
+  safelist.push(`group-hover:fill-${name}`)
+}
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
@@ -8,70 +55,27 @@ export default {
         bg: "var(--color-background)",
         "bg-hover": "var(--color-background-hover)",
         text: "var(--color-text)",
-        primary: "var(--color-primary)",
+        border: "var(--color-border)",
+        placeholder: "var(--color-placeholder)",
+        ring: "var(--color-ring)",
+        primary: generateColorObject("color-primary"),
+        ...socialMediaColors,
+      },
+      fill: (theme) => {
+        let fillColors = {}
 
-        "instagram-text": "var(--instagram-text)",
-        "instagram-bg": "var(--instagram-bg)",
-        "instagram-ring": "var(--instagram-ring)",
-        "telegram-text": "var(--telegram-text)",
-        "telegram-bg": "var(--telegram-bg)",
-        "telegram-ring": "var(--telegram-ring)",
-        "twitter-text": "var(--twitter-text)",
-        "twitter-bg": "var(--twitter-bg)",
-        "twitter-ring": "var(--twitter-ring)",
-        "linkedin-text": "var(--linkedin-text)",
-        "linkedin-bg": "var(--linkedin-bg)",
-        "linkedin-ring": "var(--linkedin-ring)",
-        "youtube-text": "var(--youtube-text)",
-        "youtube-bg": "var(--youtube-bg)",
-        "youtube-ring": "var(--youtube-ring)",
-        "aparat-text": "var(--aparat-text)",
-        "aparat-bg": "var(--aparat-bg)",
-        "aparat-ring": "var(--aparat-ring)",
-        "facebook-text": "var(--facebook-text)",
-        "facebook-bg": "var(--facebook-bg)",
-        "facebook-ring": "var(--facebook-ring)",
-        "pinterest-text": "var(--pinterest-text)",
-        "pinterest-bg": "var(--pinterest-bg)",
-        "pinterest-ring": "var(--pinterest-ring)",
-        "reddit-text": "var(--reddit-text)",
-        "reddit-bg": "var(--reddit-bg)",
-        "reddit-ring": "var(--reddit-ring)",
+        for (let name of colorNames) {
+          fillColors[name] = theme(`colors.${name}-text`)
+        }
+
+        return fillColors
       },
     },
   },
   plugins: [require("@tailwindcss/forms")],
   purge: {
     options: {
-      safelist: [
-        "text-instagram-text",
-        "bg-instagram-bg",
-        "ring-instagram-ring",
-        "text-telegram-text",
-        "bg-telegram-bg",
-        "ring-telegram-ring",
-        "text-twitter-text",
-        "bg-twitter-bg",
-        "ring-twitter-ring",
-        "text-linkedin-text",
-        "bg-linkedin-bg",
-        "ring-linkedin-ring",
-        "text-youtube-text",
-        "bg-youtube-bg",
-        "ring-youtube-ring",
-        "text-aparat-text",
-        "bg-aparat-bg",
-        "ring-aparat-ring",
-        "text-facebook-text",
-        "bg-facebook-bg",
-        "ring-facebook-ring",
-        "text-pinterest-text",
-        "bg-pinterest-bg",
-        "ring-pinterest-ring",
-        "text-reddit-text",
-        "bg-reddit-bg",
-        "ring-reddit-ring",
-      ],
+      safelist,
     },
   },
 }

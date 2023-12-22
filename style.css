@@ -3,15 +3,32 @@
 @tailwind utilities;
 
 :root {
+
+  --color-primary: hsl(217deg 93% 60%);
+  --color-primary-50: hsl(214deg 100% 97%);
+  --color-primary-100: hsl(214deg 95% 93%);
+  --color-primary-200: hsl(213deg 100% 87%);
+  --color-primary-300: hsl(212deg 98% 78%);
+  --color-primary-400: hsl(213deg 96% 68%);
+  --color-primary-500: hsl(217deg 93% 60%);
+  --color-primary-600: hsl(221deg 85% 53%);
+  --color-primary-700: hsl(224deg 78% 48%);
+  --color-primary-800: hsl(226deg 73% 40%);
+  --color-primary-900: hsl(225deg 65% 33%);
+  --color-primary-950: hsl(226deg 59% 21%);
+
+
   --color-background: hsl(250deg 10% 100%);
   --color-background-hover: hsl(250deg 10% 95%);
   --color-text: hsl(250deg 20% 20%);
-  --color-primary: hsl(250deg 100% 50%);
+  --color-placeholder: hsl(218, 11%, 65%);
+  --color-ring: hsl(217deg 93% 60% / 0.5);
+  --color-border: hsla(221, 39%, 11%, 0.1);
 
   --instagram-text: hsl(348.66, 75.23%, 57.25%);
   --instagram-bg: hsl(348.66, 75.23%, 87%);
   --instagram-ring: hsla(348.66, 75.23%, 20%, 0.2);
-  
+
   --telegram-text: hsl(204.2, 87.6%, 52.7%);
   --telegram-bg: hsl(204.2, 87.6%, 82.7%);
   --telegram-ring: hsla(204.2, 87.6%, 20%, 0.2);
@@ -49,13 +66,16 @@
 .dark {
   --color-background: hsl(250deg 10% 10%);
   --color-background-hover: hsl(250deg 10% 15%);
+  --color-text-hover: hsl(250deg 10% 15%);
   --color-text: hsl(250deg 20% 90%);
-  --color-primary: hsl(250deg 100% 50%);
+  --color-placeholder: hsl(215, 14%, 34%);
+  --color-ring: hsl(217deg 93% 60% / 0.5);
+  --color-border: hsla(221, 39%, 87%, 0.1);
 
-  --instagram-text: hsl(221, 85%, 86%);
-  --instagram-bg: hsl(221, 85%, 36%);
-  --instagram-ring: hsla(221, 85%, 80%, 0.8);
-  
+  --instagram-text: hsl(348.66, 75.23%, 83%);
+  --instagram-bg: hsl(348.66, 75.23%, 53%);
+  --instagram-ring: hsla(348.66, 75.23%, 80%, 0.8);
+
   --telegram-text: hsl(204.2, 87.6%, 82.7%);
   --telegram-bg: hsl(204.2, 87.6%, 52.7%);
   --telegram-ring: hsla(204.2, 87.6%, 80%, 0.8);
