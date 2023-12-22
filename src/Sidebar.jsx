@@ -8,10 +8,11 @@ import { NavLink } from "react-router-dom"
 import { ThemeToggle } from "./components/ThemeToggle"
 
 const navigation = [
-  { name: "Users", href: "users", icon: FolderIcon, current: false },
-  { name: "Posts", href: "posts", icon: ServerIcon, current: true },
-  { name: "Sources", href: "sources", icon: ServerIcon, current: true },
-  { name: "Settings", href: "settings", icon: Cog6ToothIcon, current: false },
+  { name: "Users", href: "users", icon: FolderIcon },
+  { name: "Posts", href: "posts", icon: ServerIcon },
+  { name: "Sources", href: "sources", icon: ServerIcon },
+  { name: "Accounts", href: "accounts", icon: ServerIcon },
+  { name: "Settings", href: "settings", icon: Cog6ToothIcon },
 ]
 
 export function Sidebar() {
