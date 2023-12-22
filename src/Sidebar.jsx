@@ -32,7 +32,7 @@ export function Sidebar() {
                     to={item.href}
                     className={(navData) =>
                       navData.isActive
-                        ? "hover:bg-bg-hover group flex gap-x-3 rounded-md bg-gray-50 p-2 text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-600 dark:bg-gray-800"
+                        ? "hover:bg-bg-hover group flex gap-x-3 rounded-md bg-gray-50 p-2 text-sm font-semibold leading-6 text-primary-600 hover:text-indigo-600 dark:bg-gray-800"
                         : "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-bg-hover hover:text-indigo-600 dark:text-gray-400 dark:hover:text-white"
                     }
                   >
