@@ -177,42 +177,29 @@ export function AparatIcon(props) {
 export const socialMediaDictionary = {
   instagram: {
     icon: InstagramIcon,
-    color: "hsl(221, 85%, 36%)",
   },
   telegram: {
     icon: TelegramIcon,
-    color: "hsl(204.2, 87.6%, 52.7%)",
   },
   twitter: {
     icon: TwitterIcon,
-    color: "hsl(197, 100%, 47%)",
   },
   linkedin: {
     icon: LinkedinIcon,
-    color: "hsl(199, 85%, 36%)",
   },
   youtube: {
     icon: YoutubeIcon,
-    color: "hsl(2, 64%, 47%)",
   },
   aparat: {
     icon: AparatIcon,
-    color: "hsl(352, 92%, 36%)",
   },
   facebook: {
     icon: FacebookIcon,
-    color: "hsl(221, 44%, 41%)",
   },
   pinterest: {
     icon: PinterestIcon,
-    color: "hsl(352, 92%, 36%)",
   },
   reddit: {
     icon: RedditIcon,
-    color: "hsl(16, 100%, 47%)",
   },
 }
-
-// Usage
-// const { icon: IconComponent, color } = socialMediaDictionary["instagram"];
-// <IconComponent style={{ color }} />
