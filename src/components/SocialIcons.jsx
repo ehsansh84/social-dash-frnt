@@ -164,3 +164,55 @@ export function TwitchIcon(props) {
     </svg>
   )
 }
+
+export function AparatIcon(props) {
+  return (
+    <svg viewBox="0 0 48 48" {...props}>
+      <path d="M21.881 6.136l-4.315-.974c-3.52-.795-7.017 1.414-7.812 4.934l-.983 4.351C11.603 9.95 16.357 6.788 21.881 6.136zM6.136 26.119l-.974 4.315c-.795 3.52 1.414 7.017 4.934 7.812l4.351.983C9.95 36.396 6.788 31.643 6.136 26.119zM37.904 9.754l-4.351-.983c4.497 2.832 7.659 7.586 8.311 13.109l.974-4.315C43.633 14.047 41.424 10.549 37.904 9.754zM26.119 41.864l4.315.974c3.52.795 7.017-1.414 7.812-4.934l.983-4.351C36.397 38.05 31.643 41.212 26.119 41.864z"></path>
+      <path d="M24,8C15.163,8,8,15.163,8,24s7.163,16,16,16s16-7.163,16-16S32.837,8,24,8z M20,13 c2.209,0,4,1.791,4,4c0,2.209-1.791,4-4,4s-4-1.791-4-4C16,14.791,17.791,13,20,13z M17,32c-2.209,0-4-1.791-4-4 c0-2.209,1.791-4,4-4s4,1.791,4,4C21,30.209,19.209,32,17,32z M22,24c0-1.105,0.895-2,2-2s2,0.895,2,2c0,1.105-0.895,2-2,2 S22,25.105,22,24z M28,35c-2.209,0-4-1.791-4-4c0-2.209,1.791-4,4-4s4,1.791,4,4C32,33.209,30.209,35,28,35z M31,24 c-2.209,0-4-1.791-4-4c0-2.209,1.791-4,4-4s4,1.791,4,4C35,22.209,33.209,24,31,24z"></path>
+    </svg>
+  )
+}
+
+export const socialMediaDictionary = {
+  instagram: {
+    icon: InstagramIcon,
+    color: "hsl(221, 85%, 36%)",
+  },
+  telegram: {
+    icon: TelegramIcon,
+    color: "hsl(204.2, 87.6%, 52.7%)",
+  },
+  twitter: {
+    icon: TwitterIcon,
+    color: "hsl(197, 100%, 47%)",
+  },
+  linkedin: {
+    icon: LinkedinIcon,
+    color: "hsl(199, 85%, 36%)",
+  },
+  youtube: {
+    icon: YoutubeIcon,
+    color: "hsl(2, 64%, 47%)",
+  },
+  aparat: {
+    icon: AparatIcon,
+    color: "hsl(352, 92%, 36%)",
+  },
+  facebook: {
+    icon: FacebookIcon,
+    color: "hsl(221, 44%, 41%)",
+  },
+  pinterest: {
+    icon: PinterestIcon,
+    color: "hsl(352, 92%, 36%)",
+  },
+  reddit: {
+    icon: RedditIcon,
+    color: "hsl(16, 100%, 47%)",
+  },
+}
+
+// Usage
+// const { icon: IconComponent, color } = socialMediaDictionary["instagram"];
+// <IconComponent style={{ color }} />
