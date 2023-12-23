@@ -1,9 +1,10 @@
 import { PlusIcon } from "@heroicons/react/24/solid"
+import pluralize from "pluralize"
+import { useNavigate } from "react-router-dom"
+
 import { SectionHeadingWithActionButton } from "../SectionHeadingWithActionButton"
 import { Wrapper } from "../Wrapper"
-import { useNavigate } from "react-router-dom"
 import { ButtonWithLeadingIcon } from "../components/ButtonWithLeadingIcon"
-import pluralize from "pluralize"
 import { capitalize } from "../utils"
 
 export function IndexPage({ resourceName, children }) {
