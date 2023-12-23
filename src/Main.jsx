@@ -8,7 +8,8 @@ import { SourceList } from "./pages/Source/Components/SourceList"
 import { Create as CreateSource } from "./pages/Source/Create"
 import { UserList } from "./pages/User/Components/UserList"
 import { Create as CreateUser } from "./pages/User/Create"
-import {Index as AccountIndex} from "./pages/Account/Index"
+import { Index as AccountIndex } from "./pages/Account/Index"
+import { Index as SourceIndex } from "./pages/Source/Index"
 
 export function Main() {
   return (
@@ -34,15 +35,7 @@ export function Main() {
 
         <Route path="sources/:sourceId/edit" element={<div>edit source</div>} />
         <Route path="sources/create" element={<CreateSource />} />
-        <Route
-          path="sources"
-          element={
-            <IndexPage resourceName="source">
-              <SourceList />
-            </IndexPage>
-          }
-        />
-        <Route path="sources/:sourceId/edit" element={<div>edit source</div>} />
+        <Route path="sources" element={<SourceIndex />} />
 
         <Route path="posts/create" element={<CreatePost />} />
         <Route
