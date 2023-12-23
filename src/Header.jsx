@@ -2,10 +2,10 @@ import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/20/solid"
 
 export function Header({ setSidebarOpen }) {
   return (
-    <div className="bg-bg sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 px-4 shadow-sm sm:px-6 lg:px-8">
+    <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 bg-bg px-4 shadow-sm sm:px-6 lg:px-8">
       <button
         type="button"
-        className="-m-2.5 p-2.5 text-gray-700 xl:hidden dark:text-white"
+        className="-m-2.5 p-2.5 text-gray-700 dark:text-gray-300 xl:hidden"
         onClick={() => setSidebarOpen(true)}
       >
         <span className="sr-only">Open sidebar</span>
@@ -24,7 +24,7 @@ export function Header({ setSidebarOpen }) {
             />
             <input
               id="search-field"
-              className="block h-full w-full border-0 bg-transparent py-0 ps-8 pe-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 dark:placeholder:text-gray-500 sm:text-sm dark:text-white"
+              className="block h-full w-full border-0 bg-transparent py-0 pe-0 ps-8 text-text placeholder:text-placeholder focus:ring-0 sm:text-sm"
               placeholder="Search..."
               type="search"
               name="search"
