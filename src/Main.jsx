@@ -1,14 +1,14 @@
-import { Routes, Route } from "react-router-dom"
-import { Create as CreateUser } from "./pages/User/Create"
-import { Create as CreatePost } from "./pages/Post/Create"
-import { Create as CreateSource } from "./pages/Source/Create"
+import { Route, Routes } from "react-router-dom"
+import { IndexPage } from "./pages/IndexPage"
+
 import { Create as CreateAccount } from "./pages/Account/Create"
-import { IndexPage } from "./IndexPage"
 import { PostList } from "./pages/Post/Components/PostList"
-import { UserList } from "./pages/User/Components/UserList"
+import { Create as CreatePost } from "./pages/Post/Create"
 import { SourceList } from "./pages/Source/Components/SourceList"
-import { AccountList } from "./pages/Account/Components/AccountList"
-import { Wrapper } from "./Wrapper"
+import { Create as CreateSource } from "./pages/Source/Create"
+import { UserList } from "./pages/User/Components/UserList"
+import { Create as CreateUser } from "./pages/User/Create"
+import Index from "./pages/Account/Index"
 
 export function Main() {
   return (
@@ -30,16 +30,7 @@ export function Main() {
           element={<div>edit account</div>}
         />
         <Route path="accounts/create" element={<CreateAccount />} />
-        <Route
-          path="accounts"
-          element={
-            <IndexPage resourceName="account">
-              <Wrapper>
-                <AccountList />
-              </Wrapper>
-            </IndexPage>
-          }
-        />
+        <Route path="accounts" element={<Index />} />
 
         <Route path="sources/:sourceId/edit" element={<div>edit source</div>} />
         <Route path="sources/create" element={<CreateSource />} />
