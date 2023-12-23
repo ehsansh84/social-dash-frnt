@@ -19,7 +19,7 @@ export function Header({ setSidebarOpen }) {
           </label>
           <div className="relative w-full">
             <MagnifyingGlassIcon
-              className="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-400 dark:text-gray-500"
+              className="pointer-events-none absolute inset-y-0 start-0 h-full w-5 text-gray-400 dark:text-gray-500"
               aria-hidden="true"
             />
             <input
