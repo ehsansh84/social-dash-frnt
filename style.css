@@ -19,6 +19,7 @@
 
 
   --color-background: hsl(250deg 10% 100%);
+  --color-background-card: hsl(240 33% 97%);
   --color-background-hover: hsl(250deg 10% 95%);
   --color-text: hsl(250deg 20% 20%);
   --color-placeholder: hsl(218, 11%, 65%);
@@ -65,6 +66,7 @@
 
 .dark {
   --color-background: hsl(250deg 10% 10%);
+  --color-background-card: hsl(240deg 21% 24%);
   --color-background-hover: hsl(250deg 10% 15%);
   --color-text-hover: hsl(250deg 10% 15%);
   --color-text: hsl(250deg 20% 90%);

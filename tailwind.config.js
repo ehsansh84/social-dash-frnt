@@ -54,6 +54,7 @@ export default {
       colors: {
         bg: "var(--color-background)",
         "bg-hover": "var(--color-background-hover)",
+        "bg-card": "var(--color-background-card)",
         text: "var(--color-text)",
         border: "var(--color-border)",
         placeholder: "var(--color-placeholder)",
