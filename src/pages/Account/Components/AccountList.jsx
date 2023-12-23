@@ -3,6 +3,7 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/20/solid"
 import { classNames } from "../../../utils"
 
 import { socialMediaDictionary } from "../../../components/SocialIcons"
+import { SocialBadge } from "../../../components/SocialBadge"
 
 const accounts = [
   {
@@ -45,23 +46,6 @@ const accounts = [
 ]
 
 export function AccountList() {
-  const badgeClass = (socialMedia) =>
-    classNames(
-      "inline-flex",
-      "flex-shrink-0",
-      "items-center",
-      "rounded-full",
-      "px-1.5",
-      "py-0.5",
-      "text-xs",
-      "font-medium",
-      "ring-1",
-      "ring-inset",
-      "font-normal",
-      "text-" + socialMedia + "-text",
-      "bg-" + socialMedia + "-bg",
-      "ring-" + socialMedia + "-ring",
-    )
   return (
     <ul className="grid  grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {accounts.map((account) => {
@@ -69,7 +53,7 @@ export function AccountList() {
         return (
           <li
             key={account.id}
-            className="bg-bg-card col-span-1 divide-y divide-border rounded-lg shadow"
+            className="col-span-1 divide-y divide-border rounded-lg bg-bg-card shadow"
           >
             <div className="flex w-full items-center justify-between space-x-6 p-6">
               <div className="flex-1 truncate">
@@ -77,17 +61,16 @@ export function AccountList() {
                   <h3 className="truncate text-sm font-medium text-text">
                     {account.name}
                   </h3>
-
-                  <span className={badgeClass(account.social_media)}>
-                    {account.social_media}
-                  </span>
+                  <SocialBadge socialMedia={account.social_media} />
                 </div>
                 <p className="mt-1 truncate text-sm text-gray-500">
                   {account.description}
                 </p>
               </div>
-              <div className="group -m-1 p-1 -mt-4">
-                <SocialIcon className={`h-8 w-8 fill-${account.social_media}`} />
+              <div className="group -m-1 -mt-4 p-1">
+                <SocialIcon
+                  className={`h-8 w-8 fill-${account.social_media}`}
+                />
               </div>
             </div>
             <div>
