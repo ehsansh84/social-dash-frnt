@@ -27,7 +27,7 @@ export function IndexPage({ resourceName, children }) {
     <>
       <Wrapper as="header" className="dark:border-t dark:border-white/5">
         <SectionHeadingWithActionButton Button={AddUserButton}>
-          {capitalize(resourceName)}
+          {capitalize(pluralize(resourceName))}
         </SectionHeadingWithActionButton>
       </Wrapper>
       {children}
