@@ -1,11 +1,11 @@
-import { Fragment, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { XMarkIcon } from "@heroicons/react/24/outline"
+import { Fragment, useState } from "react"
+import { BrowserRouter } from "react-router-dom"
 
-import { Sidebar } from "./Sidebar"
 import { Header } from "./Header"
 import { Main } from "./Main"
-import { BrowserRouter } from "react-router-dom"
+import { Sidebar } from "./Sidebar"
 
 export function Shell() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
