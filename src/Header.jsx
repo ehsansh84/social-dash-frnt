@@ -24,7 +24,7 @@ export function Header({ setSidebarOpen }) {
             />
             <input
               id="search-field"
-              className="block h-full w-full border-0 bg-transparent py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 dark:placeholder:text-gray-500 sm:text-sm dark:text-white"
+              className="block h-full w-full border-0 bg-transparent py-0 ps-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 dark:placeholder:text-gray-500 sm:text-sm dark:text-white"
               placeholder="Search..."
               type="search"
               name="search"

@@ -75,7 +75,7 @@ export function Shell() {
         <div className="hidden xl:fixed xl:inset-y-0 xl:z-50 xl:flex xl:w-72 xl:flex-col">
           <Sidebar />
         </div>
-        <div className="xl:pl-72">
+        <div className="xl:ps-72">
           <Header setSidebarOpen={setSidebarOpen} />
           <Main />
         </div>
