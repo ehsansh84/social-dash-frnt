@@ -17,7 +17,7 @@ const navigation = [
 
 export function Sidebar() {
   return (
-    <div className="bg-bg flex grow flex-col gap-y-5 overflow-y-auto border-e border-gray-200 px-6 dark:border-none dark:ring-1 dark:ring-white/10">
+    <div className="flex grow flex-col gap-y-5 overflow-y-auto border-e border-border bg-bg px-6 dark:border-none dark:ring-1 dark:ring-white/10">
       <div className="flex h-16 shrink-0 items-center">
         <img className="h-16 w-auto" src="/logo.svg" alt="Your Company" />
       </div>
@@ -32,8 +32,8 @@ export function Sidebar() {
                     to={item.href}
                     className={(navData) =>
                       navData.isActive
-                        ? "hover:bg-bg-hover group flex gap-x-3 rounded-md bg-gray-50 p-2 text-sm font-semibold leading-6 text-primary-600 hover:text-indigo-600 dark:bg-gray-800"
-                        : "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-bg-hover hover:text-indigo-600 dark:text-gray-400 dark:hover:text-white"
+                        ? "group flex gap-x-3 rounded-md bg-gray-100 p-2 text-sm font-semibold leading-6 text-primary-600 hover:bg-bg-hover hover:text-primary-600 dark:bg-gray-800"
+                        : "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-bg-hover hover:text-primary-600 dark:text-gray-400 dark:hover:text-white"
                     }
                   >
                     <item.icon
@@ -49,7 +49,7 @@ export function Sidebar() {
           <li className="-mx-6 mt-auto">
             <a
               href="google.com"
-              className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6  text-gray-900 hover:bg-bg-hover dark:text-white"
+              className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-text hover:bg-bg-hover"
             >
               <img
                 className="h-8 w-8 rounded-full bg-gray-50"
