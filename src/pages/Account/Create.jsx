@@ -67,7 +67,7 @@ export function Create() {
                     <input
                       value={name}
                       onChange={(e) => {
-                        setName(e.value)
+                        setName(e.target.value)
                       }}
                       type="text"
                       name="name"
@@ -99,11 +99,11 @@ export function Create() {
                     <input
                       value={token}
                       onChange={(e) => {
-                        setToken(e.value)
+                        setToken(e.target.value)
                       }}
                       type="text"
                       name="token"
-                      id="name"
+                      id="token"
                       className="placeholder:text-placeholder block flex-1 border-0 bg-transparent py-1.5 ps-3 text-text focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="My account token"
                       required
@@ -123,13 +123,12 @@ export function Create() {
                   <textarea
                     value={description}
                     onChange={(e) => {
-                      setDescription(e.value)
+                      setDescription(e.target.value)
                     }}
                     id="description"
                     name="description"
                     rows={3}
                     className="ring-ring placeholder:text-placeholder block w-full rounded-md border-0 bg-bg py-1.5 text-text shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
-                    defaultValue={""}
                   />
                 </div>
                 <p className="mt-3 text-sm leading-6 text-gray-600">
