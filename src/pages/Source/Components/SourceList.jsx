@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid"
 import { Wrapper } from "../../../Wrapper"
 import { Link } from "react-router-dom"
-import { SocialBadge } from "../../../components/SocialBadge"
+import { SocialIcon } from "../../../components/SocialIcons"
 
 const sources = [
   {
@@ -39,9 +39,9 @@ export function SourceList() {
         <Wrapper
           as="li"
           key={source.id}
-          className="relative flex justify-between gap-x-6 py-5 hover:bg-bg-hover"
+          className="relative flex justify-between gap-x-6 py-4 pb-3 hover:bg-bg-hover"
         >
-          <div className="flex gap-x-4">
+          <div className="flex gap-x-4 items-center">
             <img
               className="h-12 w-12 flex-none rounded-full bg-gray-50"
               src={source.logo}
@@ -57,16 +57,16 @@ export function SourceList() {
               <div className="mt-1 flex text-xs leading-5 text-gray-500 dark:text-gray-400">
                 <p className="relative truncate">{source.description}</p>
               </div>
+                <p className="text-xs leading-5 text-gray-500">
+                  Crawled {source.crawl_schedule}
+                </p>
             </div>
           </div>
           <div className="flex items-center gap-x-4">
             <div className="hidden sm:flex sm:flex-col sm:items-end">
-              <p className="text-sm leading-6 text-gray-900 dark:text-gray-100 -mt-1">
-                <SocialBadge socialMedia={source.social_media} />
-              </p>
-              <p className="mt-2 text-xs leading-5 text-gray-500">
-                Crawled {source.crawl_schedule}
-              </p>
+              <div className="text-sm leading-6 text-gray-900 dark:text-gray-100">
+                <SocialIcon socialMedia={source.social_media} />
+              </div>
             </div>
             <ChevronRightIcon
               className="h-5 w-5 flex-none text-gray-400"
