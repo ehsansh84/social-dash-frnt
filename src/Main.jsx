@@ -47,6 +47,11 @@ export function Main() {
         <Route path="posts/:postId/edit" element={<div>edit post</div>} />
 
         <Route path="settings" element={<div>settings</div>} />
+        <Route path="/" element={<div>dashboard</div>} />
+
+        <Route path="*" element={<div>not found</div>} />
+
+
       </Routes>
     </main>
   )
