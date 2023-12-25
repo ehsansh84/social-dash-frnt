@@ -8,13 +8,13 @@ import { Breadcrumb } from "../../components/Breadcrumb"
 import { SocialMediaRadio } from "../../components/SocialMediaRadio"
 
 export function Create() {
-  const [socialMedia, setSocialMedia] = useState('')
+  const [socialMedia, setSocialMedia] = useState("")
   const [name, setName] = useState("")
   const [token, setToken] = useState("")
   const [description, setDescription] = useState("")
   const [socialMediaError, setSocialMediaError] = useState(null)
   const [status, setStatus] = useState("unloaded")
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (socialMedia) {
@@ -153,7 +153,7 @@ export function Create() {
           </div>
 
           <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button
+            <button
               type="button"
               className="text-sm font-semibold leading-6 text-text"
               onClick={() => navigate(-1)}
