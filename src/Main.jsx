@@ -2,12 +2,13 @@ import { Route, Routes } from "react-router-dom"
 import { IndexPage } from "./pages/IndexPage"
 
 import { Create as CreateAccount } from "./pages/Account/Create"
-import { Index as AccountIndex } from "./pages/Account/Index"
 import { Edit as EditAccount } from "./pages/Account/Edit"
+import { Index as AccountIndex } from "./pages/Account/Index"
 import { PostList } from "./pages/Post/Components/PostList"
 import { Create as CreatePost } from "./pages/Post/Create"
 import { Create as CreateSource } from "./pages/Source/Create"
 import { Index as SourceIndex } from "./pages/Source/Index"
+import { Edit as EditSource } from "./pages/Source/Edit"
 import { UserList } from "./pages/User/Components/UserList"
 import { Create as CreateUser } from "./pages/User/Create"
 
@@ -26,14 +27,11 @@ export function Main() {
           }
         />
 
-        <Route
-          path="accounts/:accountId/edit"
-          element={<EditAccount />}
-        />
+        <Route path="accounts/:accountId/edit" element={<EditAccount />} />
         <Route path="accounts/create" element={<CreateAccount />} />
         <Route path="accounts" element={<AccountIndex />} />
 
-        <Route path="sources/:sourceId/edit" element={<div>edit source</div>} />
+        <Route path="sources/:sourceId/edit" element={<EditSource />} />
         <Route path="sources/create" element={<CreateSource />} />
         <Route path="sources" element={<SourceIndex />} />
 
