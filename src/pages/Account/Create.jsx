@@ -1,33 +1,31 @@
-import RadioChannel from "./Components/RadioChannels"
+import SocialMediaRadio from "./Components/SocialMediaRadio"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { useEffect, useState } from "react"
 import { Alert } from "../../components/Alert"
 import { Breadcrumb } from "../../components/Breadcrumb"
 import { Transition } from "@headlessui/react"
 import { Wrapper } from "../../Wrapper"
+import { useNavigate } from "react-router-dom"
 
 export function Create() {
-  const [selectedOption, setSelectedOption] = useState(null)
+  const [socialMedia, setSocialMedia] = useState('')
   const [name, setName] = useState("")
   const [token, setToken] = useState("")
   const [description, setDescription] = useState("")
-  const selectedSocialName = selectedOption?.name ?? ""
   const [socialMediaError, setSocialMediaError] = useState(null)
   const [status, setStatus] = useState("unloaded")
-
-  console.log(socialMediaError)
-  console.log(Boolean(socialMediaError))
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (selectedSocialName) {
+    if (socialMedia) {
       setSocialMediaError(null)
     }
-  }, [selectedSocialName])
+  }, [socialMedia])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (!selectedOption?.name) {
+    if (!socialMedia) {
       setSocialMediaError({
         errorMessage: "You need to select a social media platform",
       })
@@ -39,7 +37,7 @@ export function Create() {
       name,
       token,
       description,
-      social_media: selectedSocialName,
+      social_media: socialMedia,
       user_id: "62d7a781d8f8d7627ce212d5",
     }
     const response = await fetch("http://social.devserver.ir/account/", {
@@ -88,7 +86,7 @@ export function Create() {
                         name="name"
                         id="name"
                         className="block flex-1 border-0 bg-transparent py-1.5 ps-3 text-text placeholder:text-placeholder focus:ring-0 sm:text-sm sm:leading-6"
-                        placeholder={`My ${selectedSocialName} account`}
+                        placeholder={`My ${socialMedia} account`}
                         required
                       />
                     </div>
@@ -96,9 +94,9 @@ export function Create() {
                 </div>
 
                 <div className="col-span-full">
-                  <RadioChannel
-                    selectedOption={selectedOption}
-                    setSelectedOption={setSelectedOption}
+                  <SocialMediaRadio
+                    socialMedia={socialMedia}
+                    setSocialMedia={setSocialMedia}
                   />
                 </div>
 
@@ -155,12 +153,20 @@ export function Create() {
           </div>
 
           <div className="mt-6 flex items-center justify-end gap-x-6">
+          <button
+              type="button"
+              className="text-sm font-semibold leading-6 text-text"
+              onClick={() => navigate(-1)}
+            >
+              Cancel
+            </button>
+
             <button
               type="button"
               className="text-sm font-semibold leading-6 text-text"
               onClick={() => {
                 setName("")
-                setSelectedOption(null)
+                setSocialMediaError(null)
                 setToken("")
                 setDescription("")
               }}

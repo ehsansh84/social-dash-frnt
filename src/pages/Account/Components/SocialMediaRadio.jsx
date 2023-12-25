@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { RadioGroup } from "@headlessui/react"
 import { socialMediaDictionary } from "../../../components/SocialIcons"
 
@@ -11,7 +10,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-export default function RadioChannel({ selectedOption, setSelectedOption }) {
+export default function SocialMediaRadio({ socialMedia, setSocialMedia }) {
+  console.log(socialMedia);
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -21,8 +21,8 @@ export default function RadioChannel({ selectedOption, setSelectedOption }) {
       </div>
 
       <RadioGroup
-        value={selectedOption}
-        onChange={setSelectedOption}
+        value={socialMedia}
+        onChange={setSocialMedia}
         className="mt-2"
       >
         <RadioGroup.Label className="sr-only">
@@ -32,7 +32,7 @@ export default function RadioChannel({ selectedOption, setSelectedOption }) {
           {socialMediaOptions.map((option) => (
             <RadioGroup.Option
               key={option.name}
-              value={option}
+              value={option.name}
               className={({ active, checked }) =>
                 classNames(
                   "cursor-pointer focus:outline-none",
