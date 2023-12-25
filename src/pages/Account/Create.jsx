@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { Alert } from "../../components/Alert"
 import { Breadcrumb } from "../../components/Breadcrumb"
 import { Transition } from "@headlessui/react"
+import { Wrapper } from "../../Wrapper"
 
 export function Create() {
   const [selectedOption, setSelectedOption] = useState(null)
@@ -56,13 +57,15 @@ export function Create() {
 
   return (
     <div className="border-t border-border">
-      <NarrowWrapper>
+      <Wrapper as="header" className="border-b border-border">
         <Breadcrumb
           pages={[
             { name: "Accounts", href: "/accounts" },
             { name: "Create", href: "/accounts/create" },
           ]}
         />
+      </Wrapper>
+      <NarrowWrapper>
         <form onSubmit={handleSubmit}>
           <div className="space-y-12">
             <div className="border-b border-border pb-12">
@@ -192,7 +195,12 @@ export function Create() {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Alert status="danger" message={socialMediaError?.errorMessage} show={Boolean(socialMediaError)} setShow={setSocialMediaError} />
+              <Alert
+                status="danger"
+                message={socialMediaError?.errorMessage}
+                show={Boolean(socialMediaError)}
+                setShow={setSocialMediaError}
+              />
             </Transition>
           </div>
         </form>
