@@ -6,29 +6,18 @@ import { Wrapper } from "../../Wrapper"
 import { Alert } from "../../components/Alert"
 import { Breadcrumb } from "../../components/Breadcrumb"
 import { SocialMediaRadio } from "../../components/SocialMediaRadio"
-
-const account = {
-  name: "Jane Cooper",
-  social_media: "instagram",
-  token: "Admin",
-  description:
-    "janecooper@example.com janecooper@example.com janecooper@example.com",
-  id: "+ss1-202-5170",
-  created_at:
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  updated_at:
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  user_id: "62d7a781d8f8d7627ce212d5",
-}
+import { accounts } from "../../hardcoded"
 
 export function Edit() {
+  const { accountId } = useParams()
+  const account = accounts.find((s) => s.id === accountId)
+
   const [socialMedia, setSocialMedia] = useState(account.social_media)
   const [name, setName] = useState(account.name)
   const [token, setToken] = useState(account.token)
   const [description, setDescription] = useState(account.description)
   const [socialMediaError, setSocialMediaError] = useState(null)
   const [status, setStatus] = useState("unloaded")
-  const { accountId } = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
