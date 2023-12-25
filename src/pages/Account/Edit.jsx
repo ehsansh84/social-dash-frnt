@@ -1,11 +1,11 @@
-import SocialMediaRadio from "./Components/SocialMediaRadio"
-import { NarrowWrapper } from "../../NarrowWrapper"
+import { Transition } from "@headlessui/react"
 import { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { NarrowWrapper } from "../../NarrowWrapper"
+import { Wrapper } from "../../Wrapper"
 import { Alert } from "../../components/Alert"
 import { Breadcrumb } from "../../components/Breadcrumb"
-import { Transition } from "@headlessui/react"
-import { Wrapper } from "../../Wrapper"
-import { useNavigate, useParams } from "react-router-dom"
+import { SocialMediaRadio } from "../../components/SocialMediaRadio"
 
 const account = {
   name: "Jane Cooper",
@@ -29,8 +29,7 @@ export function Edit() {
   const [socialMediaError, setSocialMediaError] = useState(null)
   const [status, setStatus] = useState("unloaded")
   const { accountId } = useParams()
-  const navigate = useNavigate();
-
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (socialMedia) {
@@ -169,7 +168,6 @@ export function Edit() {
           </div>
 
           <div className="mt-6 flex items-center justify-end gap-x-6">
-
             <button
               type="button"
               className="text-sm font-semibold leading-6 text-text"

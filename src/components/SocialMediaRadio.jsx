@@ -1,5 +1,5 @@
 import { RadioGroup } from "@headlessui/react"
-import { socialMediaDictionary } from "../../../components/SocialIcons"
+import { socialMediaDictionary } from "./SocialIcons"
 
 const socialMediaOptions = Object.keys(socialMediaDictionary).map((key) => ({
   name: key,
@@ -10,7 +10,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-export default function SocialMediaRadio({ socialMedia, setSocialMedia }) {
+export function SocialMediaRadio({ socialMedia, setSocialMedia }) {
   console.log(socialMedia);
   return (
     <div>
