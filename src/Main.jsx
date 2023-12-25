@@ -2,14 +2,14 @@ import { Route, Routes } from "react-router-dom"
 import { IndexPage } from "./pages/IndexPage"
 
 import { Create as CreateAccount } from "./pages/Account/Create"
+import { Index as AccountIndex } from "./pages/Account/Index"
+import { Edit as EditAccount } from "./pages/Account/Edit"
 import { PostList } from "./pages/Post/Components/PostList"
 import { Create as CreatePost } from "./pages/Post/Create"
-import { SourceList } from "./pages/Source/Components/SourceList"
 import { Create as CreateSource } from "./pages/Source/Create"
+import { Index as SourceIndex } from "./pages/Source/Index"
 import { UserList } from "./pages/User/Components/UserList"
 import { Create as CreateUser } from "./pages/User/Create"
-import { Index as AccountIndex } from "./pages/Account/Index"
-import { Index as SourceIndex } from "./pages/Source/Index"
 
 export function Main() {
   return (
@@ -28,7 +28,7 @@ export function Main() {
 
         <Route
           path="accounts/:accountId/edit"
-          element={<div>edit account</div>}
+          element={<EditAccount />}
         />
         <Route path="accounts/create" element={<CreateAccount />} />
         <Route path="accounts" element={<AccountIndex />} />
