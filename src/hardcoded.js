@@ -359,7 +359,7 @@ export const sources = [
     social_media: "telegram",
     name: "Random Telegram 2",
     description: "This Telegram channel has great photography content",
-    account_id: "62d7a781d8f8d7627ce212d5",
+    account_id: "103",
     channel: "random_channel_2",
     logo: "https://picsum.photos/200",
     crawl_schedule: "daily",
