@@ -1,4 +1,4 @@
-import { SocialMediaRadio } from "../../components/SocialMediaRadio" 
+import { SocialMediaRadio } from "../../components/SocialMediaRadio"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { useEffect, useState } from "react"
 import { Alert } from "../../components/Alert"
@@ -7,14 +7,30 @@ import { Transition } from "@headlessui/react"
 import { Wrapper } from "../../Wrapper"
 import { useNavigate } from "react-router-dom"
 
+import { accounts } from "../../hardcoded"
+import { SearchMenu } from "../../components/SearchMenu"
+
 export function Create() {
   const [socialMedia, setSocialMedia] = useState("")
   const [name, setName] = useState("")
-  const [token, setToken] = useState("")
+  const [channel, setChannel] = useState("")
+  const [accountId, setAccountId] = useState("")
+  const [crawlId, setCrawlId] = useState(0)
   const [description, setDescription] = useState("")
+  const [logo, setLogo] = useState("")
   const [socialMediaError, setSocialMediaError] = useState(null)
+
   const [status, setStatus] = useState("unloaded")
   const navigate = useNavigate()
+  const acceptableAccounts = accounts.filter((a) =>
+    socialMedia ? a.social_media === socialMedia : true,
+  )
+  const crawlSchedules = [
+    { id: 'hourly', name: "Hourly" },
+    { id: 'daily', name: "Daily" },
+    { id: 'weekly', name: "Weekly" },
+    { id: 'monthly', name: "Monthly" },
+  ]
 
   useEffect(() => {
     if (socialMedia) {
@@ -35,7 +51,7 @@ export function Create() {
     setStatus("loading")
     const bodyObject = {
       name,
-      token,
+      channel,
       description,
       social_media: socialMedia,
       user_id: "62d7a781d8f8d7627ce212d5",
@@ -86,7 +102,7 @@ export function Create() {
                         name="name"
                         id="name"
                         className="block flex-1 border-0 bg-transparent py-1.5 ps-3 text-text placeholder:text-placeholder focus:ring-0 sm:text-sm sm:leading-6"
-                        placeholder={`My ${socialMedia} account`}
+                        placeholder={`My ${socialMedia} source`}
                         required
                       />
                     </div>
@@ -102,23 +118,58 @@ export function Create() {
 
                 <div className="sm:col-span-4">
                   <label
-                    htmlFor="token"
+                    htmlFor="channel"
                     className="block text-sm font-medium leading-6 text-text"
                   >
-                    Token
+                    Channel
                   </label>
                   <div className="mt-2">
-                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-ring focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary sm:max-w-md">
+                    <div className="relative flex rounded-md shadow-sm ring-1 ring-inset ring-ring focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary sm:max-w-md">
                       <input
-                        value={token}
+                        value={channel}
                         onChange={(e) => {
-                          setToken(e.target.value)
+                          setName(e.target.value)
                         }}
                         type="text"
-                        name="token"
-                        id="token"
+                        name="channel"
+                        id="channel"
                         className="block flex-1 border-0 bg-transparent py-1.5 ps-3 text-text placeholder:text-placeholder focus:ring-0 sm:text-sm sm:leading-6"
-                        placeholder="My account token"
+                        placeholder={`my_${socialMedia}_channel`}
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="sm:col-span-4">
+                  <SearchMenu
+                    label="Account"
+                    options={acceptableAccounts}
+                    setSelected={setAccountId}
+                    selected={accountId}
+                  />
+                </div>
+
+
+                <div className="sm:col-span-4">
+                  <label
+                    htmlFor="logo"
+                    className="block text-sm font-medium leading-6 text-text"
+                  >
+                    Logo
+                  </label>
+                  <div className="mt-2">
+                    <div className="relative flex rounded-md shadow-sm ring-1 ring-inset ring-ring focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary sm:max-w-md">
+                      <input
+                        value={logo}
+                        onChange={(e) => {
+                          setLogo(e.target.value)
+                        }}
+                        type="text"
+                        name="logo"
+                        id="logo"
+                        className="block flex-1 border-0 bg-transparent py-1.5 ps-3 text-text placeholder:text-placeholder focus:ring-0 sm:text-sm sm:leading-6"
+                        placeholder={`My ${socialMedia} logo`}
                         required
                       />
                     </div>
@@ -148,6 +199,15 @@ export function Create() {
                     Write a few sentences about the source.
                   </p>
                 </div>
+
+                <div className="sm:col-span-4">
+                  <SearchMenu
+                    label="Crawl schedule"
+                    options={crawlSchedules}
+                    setSelected={setCrawlId}
+                    selected={crawlId}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -167,7 +227,7 @@ export function Create() {
               onClick={() => {
                 setName("")
                 setSocialMediaError(null)
-                setToken("")
+                setChannel("")
                 setDescription("")
               }}
             >
