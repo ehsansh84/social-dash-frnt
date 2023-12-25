@@ -1,48 +1,9 @@
 import { PencilIcon, TrashIcon } from "@heroicons/react/20/solid"
 
-import { socialMediaDictionary } from "../../../components/SocialIcons"
+import { socialMediaDictionary } from "../../../components/SocialMedia"
 import { SocialBadge } from "../../../components/SocialBadge"
 import { Link } from "react-router-dom"
-
-const accounts = [
-  {
-    name: "Jane Cooper",
-    social_media: "instagram",
-    token: "Admin",
-    description:
-      "janecooper@example.com janecooper@example.com janecooper@example.com",
-    id: "+ss1-202-5170",
-    created_at:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-    updated_at:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-    user_id: "62d7a781d8f8d7627ce212d5",
-  },
-  {
-    name: "Jane Cooper",
-    social_media: "reddit",
-    token: "Admin",
-    description: "janecooper@example.com",
-    id: "+1-",
-    created_at:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-    updated_at:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-    user_id: "62d7a781d8f8d7627ce212d5",
-  },
-  {
-    name: "Jane Cooper",
-    social_media: "telegram",
-    token: "Admin",
-    description: "janecooper@example.com",
-    id: "+1-0170",
-    created_at:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-    updated_at:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-    user_id: "62d7a781d8f8d7627ce212d5",
-  },
-]
+import { accounts } from "../../../hardcoded"
 
 export function AccountList() {
   return (

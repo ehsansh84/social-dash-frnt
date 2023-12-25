@@ -1,36 +1,8 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid"
 import { Wrapper } from "../../../Wrapper"
 import { Link } from "react-router-dom"
-import { SocialIcon } from "../../../components/SocialIcons"
-
-const sources = [
-  {
-    social_media: "instagram",
-    name: "Photography by Ehsan",
-    description: "This is a great channel about photography",
-    account_id: "62d7a781d8f8d7627ce212d5",
-    channel: "my_channel",
-    logo: "https://picsum.photos/200",
-    crawl_schedule: "daily",
-    id: "1",
-    created_at: "2023-12-23T20:53:51.237Z",
-    updated_at: "2023-12-23T20:53:51.237Z",
-    user_id: "string",
-  },
-  {
-    social_media: "telegram",
-    name: "Photography by Ehsan",
-    description: "This is a great channel about photography",
-    account_id: "62d7a781d8f8d7627ce212d5",
-    channel: "my_channel",
-    logo: "https://picsum.photos/200",
-    crawl_schedule: "daily",
-    id: "2",
-    created_at: "2023-12-23T20:53:51.237Z",
-    updated_at: "2023-12-23T20:53:51.237Z",
-    user_id: "string",
-  },
-]
+import { SocialIcon } from "../../../components/SocialMedia" 
+import { sources } from "../../../hardcoded"
 
 export function SourceList() {
   return (

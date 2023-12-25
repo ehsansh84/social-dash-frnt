@@ -1,5 +1,5 @@
 import { RadioGroup } from "@headlessui/react"
-import { socialMediaDictionary } from "./SocialIcons"
+import { socialMediaDictionary } from "./SocialMedia"
 
 const socialMediaOptions = Object.keys(socialMediaDictionary).map((key) => ({
   name: key,
