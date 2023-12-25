@@ -11,7 +11,6 @@ function classNames(...classes) {
 }
 
 export function SocialMediaRadio({ socialMedia, setSocialMedia }) {
-  console.log(socialMedia);
   return (
     <div>
       <div className="flex items-center justify-between">
