@@ -4,6 +4,7 @@ import { classNames } from "../../../utils"
 
 import { socialMediaDictionary } from "../../../components/SocialIcons"
 import { SocialBadge } from "../../../components/SocialBadge"
+import { Link } from "react-router-dom"
 
 const accounts = [
   {
@@ -76,8 +77,7 @@ export function AccountList() {
             <div>
               <div className="-mt-px flex divide-x divide-border">
                 <div className="flex w-0 flex-1 hover:bg-bg-hover">
-                  <a
-                    href={`mailto:${account.token}`}
+                  <Link to={`/accounts/${account.id}/edit`}
                     className="relative -me-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-es-lg border border-transparent py-4 text-sm font-semibold text-text"
                   >
                     <PencilIcon
@@ -85,11 +85,11 @@ export function AccountList() {
                       aria-hidden="true"
                     />
                     Edit Account
-                  </a>
+                  </Link>
                 </div>
                 <div className="-ms-px flex w-0 flex-1 hover:bg-bg-hover">
-                  <a
-                    href={`tel:${account.token}`}
+                  <button
+                    type="button"
                     className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-ee-lg border border-transparent py-4 text-sm font-semibold text-text"
                   >
                     <TrashIcon
@@ -97,7 +97,7 @@ export function AccountList() {
                       aria-hidden="true"
                     />
                     Delete
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
