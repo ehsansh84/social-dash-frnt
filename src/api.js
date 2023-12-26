@@ -1,8 +1,11 @@
 import axios from "axios"
 import { API_CONFIG } from "./apiConfig"
 
-export const fetchResource = (resourceName) => {
-  const url = `${API_CONFIG.baseUrl}${API_CONFIG.endpoints[resourceName]}`
+export const fetchResource = (resourceName, id) => {
+  let url = `${API_CONFIG.baseUrl}${API_CONFIG.endpoints[resourceName]}`
+  if (id) {
+    url += `/${id}`
+  }
   return axios.get(url).then((res) => res.data)
 }
 

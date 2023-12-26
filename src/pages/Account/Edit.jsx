@@ -6,18 +6,18 @@ import { Wrapper } from "../../Wrapper"
 import { Alert } from "../../components/Alert"
 import { Breadcrumb } from "../../components/Breadcrumb"
 import { SocialMediaRadio } from "../../components/SocialMediaRadio"
-import { accounts } from "../../hardcoded"
+import { useResource, useUpdateResource } from "../../hooks/useResources"
 
 export function Edit() {
   const { accountId } = useParams()
-  const account = accounts.find((s) => s.id === accountId)
+  const { data: account, isLoading } = useResource("accounts", accountId)
+  const updateAccount = useUpdateResource("accounts")
 
-  const [socialMedia, setSocialMedia] = useState(account.social_media)
-  const [name, setName] = useState(account.name)
-  const [token, setToken] = useState(account.token)
-  const [description, setDescription] = useState(account.description)
+  const [socialMedia, setSocialMedia] = useState("")
+  const [name, setName] = useState("")
+  const [token, setToken] = useState("")
+  const [description, setDescription] = useState("")
   const [socialMediaError, setSocialMediaError] = useState(null)
-  const [status, setStatus] = useState("unloaded")
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -25,6 +25,15 @@ export function Edit() {
       setSocialMediaError(null)
     }
   }, [socialMedia])
+
+  useEffect(() => {
+      if (account) {
+        setName(account.name)
+        setDescription(account.description)
+        setToken(account.token)
+        setSocialMedia(account.social_media)
+    }
+  }, [account])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -36,7 +45,6 @@ export function Edit() {
       return
     }
 
-    setStatus("loading")
     const bodyObject = {
       name,
       token,
@@ -44,18 +52,11 @@ export function Edit() {
       social_media: socialMedia,
       user_id: "62d7a781d8f8d7627ce212d5",
     }
-    const response = await fetch("http://social.devserver.ir/account/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(bodyObject),
-    })
+    updateAccount.mutate({ _id: accountId, data: bodyObject })
 
-    const data = await response.json()
-    console.log(data)
-    setStatus("unloaded")
   }
+
+  if (isLoading) return <div>Loading...</div>
 
   return (
     <div className="border-t border-border">
@@ -168,7 +169,7 @@ export function Edit() {
               type="submit"
               className="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
             >
-              {status === "loading" ? (
+              {isLoading ? (
                 <div
                   className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                   role="status"

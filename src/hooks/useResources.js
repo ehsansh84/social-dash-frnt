@@ -6,10 +6,10 @@ import {
   deleteResource,
 } from "../api"
 
-export const useResource = (resourceName) => {
+export const useResource = (resourceName, id) => {
   return useQuery({
-    queryKey: [resourceName],
-    queryFn: () => fetchResource(resourceName),
+    queryKey: [resourceName, id],
+    queryFn: () => fetchResource(resourceName, id),
   })
 }
 
@@ -20,6 +20,7 @@ export const useCreateResource = (resourceName) => {
     mutationFn: (data) => createResource(resourceName, data),
     onSuccess: () => {
       queryClient.invalidateQueries(resourceName)
+      // queryClient.setQueryData([resourceName, data._id], data)
     },
   })
 }
@@ -31,6 +32,8 @@ export const useUpdateResource = (resourceName) => {
     mutationFn: ({ _id, data }) => updateResource(resourceName, _id, data),
     onSuccess: () => {
       queryClient.invalidateQueries(resourceName)
+      // queryClient.setQueryData([resourceName, data._id], data.data)
+
     },
   })
 }
