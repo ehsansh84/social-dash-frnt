@@ -13,8 +13,6 @@ export function Index() {
     location.state?.message ? location.state : null,
   )
 
-  console.log(message)
-
   useEffect(() => {
     if (location.state?.message) {
       navigate(".", { state: {} })

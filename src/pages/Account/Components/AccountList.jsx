@@ -2,18 +2,17 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/20/solid"
 
 import { socialMediaDictionary } from "../../../components/SocialMedia"
 import { SocialBadge } from "../../../components/SocialBadge"
-import { Link, useNavigate } from "react-router-dom"
-import { useDeleteResource, useResource } from "../../../hooks/useResources"
+import { Link } from "react-router-dom"
+import { useDeleteResource, useResourceList } from "../../../hooks/useResources"
 import { useEffect, useState } from "react"
 
 export function AccountList({ setMessage }) {
   const [idToDelete, setIdToDelete] = useState("")
 
-  const { data } = useResource("accounts")
+  const { data } = useResourceList("accounts")
   const accounts = data ?? []
   const deleteAccountMutation = useDeleteResource("accounts")
-  const navigate = useNavigate()
-
+  // console.log(accounts);
   useEffect(() => {
     if (deleteAccountMutation.isError) {
       setMessage({
@@ -30,7 +29,6 @@ export function AccountList({ setMessage }) {
     }
     setIdToDelete("")
   }, [
-    navigate,
     deleteAccountMutation.isError,
     deleteAccountMutation.isSuccess,
     deleteAccountMutation.error,
