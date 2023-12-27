@@ -34,6 +34,7 @@ export function AccountList({ setMessage }) {
     deleteAccountMutation.isError,
     deleteAccountMutation.isSuccess,
     deleteAccountMutation.error,
+    setMessage
   ])
 
   return (
