@@ -6,6 +6,7 @@ import { Wrapper } from "../../Wrapper"
 import { Alert } from "../../components/Alert"
 import { Breadcrumb } from "../../components/Breadcrumb"
 import { SocialMediaRadio } from "../../components/SocialMediaRadio"
+import { useCreateResource } from "../../hooks/useResources"
 
 export function Create() {
   const [socialMedia, setSocialMedia] = useState("")
@@ -13,8 +14,11 @@ export function Create() {
   const [token, setToken] = useState("")
   const [description, setDescription] = useState("")
   const [socialMediaError, setSocialMediaError] = useState(null)
-  const [status, setStatus] = useState("unloaded")
+  const [requestError, setRequestError] = useState(null)
+
   const navigate = useNavigate()
+
+  const createResourceMutation = useCreateResource("accounts")
 
   useEffect(() => {
     if (socialMedia) {
@@ -22,17 +26,36 @@ export function Create() {
     }
   }, [socialMedia])
 
+  useEffect(() => {
+    if (createResourceMutation.isError) {
+      setRequestError({
+        errorMessage: createResourceMutation.error.message,
+      })
+    }
+
+    if (createResourceMutation.isSuccess) {
+      setRequestError(null)
+      navigate("/accounts", {
+        state: { message: "Your account was created!", status: "success" },
+      })
+    }
+  }, [
+    createResourceMutation.isError,
+    createResourceMutation.isSuccess,
+    navigate,
+    createResourceMutation.error,
+  ])
+
   const handleSubmit = async (event) => {
     event.preventDefault()
 
     if (!socialMedia) {
       setSocialMediaError({
-        errorMessage: "You need to select a social media platform",
+        errorMessage: "You need to select a social media platform!",
       })
       return
     }
 
-    setStatus("loading")
     const bodyObject = {
       name,
       token,
@@ -40,17 +63,8 @@ export function Create() {
       social_media: socialMedia,
       user_id: "62d7a781d8f8d7627ce212d5",
     }
-    const response = await fetch("http://social.devserver.ir/account/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(bodyObject),
-    })
 
-    const data = await response.json()
-    console.log(data)
-    setStatus("unloaded")
+    createResourceMutation.mutate(bodyObject)
   }
 
   return (
@@ -177,7 +191,7 @@ export function Create() {
               type="submit"
               className="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
             >
-              {status === "loading" ? (
+              {createResourceMutation.isLoading ? (
                 <div
                   className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                   role="status"
@@ -193,7 +207,7 @@ export function Create() {
           </div>
           <div className="mt-12">
             <Transition
-              show={Boolean(socialMediaError)}
+              show={Boolean(socialMediaError || requestError)}
               enter="transition-opacity duration-75"
               enterFrom="opacity-0"
               enterTo="opacity-100"
@@ -203,9 +217,14 @@ export function Create() {
             >
               <Alert
                 status="danger"
-                message={socialMediaError?.errorMessage}
-                show={Boolean(socialMediaError)}
-                setShow={setSocialMediaError}
+                message={
+                  socialMediaError?.errorMessage || requestError?.errorMessage
+                }
+                show={Boolean(socialMediaError || requestError)}
+                setShow={(v) => {
+                  setSocialMediaError(v)
+                  setRequestError(v)
+                }}
               />
             </Transition>
           </div>

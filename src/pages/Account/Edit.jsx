@@ -10,7 +10,7 @@ import { useResource, useUpdateResource } from "../../hooks/useResources"
 
 export function Edit() {
   const { accountId } = useParams()
-  const { data: account, isLoading } = useResource("accounts", accountId)
+  const { data: account } = useResource("accounts", accountId)
   const updateAccount = useUpdateResource("accounts")
 
   const [socialMedia, setSocialMedia] = useState("")
@@ -18,6 +18,7 @@ export function Edit() {
   const [token, setToken] = useState("")
   const [description, setDescription] = useState("")
   const [socialMediaError, setSocialMediaError] = useState(null)
+  const [requestError, setRequestError] = useState(null)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -27,20 +28,41 @@ export function Edit() {
   }, [socialMedia])
 
   useEffect(() => {
-      if (account) {
-        setName(account.name)
-        setDescription(account.description)
-        setToken(account.token)
-        setSocialMedia(account.social_media)
+    if (account) {
+      setName(account.name)
+      setDescription(account.description)
+      setToken(account.token)
+      setSocialMedia(account.social_media)
     }
   }, [account])
+
+
+  useEffect(() => {
+    if (updateAccount.isError) {
+      setRequestError({
+        errorMessage: updateAccount.error.message,
+      })
+    }
+
+    if (updateAccount.isSuccess) {
+      setRequestError(null)
+      navigate("/accounts", {
+        state: { message: "Your account was edited!", status: "success" },
+      })
+    }
+  }, [
+    navigate,
+    updateAccount.isError,
+    updateAccount.isSuccess,
+    updateAccount.error,
+  ])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
     if (!socialMedia) {
       setSocialMediaError({
-        errorMessage: "You need to select a social media platform",
+        errorMessage: "You need to select a social media platform!",
       })
       return
     }
@@ -53,10 +75,7 @@ export function Edit() {
       user_id: "62d7a781d8f8d7627ce212d5",
     }
     updateAccount.mutate({ _id: accountId, data: bodyObject })
-
   }
-
-  if (isLoading) return <div>Loading...</div>
 
   return (
     <div className="border-t border-border">
@@ -169,7 +188,7 @@ export function Edit() {
               type="submit"
               className="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
             >
-              {isLoading ? (
+              {updateAccount.isLoading ? (
                 <div
                   className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                   role="status"
@@ -184,8 +203,8 @@ export function Edit() {
             </button>
           </div>
           <div className="mt-12">
-            <Transition
-              show={Boolean(socialMediaError)}
+          <Transition
+              show={Boolean(socialMediaError || requestError)}
               enter="transition-opacity duration-75"
               enterFrom="opacity-0"
               enterTo="opacity-100"
@@ -195,9 +214,14 @@ export function Edit() {
             >
               <Alert
                 status="danger"
-                message={socialMediaError?.errorMessage}
-                show={Boolean(socialMediaError)}
-                setShow={setSocialMediaError}
+                message={
+                  socialMediaError?.errorMessage || requestError?.errorMessage
+                }
+                show={Boolean(socialMediaError || requestError)}
+                setShow={(v) => {
+                  setSocialMediaError(v)
+                  setRequestError(v)
+                }}
               />
             </Transition>
           </div>
