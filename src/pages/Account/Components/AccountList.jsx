@@ -2,15 +2,40 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/20/solid"
 
 import { socialMediaDictionary } from "../../../components/SocialMedia"
 import { SocialBadge } from "../../../components/SocialBadge"
-import { Link } from "react-router-dom"
-import { useResource } from "../../../hooks/useResources"
-// import { accounts } from "../../../hardcoded"
+import { Link, useNavigate } from "react-router-dom"
+import { useDeleteResource, useResource } from "../../../hooks/useResources"
+import { useEffect, useState } from "react"
 
-export function AccountList() {
-  const { data: accounts, isLoading } = useResource("accounts")
-  console.log(accounts)
+export function AccountList({ setMessage }) {
+  const [idToDelete, setIdToDelete] = useState("")
 
-  if (isLoading) return <div>Loading...</div>
+  const { data } = useResource("accounts")
+  const accounts = data ?? []
+  const deleteAccountMutation = useDeleteResource("accounts")
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (deleteAccountMutation.isError) {
+      setMessage({
+        message: deleteAccountMutation.error.message,
+        status: "danger",
+      })
+    }
+
+    if (deleteAccountMutation.isSuccess) {
+      setMessage({
+        message: "Account deleted",
+        status: "success",
+      })
+    }
+    setIdToDelete("")
+  }, [
+    navigate,
+    deleteAccountMutation.isError,
+    deleteAccountMutation.isSuccess,
+    deleteAccountMutation.error,
+  ])
+
   return (
     <ul className="grid  grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {accounts.map((account) => {
@@ -56,12 +81,30 @@ export function AccountList() {
                   <button
                     type="button"
                     className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-ee-lg border border-transparent py-4 text-sm font-semibold text-text"
+                    onClick={() => {
+                      setIdToDelete(account._id)
+                      deleteAccountMutation.mutate(account._id)
+                    }}
                   >
-                    <TrashIcon
-                      className="h-5 w-5 text-gray-400 dark:text-gray-600"
-                      aria-hidden="true"
-                    />
-                    Delete
+                    {idToDelete === account._id &&
+                    deleteAccountMutation.isPending ? (
+                      <div
+                        className="inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                        role="status"
+                      >
+                        <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                          Loading...
+                        </span>
+                      </div>
+                    ) : (
+                      <>
+                        <TrashIcon
+                          className="h-5 w-5 text-gray-400 dark:text-gray-600"
+                          aria-hidden="true"
+                        />
+                        Delete
+                      </>
+                    )}
                   </button>
                 </div>
               </div>

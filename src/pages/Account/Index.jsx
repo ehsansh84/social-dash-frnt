@@ -13,6 +13,8 @@ export function Index() {
     location.state?.message ? location.state : null,
   )
 
+  console.log(message)
+
   useEffect(() => {
     if (location.state?.message) {
       navigate(".", { state: {} })
@@ -22,7 +24,7 @@ export function Index() {
   return (
     <IndexPage resourceName="account">
       <Wrapper>
-        <AccountList />
+        <AccountList setMessage={setMessage} />
         <div className="mt-12">
           <Transition
             show={Boolean(message)}
