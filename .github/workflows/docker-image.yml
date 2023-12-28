@@ -27,7 +27,7 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Tag Docker image
-        run: docker tag social-dash-frnt:$IMAGE_TAG ${{ secrets.DOCKER_USERNAME }}/social_dash:$IMAGE_TAG
+        run: docker tag social-dash-frnt:$IMAGE_TAG ${{ secrets.DOCKER_USERNAME }}/social-dash-frnt:$IMAGE_TAG
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/social-dash-frnt:$IMAGE_TAG
