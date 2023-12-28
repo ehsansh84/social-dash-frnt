@@ -9,7 +9,7 @@ docker build -t social-dashboard-react .
 ## Instantiate the container
 
 ```sh
-docker run -p 3030:3030 --name social social-dashboard-react
+docker run -p 3030:3030 -e BASE_URL=https://some-api.server --name social social-dashboard-react
 ```
 
 visit the app at `localhost:3030`
