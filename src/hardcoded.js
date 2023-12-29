@@ -7,17 +7,17 @@ export const accounts = [
     id: "1",
     created_at: "2023-01-01T00:00:00.000Z",
     updated_at: "2023-01-01T00:00:00.000Z",
-    user_id: "1"
+    user_id: "1",
   },
   {
-    name: "Jane Smith", 
+    name: "Jane Smith",
     social_media: "reddit",
     token: "jsmith456",
     description: "This is Jane Smith's Reddit account",
     id: "2",
     created_at: "2023-01-02T00:00:00.000Z",
     updated_at: "2023-01-02T00:00:00.000Z",
-    user_id: "2"
+    user_id: "2",
   },
   {
     name: "Bob Johnson",
@@ -27,17 +27,17 @@ export const accounts = [
     id: "3",
     created_at: "2023-01-03T00:00:00.000Z",
     updated_at: "2023-01-03T00:00:00.000Z",
-    user_id: "3"
+    user_id: "3",
   },
   {
     name: "Account 4",
     social_media: "twitter",
     token: "token4",
-    description: "Description 4", 
+    description: "Description 4",
     id: "4",
     created_at: "2023-01-04T00:00:00.000Z",
     updated_at: "2023-01-04T00:00:00.000Z",
-    user_id: "4"
+    user_id: "4",
   },
   {
     name: "Account 5",
@@ -45,9 +45,9 @@ export const accounts = [
     token: "token5",
     description: "Description 5",
     id: "5",
-    created_at: "2023-01-05T00:00:00.000Z", 
+    created_at: "2023-01-05T00:00:00.000Z",
     updated_at: "2023-01-05T00:00:00.000Z",
-    user_id: "5"
+    user_id: "5",
   },
   {
     name: "Account 6",
@@ -57,7 +57,7 @@ export const accounts = [
     id: "6",
     created_at: "2023-01-06T00:00:00.000Z",
     updated_at: "2023-01-06T00:00:00.000Z",
-    user_id: "6"
+    user_id: "6",
   },
   {
     name: "Account 7",
@@ -67,7 +67,7 @@ export const accounts = [
     id: "7",
     created_at: "2023-01-07T00:00:00.000Z",
     updated_at: "2023-01-07T00:00:00.000Z",
-    user_id: "7"
+    user_id: "7",
   },
   {
     name: "Account 8",
@@ -77,17 +77,17 @@ export const accounts = [
     id: "8",
     created_at: "2023-01-08T00:00:00.000Z",
     updated_at: "2023-01-08T00:00:00.000Z",
-    user_id: "8"
+    user_id: "8",
   },
   {
     name: "Account 9",
     social_media: "youtube",
     token: "token9",
     description: "Description 9",
-    id: "9", 
+    id: "9",
     created_at: "2023-01-09T00:00:00.000Z",
     updated_at: "2023-01-09T00:00:00.000Z",
-    user_id: "9"
+    user_id: "9",
   },
   {
     name: "Account 10",
@@ -97,17 +97,17 @@ export const accounts = [
     id: "10",
     created_at: "2023-01-10T00:00:00.000Z",
     updated_at: "2023-01-10T00:00:00.000Z",
-    user_id: "10" 
+    user_id: "10",
   },
   {
-    name: "Sara Lee", 
+    name: "Sara Lee",
     social_media: "instagram",
     token: "slee123",
     description: "Sara Lee's Instagram account",
     id: "101",
     created_at: "2023-02-01T00:00:00.000Z",
     updated_at: "2023-02-01T00:00:00.000Z",
-    user_id: "101"
+    user_id: "101",
   },
   {
     name: "Tom Sawyer",
@@ -117,7 +117,7 @@ export const accounts = [
     id: "102",
     created_at: "2023-02-02T00:00:00.000Z",
     updated_at: "2023-02-02T00:00:00.000Z",
-    user_id: "102"
+    user_id: "102",
   },
   {
     name: "Michelle Thompson",
@@ -127,17 +127,17 @@ export const accounts = [
     id: "103",
     created_at: "2023-02-03T00:00:00.000Z",
     updated_at: "2023-02-03T00:00:00.000Z",
-    user_id: "103"
+    user_id: "103",
   },
   {
     name: "Account 104",
-    social_media: "twitter", 
+    social_media: "twitter",
     token: "token104",
     description: "Description 104",
     id: "104",
     created_at: "2023-02-04T00:00:00.000Z",
     updated_at: "2023-02-04T00:00:00.000Z",
-    user_id: "104"
+    user_id: "104",
   },
   {
     name: "Account 11",
@@ -147,9 +147,9 @@ export const accounts = [
     id: "11",
     created_at: "2023-01-11T00:00:00.000Z",
     updated_at: "2023-01-11T00:00:00.000Z",
-    user_id: "11"
-   },
-   {
+    user_id: "11",
+  },
+  {
     name: "Account 12",
     social_media: "reddit",
     token: "token12",
@@ -157,9 +157,9 @@ export const accounts = [
     id: "12",
     created_at: "2023-01-12T00:00:00.000Z",
     updated_at: "2023-01-12T00:00:00.000Z",
-    user_id: "12"
-   },
-   {
+    user_id: "12",
+  },
+  {
     name: "Account 13",
     social_media: "telegram",
     token: "token13",
@@ -167,9 +167,9 @@ export const accounts = [
     id: "13",
     created_at: "2023-01-13T00:00:00.000Z",
     updated_at: "2023-01-13T00:00:00.000Z",
-    user_id: "13"
-   },
-   {
+    user_id: "13",
+  },
+  {
     name: "Account 14",
     social_media: "twitter",
     token: "token14",
@@ -177,9 +177,9 @@ export const accounts = [
     id: "14",
     created_at: "2023-01-14T00:00:00.000Z",
     updated_at: "2023-01-14T00:00:00.000Z",
-    user_id: "14"
-   },
-   {
+    user_id: "14",
+  },
+  {
     name: "Account 15",
     social_media: "facebook",
     token: "token15",
@@ -187,9 +187,9 @@ export const accounts = [
     id: "15",
     created_at: "2023-01-15T00:00:00.000Z",
     updated_at: "2023-01-15T00:00:00.000Z",
-    user_id: "15"
-   },
-   {
+    user_id: "15",
+  },
+  {
     name: "Account 16",
     social_media: "linkedin",
     token: "token16",
@@ -197,9 +197,9 @@ export const accounts = [
     id: "16",
     created_at: "2023-01-16T00:00:00.000Z",
     updated_at: "2023-01-16T00:00:00.000Z",
-    user_id: "16"
-   },
-   {
+    user_id: "16",
+  },
+  {
     name: "Account 17",
     social_media: "pinterest",
     token: "token17",
@@ -207,19 +207,19 @@ export const accounts = [
     id: "17",
     created_at: "2023-01-17T00:00:00.000Z",
     updated_at: "2023-01-17T00:00:00.000Z",
-    user_id: "17"
-   },
-   {
+    user_id: "17",
+  },
+  {
     name: "Account 18",
     social_media: "twitter",
     token: "token18",
-    description: "Description 18", 
+    description: "Description 18",
     id: "18",
     created_at: "2023-01-18T00:00:00.000Z",
     updated_at: "2023-01-18T00:00:00.000Z",
-    user_id: "18"
-   },
-   {
+    user_id: "18",
+  },
+  {
     name: "Account 19",
     social_media: "youtube",
     token: "token19",
@@ -227,9 +227,9 @@ export const accounts = [
     id: "19",
     created_at: "2023-01-19T00:00:00.000Z",
     updated_at: "2023-01-19T00:00:00.000Z",
-    user_id: "19"
-   },
-   {
+    user_id: "19",
+  },
+  {
     name: "Account 20",
     social_media: "aparat",
     token: "token20",
@@ -237,9 +237,9 @@ export const accounts = [
     id: "20",
     created_at: "2023-01-20T00:00:00.000Z",
     updated_at: "2023-01-20T00:00:00.000Z",
-    user_id: "20"
-   },
-   {
+    user_id: "20",
+  },
+  {
     name: "Account 21",
     social_media: "instagram",
     token: "token21",
@@ -247,9 +247,9 @@ export const accounts = [
     id: "21",
     created_at: "2023-01-21T00:00:00.000Z",
     updated_at: "2023-01-21T00:00:00.000Z",
-    user_id: "21"
-   },
-   {
+    user_id: "21",
+  },
+  {
     name: "Account 22",
     social_media: "reddit",
     token: "token22",
@@ -257,9 +257,9 @@ export const accounts = [
     id: "22",
     created_at: "2023-01-22T00:00:00.000Z",
     updated_at: "2023-01-22T00:00:00.000Z",
-    user_id: "22"  
-   },
-   {
+    user_id: "22",
+  },
+  {
     name: "Account 23",
     social_media: "telegram",
     token: "token23",
@@ -267,9 +267,9 @@ export const accounts = [
     id: "23",
     created_at: "2023-01-23T00:00:00.000Z",
     updated_at: "2023-01-23T00:00:00.000Z",
-    user_id: "23"
-   },
-   {
+    user_id: "23",
+  },
+  {
     name: "Account 24",
     social_media: "twitter",
     token: "token24",
@@ -277,9 +277,9 @@ export const accounts = [
     id: "24",
     created_at: "2023-01-24T00:00:00.000Z",
     updated_at: "2023-01-24T00:00:00.000Z",
-    user_id: "24"
-   },  
-   {
+    user_id: "24",
+  },
+  {
     name: "Account 25",
     social_media: "facebook",
     token: "token25",
@@ -287,9 +287,9 @@ export const accounts = [
     id: "25",
     created_at: "2023-01-25T00:00:00.000Z",
     updated_at: "2023-01-25T00:00:00.000Z",
-    user_id: "25"
-   },
-   {
+    user_id: "25",
+  },
+  {
     name: "Account 26",
     social_media: "linkedin",
     token: "token26",
@@ -297,9 +297,9 @@ export const accounts = [
     id: "26",
     created_at: "2023-01-26T00:00:00.000Z",
     updated_at: "2023-01-26T00:00:00.000Z",
-    user_id: "26"
-   },
-   {
+    user_id: "26",
+  },
+  {
     name: "Account 27",
     social_media: "pinterest",
     token: "token27",
@@ -307,9 +307,9 @@ export const accounts = [
     id: "27",
     created_at: "2023-01-27T00:00:00.000Z",
     updated_at: "2023-01-27T00:00:00.000Z",
-    user_id: "27"
-   },
-   {
+    user_id: "27",
+  },
+  {
     name: "Account 28",
     social_media: "twitter",
     token: "token28",
@@ -317,9 +317,9 @@ export const accounts = [
     id: "28",
     created_at: "2023-01-28T00:00:00.000Z",
     updated_at: "2023-01-28T00:00:00.000Z",
-    user_id: "28"
-   },
-   {
+    user_id: "28",
+  },
+  {
     name: "Account 29",
     social_media: "youtube",
     token: "token29",
@@ -327,9 +327,9 @@ export const accounts = [
     id: "29",
     created_at: "2023-01-29T00:00:00.000Z",
     updated_at: "2023-01-29T00:00:00.000Z",
-    user_id: "29"
-   },
-   {
+    user_id: "29",
+  },
+  {
     name: "Account 30",
     social_media: "aparat",
     token: "token30",
@@ -337,8 +337,8 @@ export const accounts = [
     id: "30",
     created_at: "2023-01-30T00:00:00.000Z",
     updated_at: "2023-01-30T00:00:00.000Z",
-    user_id: "30"
-   }
+    user_id: "30",
+  },
 ]
 
 export const sources = [
@@ -406,5 +406,83 @@ export const sources = [
     created_at: "2023-02-28T09:00:00.000Z",
     updated_at: "2023-02-28T09:00:00.000Z",
     user_id: "some_other_id",
+  },
+]
+
+export const charts = [
+  {
+    name: "Posts per channel",
+    type: "pie",
+    values: [
+      {
+        Page1: 100,
+      },
+      {
+        Page2: 50,
+      },
+      {
+        Page3: 25,
+      },
+    ],
+  },
+  {
+    name: "Posts per month",
+    type: "bar",
+    values: [
+      {
+        Jan: 100,
+      },
+      {
+        Feb: 50,
+      },
+      {
+        Mar: 25,
+      },
+    ],
+  },
+  {
+    name: "Posts per month per channel",
+    type: "bar",
+    values: [
+      {
+        Jan: [
+          {
+            Page1: 100,
+          },
+          {
+            Page2: 50,
+          },
+          {
+            Page3: 25,
+          },
+        ],
+      },
+      {
+        Feb: [
+          {
+            Page1: 200,
+          },
+          {
+            Page2: 70,
+          },
+          {
+            Page3: 50,
+          },
+        ],
+      },
+      {
+        Mar: [
+          {
+            Page1: 50,
+          },
+          {
+            Page2: 80,
+          },
+          {
+            Page3: 100,
+          },
+        ],
+      },
+    ],
   },
 ]

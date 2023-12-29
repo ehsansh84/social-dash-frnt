@@ -11,6 +11,7 @@ import { Index as SourceIndex } from "./pages/Source/Index"
 import { Edit as EditSource } from "./pages/Source/Edit"
 import { UserList } from "./pages/User/Components/UserList"
 import { Create as CreateUser } from "./pages/User/Create"
+import Dashboard from "./pages/Dashboard/Dashboard"
 
 export function Main() {
   return (
@@ -47,7 +48,7 @@ export function Main() {
         <Route path="posts/:postId/edit" element={<div>edit post</div>} />
 
         <Route path="settings" element={<div>settings</div>} />
-        <Route path="/" element={<div>dashboard</div>} />
+        <Route path="/" element={<Dashboard />} />
 
         <Route path="*" element={<div>not found</div>} />
 
