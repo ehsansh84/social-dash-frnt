@@ -53,7 +53,7 @@ export default function TinyLineChart() {
           labelStyle={{ display: "none" }}
           position={{ x: -20, y: 110 }}
         />
-        <Line type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={2} />
+        <Line type="monotone" dataKey="pv" stroke="var(--color-primary)" strokeWidth={2} />
       </LineChart>
     </ResponsiveContainer>
   )
