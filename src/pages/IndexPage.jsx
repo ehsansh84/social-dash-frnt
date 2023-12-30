@@ -10,7 +10,7 @@ import { capitalize } from "../utils"
 export function IndexPage({ resourceName, children }) {
   const navigate = useNavigate()
 
-  const AddUserButton = () => {
+  const AddButton = () => {
     return (
       <ButtonWithLeadingIcon
         Icon={PlusIcon}
@@ -26,7 +26,7 @@ export function IndexPage({ resourceName, children }) {
   return (
     <>
       <Wrapper as="header" className="dark:border-t dark:border-white/5">
-        <SectionHeadingWithActionButton Button={AddUserButton}>
+        <SectionHeadingWithActionButton Button={AddButton}>
           {capitalize(pluralize(resourceName))}
         </SectionHeadingWithActionButton>
       </Wrapper>
