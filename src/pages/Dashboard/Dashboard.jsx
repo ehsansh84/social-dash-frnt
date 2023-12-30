@@ -1,98 +1,94 @@
-import {
-  AcademicCapIcon,
-  BanknotesIcon,
-  CheckBadgeIcon,
-  ClockIcon,
-  ReceiptRefundIcon,
-  UsersIcon,
-} from "@heroicons/react/24/outline"
+import { useState } from "react"
 import TinyLineChart from "../../components/charts/TinyLineChart"
+import { classNames } from "../../utils"
+import { SectionHeadingWithActionButton } from "../../SectionHeadingWithActionButton"
+import { Wrapper } from "../../Wrapper"
 
-const actions = [
-  {
-    title: "Request time off",
-    href: "#",
-    icon: ClockIcon,
-    iconForeground: "text-teal-700",
-    iconBackground: "bg-teal-50",
-  },
-  {
-    title: "Benefits",
-    href: "#",
-    icon: CheckBadgeIcon,
-    iconForeground: "text-purple-700",
-    iconBackground: "bg-purple-50",
-  },
-  {
-    title: "Schedule a one-on-one",
-    href: "#",
-    icon: UsersIcon,
-    iconForeground: "text-sky-700",
-    iconBackground: "bg-sky-50",
-  },
-  {
-    title: "Payroll",
-    href: "#",
-    icon: BanknotesIcon,
-    iconForeground: "text-yellow-700",
-    iconBackground: "bg-yellow-50",
-  },
-  {
-    title: "Submit an expense",
-    href: "#",
-    icon: ReceiptRefundIcon,
-    iconForeground: "text-rose-700",
-    iconBackground: "bg-rose-50",
-  },
-  {
-    title: "Training",
-    href: "#",
-    icon: AcademicCapIcon,
-    iconForeground: "text-indigo-700",
-    iconBackground: "bg-indigo-50",
-  },
+const charts = [
+  { title: "Request time off" },
+  { title: "Benefits" },
+  { title: "Schedule a one-on-one" },
+  { title: "Payroll" },
+  { title: "Submit an expense" },
+  { title: "Training" },
 ]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ")
-}
+const secondaryNavigation = [
+  { name: "Last 7 days", id: "last7days" },
+  { name: "Last 30 days", id: "last30days" },
+  { name: "All-time", id: "alltime" },
+]
 
 export default function Dashboard() {
+  const [timeline, setTimeline] = useState(secondaryNavigation[0])
+
   return (
-    <div className="divide-y divide-gray-200 dark:divide-gray-800 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0 lg:grid-cols-3">
-      {actions.map((action, actionIdx) => (
-        <div
-          key={action.title}
-          className={classNames(
-            actionIdx === 0
-              ? "rounded-tl-lg rounded-tr-lg sm:rounded-tr-none"
-              : "",
-            actionIdx === 1 ? "sm:rounded-tr-lg" : "",
-            actionIdx === actions.length - 2 ? "sm:rounded-bl-lg" : "",
-            actionIdx === actions.length - 1
-              ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
-              : "",
-            "group relative bg-bg p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500",
-          )}
-        >
-          <div className="h-36 w-10/12 mx-auto">
-            <TinyLineChart />
+    <>
+      <Wrapper as="header" className="dark:border-t dark:border-white/5">
+        <SectionHeadingWithActionButton Button={null}>
+              <div className="flex max-w-7xl flex-wrap items-center justify-start gap-6 sm:flex-nowrap mt-1">
+                <h1>
+                  Timeline
+                </h1>
+                <div className="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-s sm:border-border sm:ps-6 sm:leading-7">
+                  {secondaryNavigation.map((item) => (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setTimeline(item)
+                      }}
+                      key={item.name}
+                      href={item.href}
+                      className={
+                        item.id === timeline.id
+                          ? "text-primary"
+                          : "text-gray-700 dark:text-gray-400"
+                      }
+                    >
+                      {item.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+        </SectionHeadingWithActionButton>
+      </Wrapper>
+      <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow dark:divide-gray-800 dark:bg-gray-800 sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0 lg:grid-cols-3">
+        {charts.map((chart, chartIdx) => (
+          <div
+            key={chartIdx}
+            className={classNames(
+              chartIdx === 0
+                ? "rounded-tl-lg rounded-tr-lg sm:rounded-tr-none"
+                : "",
+              chartIdx === 1 ? "sm:rounded-tr-lg" : "",
+              chartIdx === charts.length - 2 ? "sm:rounded-bl-lg" : "",
+              chartIdx === charts.length - 1
+                ? "rounded-bl-lg rounded-br-lg sm:rounded-bl-none"
+                : "",
+              "group relative bg-bg p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500",
+            )}
+          >
+            <div className="mx-auto h-36 w-10/12">
+              <TinyLineChart />
+            </div>
+            <div className="mt-8">
+              <div className="text-base font-semibold leading-6 text-text">
+                <h4 href={chart.href} className="focus:outline-none">
+                  {/* Extend touch target to entire panel */}
+                  {/* <span className="absolute inset-0" aria-hidden="true" /> */}
+                  {chart.title}
+                </h4>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">
+                Doloribus dolores nostrum quia qui natus officia quod et
+                dolorem. Sit repellendus qui ut at blanditiis et quo et
+                molestiae.
+              </p>
+            </div>
           </div>
-          <div className="mt-8">
-            <h3 className="text-base font-semibold leading-6 text-text">
-              <a href={action.href} className="focus:outline-none">
-                {/* Extend touch target to entire panel */}
-                {/* <span className="absolute inset-0" aria-hidden="true" /> */}
-                {action.title}
-              </a>
-            </h3>
-            <p className="mt-2 text-sm text-gray-500">
-              Doloribus dolores nostrum quia qui natus officia quod et dolorem.
-              Sit repellendus qui ut at blanditiis et quo et molestiae.
-            </p>
-          </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   )
 }
