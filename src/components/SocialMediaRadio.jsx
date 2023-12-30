@@ -27,7 +27,7 @@ export function SocialMediaRadio({ socialMedia, setSocialMedia }) {
         <RadioGroup.Label className="sr-only">
           Choose a social media option
         </RadioGroup.Label>
-        <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
+        <div className="grid grid-cols-6 gap-3 sm:grid-cols-9 md:grid-cols-12">
           {socialMediaOptions.map((option) => (
             <RadioGroup.Option
               key={option.name}

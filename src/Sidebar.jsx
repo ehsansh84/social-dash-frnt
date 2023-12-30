@@ -1,17 +1,21 @@
 import {
   Cog6ToothIcon,
   FolderIcon,
-  ServerIcon,
+  PresentationChartLineIcon,
+  UserIcon,
+  DocumentIcon,
+  UserCircleIcon
 } from "@heroicons/react/24/outline"
 
 import { NavLink } from "react-router-dom"
 import { ThemeToggle } from "./components/ThemeToggle"
 
 const navigation = [
-  { name: "Users", href: "users", icon: FolderIcon },
-  { name: "Posts", href: "posts", icon: ServerIcon },
-  { name: "Sources", href: "sources", icon: ServerIcon },
-  { name: "Accounts", href: "accounts", icon: ServerIcon },
+  { name: "Dashboard", href: "/", icon: PresentationChartLineIcon },
+  { name: "Users", href: "users", icon: UserIcon },
+  { name: "Posts", href: "posts", icon: DocumentIcon },
+  { name: "Sources", href: "sources", icon: FolderIcon },
+  { name: "Accounts", href: "accounts", icon: UserCircleIcon },
   { name: "Settings", href: "settings", icon: Cog6ToothIcon },
 ]
 
