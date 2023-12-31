@@ -1,4 +1,5 @@
-import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts"
+import { BarChart, Bar, ResponsiveContainer, Tooltip } from "recharts"
+
 const data = [
   {
     name: "Page A",
@@ -44,17 +45,21 @@ const data = [
   },
 ]
 
-export function TinyLineChart() {
+export function TinyBarChart() {
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <LineChart width={300} height={100} data={data}>
+    <ResponsiveContainer width="99%" height="100%">
+      <BarChart data={data}>
         <Tooltip
-          contentStyle={{ background: "transparent", border: "none" }}
+          contentStyle={{
+            background: "var(--color-background-hover)",
+            borderRadius: "5px",
+            padding: "5px 10px",
+          }}
           labelStyle={{ display: "none" }}
-          position={{ x: -20, y: 110 }}
+          cursor={{ fill: "none" }}
         />
-        <Line type="monotone" dataKey="pv" stroke="var(--color-primary)" strokeWidth={2} />
-      </LineChart>
+        <Bar dataKey="uv" fill="var(--color-primary)" />
+      </BarChart>
     </ResponsiveContainer>
   )
 }
