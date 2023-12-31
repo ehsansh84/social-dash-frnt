@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { TinyLineChart } from "../../components/charts/TinyLineChart"
-import { classNames } from "../../utils"
 import { SectionHeadingWithActionButton } from "../../SectionHeadingWithActionButton"
 import { Wrapper } from "../../Wrapper"
 import { TinyBarChart } from "../../components/charts/TinyBarChart"
 import { SimpleAreaChart } from "../../components/charts/SimpleAreaChart"
 import { BiaxialLineChart } from "../../components/charts/BiaxialLineChart"
+import { RingPieChart } from "../../components/charts/RingPieChart"
 
 const charts = [
   { title: "Request time off", id: Math.random(), type: "line" },
@@ -13,7 +13,7 @@ const charts = [
   { title: "Schedule a one-on-one", id: Math.random(), type: "line" },
   { title: "Payroll", id: Math.random(), type: "area" },
   { title: "Submit an expense", id: Math.random(), type: "bar" },
-  { title: "Training", id: Math.random(), type: "line" },
+  { title: "Training", id: Math.random(), type: "ring" },
   { title: "Submit an expense", id: Math.random(), type: "biaxialline" },
 ]
 
@@ -22,6 +22,7 @@ const chartDictionary = {
   bar: TinyBarChart,
   area: SimpleAreaChart,
   biaxialline: BiaxialLineChart,
+  ring: RingPieChart,
 }
 
 const secondaryNavigation = [
