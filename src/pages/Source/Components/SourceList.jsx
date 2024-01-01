@@ -13,7 +13,7 @@ export function SourceList() {
       {sources.map((source) => (
         <Wrapper
           as="li"
-          key={source.id}
+          key={source._id}
           className="relative flex justify-between gap-x-6 py-4 pb-3 hover:bg-bg-hover"
         >
           <div className="flex items-center gap-x-4">
@@ -24,7 +24,7 @@ export function SourceList() {
             />
             <div className="min-w-0 flex-auto">
               <p className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
-                <Link to={"/sources/" + source.id + "/edit"}>
+                <Link to={"/sources/" + source._id + "/edit"}>
                   <span className="absolute inset-x-0 -top-px bottom-0" />
                   {source.name} - {source.channel}
                 </Link>
