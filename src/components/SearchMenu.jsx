@@ -1,10 +1,7 @@
 import { Fragment } from "react"
 import { Listbox, Transition } from "@headlessui/react"
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid"
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ")
-}
+import { classNames } from "../utils"
 
 export function SearchMenu({ label, options, setSelected, selected }) {
   return (
@@ -17,8 +14,7 @@ export function SearchMenu({ label, options, setSelected, selected }) {
           <div className="relative mt-2">
             <Listbox.Button className="relative w-full cursor-default rounded-md bg-bg py-1.5 pl-3 pr-10 text-left text-text shadow-sm ring-1 ring-inset ring-ring focus:outline-none focus:ring-2 focus:ring-primary sm:text-sm sm:leading-6">
               <span className="block truncate">
-                {options.find((el) => el.id === selected)?.name ||
-                  options[0].name}
+                {options.find((el) => el.id === selected)?.name || "- - -"}
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <ChevronUpDownIcon

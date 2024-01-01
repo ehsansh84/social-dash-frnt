@@ -2,9 +2,12 @@ import { ChevronRightIcon } from "@heroicons/react/20/solid"
 import { Wrapper } from "../../../Wrapper"
 import { Link } from "react-router-dom"
 import { SocialIcon } from "../../../components/SocialMedia" 
-import { sources } from "../../../hardcoded"
+// import { sources } from "../../../hardcoded"
+import { useResourceList } from "../../../hooks/useResources"
 
 export function SourceList() {
+  const { data } = useResourceList("sources")
+  const sources = data ?? []
   return (
     <ul className="divide-y divide-gray-100 dark:divide-gray-700 dark:border-t dark:border-white/5">
       {sources.map((source) => (
