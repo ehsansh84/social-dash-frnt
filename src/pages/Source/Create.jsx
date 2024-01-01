@@ -9,9 +9,9 @@ import { useNavigate } from "react-router-dom"
 
 import { SearchMenu } from "../../components/SearchMenu"
 import { useCreateResource, useResourceList } from "../../hooks/useResources"
-import { PhotoIcon } from "@heroicons/react/20/solid"
 import { InputField } from "../../components/InputField"
 import { LogoInput } from "../../components/LogoInput"
+import { TextAreaField } from "../../components/TextAreaField"
 
 export function Create() {
   const { data } = useResourceList("accounts")
@@ -139,6 +139,7 @@ export function Create() {
                     value={name}
                     setValue={setName}
                     placeholder={`My ${socialMedia} source`}
+                    required
                   />
                 </div>
                 <div className="col-span-full">
@@ -155,6 +156,7 @@ export function Create() {
                     value={channel}
                     setValue={setChannel}
                     placeholder={`my_${socialMedia}_channel`}
+                    required
                   />
                 </div>
 
@@ -174,51 +176,12 @@ export function Create() {
                   <LogoInput onImageChange={handleLogoChange} />
                 </div>
 
-                {/* <div className="col-span-full">
-                  <label
-                    htmlFor="channel-logo"
-                    className="block text-sm font-medium leading-6 text-text"
-                  >
-                    Logo
-                  </label>
-                  <div className="mt-2 flex items-center gap-x-3">
-                    <div className="h-12 w-12 overflow-hidden rounded-full">
-                      <PhotoIcon
-                        className="w-full text-gray-500"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      className="rounded-md bg-bg px-2.5 py-1.5 text-sm font-semibold text-text shadow-sm ring-1 ring-inset ring-ring hover:bg-bg-hover"
-                    >
-                      Change
-                    </button>
-                  </div>
-                </div> */}
-
                 <div className="col-span-full">
-                  <label
-                    htmlFor="description"
-                    className="block text-sm font-medium leading-6 text-text"
-                  >
-                    Description
-                  </label>
-                  <div className="mt-2">
-                    <textarea
-                      value={description}
-                      onChange={(e) => {
-                        setDescription(e.target.value)
-                      }}
-                      id="description"
-                      name="description"
-                      rows={3}
-                      className="block w-full rounded-md border-0 bg-bg py-1.5 text-text shadow-sm ring-1 ring-inset ring-ring placeholder:text-placeholder focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-gray-600">
-                    Write a few sentences about the source.
-                  </p>
+                  <TextAreaField
+                    helperText="Write a few sentences about the source."
+                    value={description}
+                    setValue={setDescription}
+                  />
                 </div>
 
                 <div className="sm:col-span-4">
