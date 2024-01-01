@@ -9,6 +9,9 @@ import { useNavigate } from "react-router-dom"
 
 import { SearchMenu } from "../../components/SearchMenu"
 import { useCreateResource, useResourceList } from "../../hooks/useResources"
+import { PhotoIcon } from "@heroicons/react/20/solid"
+import { InputField } from "../../components/InputField"
+import { LogoInput } from "../../components/LogoInput"
 
 export function Create() {
   const { data } = useResourceList("accounts")
@@ -20,7 +23,7 @@ export function Create() {
   const [accountId, setAccountId] = useState("")
   const [crawlId, setCrawlId] = useState("hourly")
   const [description, setDescription] = useState("")
-  const [logo, setLogo] = useState("")
+  const [logo, setLogo] = useState(null)
   const [socialMediaError, setSocialMediaError] = useState(null)
   const [accountError, setAccountError] = useState(null)
   const [requestError, setRequestError] = useState(null)
@@ -101,14 +104,18 @@ export function Create() {
       social_media: socialMedia,
       account_id: accountId,
       logo,
-      crawl_schedule:crawlId,
+      crawl_schedule: crawlId,
       user_id: "62d7a781d8f8d7627ce212d5",
     }
 
-    createResourceMutation.mutate(bodyObject)
+    createResourceMutation.mutate(bodyObject, {
+      "Content-Type": "multipart/form-data",
+    })
   }
 
-  console.log(socialMediaError)
+  const handleLogoChange = (newLogo) => {
+    setLogo(newLogo)
+  }
 
   return (
     <div className="border-t border-border pb-16">
@@ -126,30 +133,14 @@ export function Create() {
             <div className="border-b border-border pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-4">
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium leading-6 text-text"
-                  >
-                    Name
-                  </label>
-                  <div className="mt-2">
-                    <div className="relative flex rounded-md shadow-sm ring-1 ring-inset ring-ring focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary sm:max-w-md">
-                      <input
-                        value={name}
-                        onChange={(e) => {
-                          setName(e.target.value)
-                        }}
-                        type="text"
-                        name="name"
-                        id="name"
-                        className="block flex-1 border-0 bg-transparent py-1.5 ps-3 text-text placeholder:text-placeholder focus:ring-0 sm:text-sm sm:leading-6"
-                        placeholder={`My ${socialMedia} source`}
-                        required
-                      />
-                    </div>
-                  </div>
+                  <InputField
+                    id="name"
+                    label="Name"
+                    value={name}
+                    setValue={setName}
+                    placeholder={`My ${socialMedia} source`}
+                  />
                 </div>
-
                 <div className="col-span-full">
                   <SocialMediaRadio
                     socialMedia={socialMedia}
@@ -158,28 +149,13 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <label
-                    htmlFor="channel"
-                    className="block text-sm font-medium leading-6 text-text"
-                  >
-                    Channel
-                  </label>
-                  <div className="mt-2">
-                    <div className="relative flex rounded-md shadow-sm ring-1 ring-inset ring-ring focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary sm:max-w-md">
-                      <input
-                        value={channel}
-                        onChange={(e) => {
-                          setChannel(e.target.value)
-                        }}
-                        type="text"
-                        name="channel"
-                        id="channel"
-                        className="block flex-1 border-0 bg-transparent py-1.5 ps-3 text-text placeholder:text-placeholder focus:ring-0 sm:text-sm sm:leading-6"
-                        placeholder={`my_${socialMedia}_channel`}
-                        required
-                      />
-                    </div>
-                  </div>
+                  <InputField
+                    id="channel"
+                    label="Channel"
+                    value={channel}
+                    setValue={setChannel}
+                    placeholder={`my_${socialMedia}_channel`}
+                  />
                 </div>
 
                 <div className="sm:col-span-4">
@@ -195,29 +171,31 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
+                  <LogoInput onImageChange={handleLogoChange} />
+                </div>
+
+                {/* <div className="col-span-full">
                   <label
-                    htmlFor="logo"
+                    htmlFor="channel-logo"
                     className="block text-sm font-medium leading-6 text-text"
                   >
                     Logo
                   </label>
-                  <div className="mt-2">
-                    <div className="relative flex rounded-md shadow-sm ring-1 ring-inset ring-ring focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary sm:max-w-md">
-                      <input
-                        value={logo}
-                        onChange={(e) => {
-                          setLogo(e.target.value)
-                        }}
-                        type="text"
-                        name="logo"
-                        id="logo"
-                        className="block flex-1 border-0 bg-transparent py-1.5 ps-3 text-text placeholder:text-placeholder focus:ring-0 sm:text-sm sm:leading-6"
-                        placeholder={`My ${socialMedia} logo`}
-                        required
+                  <div className="mt-2 flex items-center gap-x-3">
+                    <div className="h-12 w-12 overflow-hidden rounded-full">
+                      <PhotoIcon
+                        className="w-full text-gray-500"
+                        aria-hidden="true"
                       />
                     </div>
+                    <button
+                      type="button"
+                      className="rounded-md bg-bg px-2.5 py-1.5 text-sm font-semibold text-text shadow-sm ring-1 ring-inset ring-ring hover:bg-bg-hover"
+                    >
+                      Change
+                    </button>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="col-span-full">
                   <label
