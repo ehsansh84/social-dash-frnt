@@ -39,7 +39,6 @@ export const useResource = (resourceName, id) => {
   })
 }
 
-
 export const useCreateResource = (resourceName) => {
   const queryClient = useQueryClient()
   return useMutation({
@@ -64,25 +63,31 @@ export const useCreateResource = (resourceName) => {
   })
 }
 
-
 export const useUpdateResource = (resourceName) => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationKey: [resourceName],
-    mutationFn: ({ _id, data, headers }) => updateResource(resourceName, _id, data, headers),
+    mutationFn: ({ _id, data, headers }) =>
+      updateResource(resourceName, _id, data, headers),
     onSuccess: (data, sentData) => {
       // Update the list in the cache
       const currentData = queryClient.getQueryData([resourceName])
-      console.log(sentData);
+      // console.log(sentData)
       if (currentData) {
         const updatedData = currentData.map((item) =>
-          item._id === sentData._id ? {_id: sentData._id, ...sentData.data} : item,
+          item._id === sentData._id
+            ? { _id: sentData._id, ...sentData.data }
+            : item,
         )
         queryClient.setQueryData([resourceName], updatedData)
       }
 
+      console.log(sentData)
       // Also update the individual resource in the cache
-      queryClient.setQueryData([resourceName, data._id], data)
+      queryClient.setQueryData([resourceName, sentData._id], {
+        _id: sentData._id,
+        ...sentData.data
+      })
     },
   })
 }
