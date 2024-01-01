@@ -1,4 +1,11 @@
-export function InputField({ id, label, value, setValue, placeholder }) {
+export function InputField({
+  id,
+  label,
+  value,
+  setValue,
+  placeholder,
+  ...delegated
+}) {
   return (
     <>
       <label
@@ -10,6 +17,7 @@ export function InputField({ id, label, value, setValue, placeholder }) {
       <div className="mt-2">
         <div className="relative flex rounded-md shadow-sm ring-1 ring-inset ring-ring focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary sm:max-w-md">
           <input
+            {...delegated}
             value={value}
             onChange={(e) => {
               setValue(e.target.value)
