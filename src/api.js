@@ -12,9 +12,9 @@ export const fetchResource = (resourceName, id) => {
   return axios.get(url).then((res) => res.data)
 }
 
-export const createResource = (resourceName, data) => {
+export const createResource = (resourceName, data, headers = {}) => {
   const url = `${API_CONFIG.baseUrl}${API_CONFIG.endpoints[resourceName]}`
-  return axios.post(url, data).then((res) => res.data)
+  return axios.post(url, data, { headers }).then((res) => res.data)
 }
 
 export const updateResource = (resourceName, id, data) => {
