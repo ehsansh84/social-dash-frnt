@@ -7,6 +7,8 @@ import { Alert } from "../../components/Alert"
 import { Breadcrumb } from "../../components/Breadcrumb"
 import { SocialMediaRadio } from "../../components/SocialMediaRadio"
 import { useCreateResource } from "../../hooks/useResources"
+import { InputField } from "../../components/InputField"
+import { TextAreaField } from "../../components/TextAreaField"
 
 export function Create() {
   const [socialMedia, setSocialMedia] = useState("")
@@ -83,28 +85,14 @@ export function Create() {
             <div className="border-b border-border pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-4">
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium leading-6 text-text"
-                  >
-                    Name
-                  </label>
-                  <div className="mt-2">
-                    <div className="relative flex rounded-md shadow-sm ring-1 ring-inset ring-ring focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary sm:max-w-md">
-                      <input
-                        value={name}
-                        onChange={(e) => {
-                          setName(e.target.value)
-                        }}
-                        type="text"
-                        name="name"
-                        id="name"
-                        className="block flex-1 border-0 bg-transparent py-1.5 ps-3 text-text placeholder:text-placeholder focus:ring-0 sm:text-sm sm:leading-6"
-                        placeholder={`My ${socialMedia} account`}
-                        required
-                      />
-                    </div>
-                  </div>
+                  <InputField
+                    id="name"
+                    label="Name"
+                    placeholder={`My ${socialMedia} account`}
+                    setValue={setName}
+                    value={name}
+                    required
+                  />
                 </div>
 
                 <div className="col-span-full">
@@ -115,52 +103,22 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <label
-                    htmlFor="token"
-                    className="block text-sm font-medium leading-6 text-text"
-                  >
-                    Token
-                  </label>
-                  <div className="mt-2">
-                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-ring focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary sm:max-w-md">
-                      <input
-                        value={token}
-                        onChange={(e) => {
-                          setToken(e.target.value)
-                        }}
-                        type="text"
-                        name="token"
-                        id="token"
-                        className="block flex-1 border-0 bg-transparent py-1.5 ps-3 text-text placeholder:text-placeholder focus:ring-0 sm:text-sm sm:leading-6"
-                        placeholder="My account token"
-                        required
-                      />
-                    </div>
-                  </div>
+                  <InputField
+                    id="token"
+                    label="Token"
+                    placeholder="My account token"
+                    setValue={setToken}
+                    value={token}
+                    required
+                  />
                 </div>
 
                 <div className="col-span-full">
-                  <label
-                    htmlFor="description"
-                    className="block text-sm font-medium leading-6 text-text"
-                  >
-                    Description
-                  </label>
-                  <div className="mt-2">
-                    <textarea
-                      value={description}
-                      onChange={(e) => {
-                        setDescription(e.target.value)
-                      }}
-                      id="description"
-                      name="description"
-                      rows={3}
-                      className="block w-full rounded-md border-0 bg-bg py-1.5 text-text shadow-sm ring-1 ring-inset ring-ring placeholder:text-placeholder focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-gray-600">
-                    Write a few sentences about the source.
-                  </p>
+                  <TextAreaField 
+                    value={description}
+                    setValue={setDescription}                  
+                    helperText="Write a few sentences about the source"
+                  />
                 </div>
               </div>
             </div>
@@ -193,7 +151,7 @@ export function Create() {
             >
               {createResourceMutation.isPending ? (
                 <div
-                  className="inline-block h-4 w-4 mx-2 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                  className="mx-2 inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                   role="status"
                 >
                   <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
