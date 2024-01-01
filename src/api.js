@@ -17,9 +17,9 @@ export const createResource = (resourceName, data, headers = {}) => {
   return axios.post(url, data, { headers }).then((res) => res.data)
 }
 
-export const updateResource = (resourceName, id, data) => {
+export const updateResource = (resourceName, id, data, headers = {}) => {
   const url = `${API_CONFIG.baseUrl}${API_CONFIG.endpoints[resourceName]}/${id}`
-  return axios.put(url, data).then((res) => res.data)
+  return axios.put(url, data, { headers }).then((res) => res.data)
 }
 
 export const deleteResource = (resourceName, id) => {

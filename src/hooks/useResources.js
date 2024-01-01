@@ -69,7 +69,7 @@ export const useUpdateResource = (resourceName) => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationKey: [resourceName],
-    mutationFn: ({ _id, data }) => updateResource(resourceName, _id, data),
+    mutationFn: ({ _id, data, headers }) => updateResource(resourceName, _id, data, headers),
     onSuccess: (data, sentData) => {
       // Update the list in the cache
       const currentData = queryClient.getQueryData([resourceName])
