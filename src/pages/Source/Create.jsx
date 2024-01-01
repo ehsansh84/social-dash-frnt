@@ -23,11 +23,11 @@ export function Create() {
   const [accountId, setAccountId] = useState("")
   const [crawlId, setCrawlId] = useState("hourly")
   const [description, setDescription] = useState("")
-  const [logo, setLogo] = useState(null)
+  const [logo, setLogo] = useState("")
   const [socialMediaError, setSocialMediaError] = useState(null)
   const [accountError, setAccountError] = useState(null)
   const [requestError, setRequestError] = useState(null)
-
+  const [logoError, setLogoError] = useState(null)
   const createResourceMutation = useCreateResource("sources")
 
   const navigate = useNavigate()
@@ -97,6 +97,13 @@ export function Create() {
       return
     }
 
+    if (!logo) {
+      setLogoError({
+        errorMessage: "You need to select a logo!",
+      })
+      return
+    }
+
     const bodyObject = {
       name,
       channel,
@@ -142,6 +149,7 @@ export function Create() {
                     required
                   />
                 </div>
+
                 <div className="col-span-full">
                   <SocialMediaRadio
                     socialMedia={socialMedia}
@@ -238,7 +246,9 @@ export function Create() {
           </div>
           <div className="my-12">
             <Transition
-              show={Boolean(socialMediaError || accountError || requestError)}
+              show={Boolean(
+                socialMediaError || accountError || logoError || requestError,
+              )}
               enter="transition-opacity duration-75"
               enterFrom="opacity-0"
               enterTo="opacity-100"
@@ -251,12 +261,17 @@ export function Create() {
                 message={
                   socialMediaError?.errorMessage ||
                   accountError?.errorMessage ||
-                  requestError?.errorMessage
+                  requestError?.errorMessage ||
+                  logoError?.errorMessage
                 }
-                show={Boolean(socialMediaError || accountError || requestError)}
+                show={Boolean(
+                  socialMediaError || accountError || logoError || requestError,
+                )}
                 setShow={(v) => {
                   setSocialMediaError(v)
                   setRequestError(v)
+                  setLogoError(v)
+                  setAccountError(v)
                 }}
               />
             </Transition>
