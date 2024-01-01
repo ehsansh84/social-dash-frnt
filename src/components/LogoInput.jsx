@@ -1,8 +1,8 @@
 import { PhotoIcon } from "@heroicons/react/20/solid"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export function LogoInput({ imageUrl = null, onImageChange }) {
-  const [selectedImage, setSelectedImage] = useState(imageUrl)
+export function LogoInput({ imageUrl = "", onImageChange }) {
+  const [selectedImage, setSelectedImage] = useState("")
   const [inputKey, setInputKey] = useState(Date.now())
 
   const handleImageUpload = (event) => {
@@ -19,11 +19,18 @@ export function LogoInput({ imageUrl = null, onImageChange }) {
     }
   }
 
+  useEffect(() => {
+    if (imageUrl) {
+      setSelectedImage(imageUrl)
+    }
+  },[imageUrl])
+
   const removeImage = () => {
-    setSelectedImage(null)
+    setSelectedImage("")
     setInputKey(Date.now()) // Reset the key to current timestamp
-    onImageChange(null) // Notify parent component
+    onImageChange("") // Notify parent component
   }
+
 
   return (
     <>
