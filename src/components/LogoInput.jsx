@@ -1,4 +1,4 @@
-import { PhotoIcon } from "@heroicons/react/20/solid"
+import { UserCircleIcon } from "@heroicons/react/20/solid"
 import { useEffect, useState } from "react"
 
 export function LogoInput({ imageUrl = "", onImageChange }) {
@@ -49,7 +49,7 @@ export function LogoInput({ imageUrl = "", onImageChange }) {
               className="h-full w-full object-fill"
             />
           ) : (
-            <PhotoIcon className="w-full text-gray-500" aria-hidden="true" />
+            <UserCircleIcon className="w-full text-gray-400" aria-hidden="true" />
           )}
         </div>
         <input
