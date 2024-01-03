@@ -4,7 +4,6 @@ import { SourceList } from "./Components/SourceList"
 import { useEffect, useState } from "react"
 import { Transition } from "@headlessui/react"
 import { Alert } from "../../components/Alert"
-import { Wrapper } from "../../Wrapper"
 import { NarrowWrapper } from "../../NarrowWrapper"
 
 export function Index() {
