@@ -4,14 +4,17 @@ import { IndexPage } from "./pages/IndexPage"
 import { Create as CreateAccount } from "./pages/Account/Create"
 import { Edit as EditAccount } from "./pages/Account/Edit"
 import { Index as AccountIndex } from "./pages/Account/Index"
+import Dashboard from "./pages/Dashboard/Dashboard"
 import { PostList } from "./pages/Post/Components/PostList"
 import { Create as CreatePost } from "./pages/Post/Create"
 import { Create as CreateSource } from "./pages/Source/Create"
-import { Index as SourceIndex } from "./pages/Source/Index"
 import { Edit as EditSource } from "./pages/Source/Edit"
+import { Index as SourceIndex } from "./pages/Source/Index"
+import { Create as CreateSchedule } from "./pages/Schedule/Create"
+import { Edit as EditSchedule } from "./pages/Schedule/Edit"
+import { Index as ScheduleIndex } from "./pages/Schedule/Index"
 import { UserList } from "./pages/User/Components/UserList"
 import { Create as CreateUser } from "./pages/User/Create"
-import Dashboard from "./pages/Dashboard/Dashboard"
 
 export function Main() {
   return (
@@ -35,6 +38,10 @@ export function Main() {
         <Route path="sources/:sourceId/edit" element={<EditSource />} />
         <Route path="sources/create" element={<CreateSource />} />
         <Route path="sources" element={<SourceIndex />} />
+
+        <Route path="schedules/:scheduleId/edit" element={<EditSchedule />} />
+        <Route path="schedules/create" element={<CreateSchedule />} />
+        <Route path="schedules" element={<ScheduleIndex />} />
 
         <Route path="posts/create" element={<CreatePost />} />
         <Route

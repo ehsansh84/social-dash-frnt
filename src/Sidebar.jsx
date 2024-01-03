@@ -4,7 +4,8 @@ import {
   PresentationChartLineIcon,
   UserIcon,
   DocumentIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  ClockIcon
 } from "@heroicons/react/24/outline"
 
 import { NavLink } from "react-router-dom"
@@ -16,6 +17,7 @@ const navigation = [
   { name: "Posts", href: "posts", icon: DocumentIcon },
   { name: "Sources", href: "sources", icon: FolderIcon },
   { name: "Accounts", href: "accounts", icon: UserCircleIcon },
+  { name: "Schedules", href: "schedules", icon: ClockIcon },
   { name: "Settings", href: "settings", icon: Cog6ToothIcon },
 ]
 
