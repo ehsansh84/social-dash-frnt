@@ -4,5 +4,6 @@ export const API_CONFIG = {
     accounts: "/account",
     dashboard: "/dashboard",
     sources: "/source",
+    posts: "/post",
   },
 }
