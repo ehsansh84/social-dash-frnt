@@ -2,7 +2,6 @@ import { ChevronRightIcon } from "@heroicons/react/20/solid"
 import { Wrapper } from "../../../Wrapper"
 import { Link } from "react-router-dom"
 import { SocialIcon } from "../../../components/SocialMedia" 
-// import { sources } from "../../../hardcoded"
 import { useResourceList } from "../../../hooks/useResources"
 
 export function SourceList() {
