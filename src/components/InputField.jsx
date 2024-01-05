@@ -3,7 +3,6 @@ export function InputField({
   label,
   value,
   setValue,
-  placeholder,
   ...delegated
 }) {
   return (
@@ -17,7 +16,6 @@ export function InputField({
       <div className="mt-2">
         <div className="relative flex rounded-md shadow-sm ring-1 ring-inset ring-ring focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary sm:max-w-md">
           <input
-            {...delegated}
             value={value}
             onChange={(e) => {
               setValue(e.target.value)
@@ -26,8 +24,7 @@ export function InputField({
             name={id}
             id={id}
             className="block flex-1 border-0 bg-transparent py-1.5 ps-3 text-text placeholder:text-placeholder focus:ring-0 sm:text-sm sm:leading-6"
-            placeholder={placeholder}
-            required
+            {...delegated}
           />
         </div>
       </div>
