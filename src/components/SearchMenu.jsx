@@ -12,7 +12,7 @@ export function SearchMenu({ label, options, setSelected, selected }) {
             {label}
           </Listbox.Label>
           <div className="relative mt-2">
-            <Listbox.Button className="relative w-full cursor-default rounded-md bg-bg py-1.5 pl-3 pr-10 text-left text-text shadow-sm ring-1 ring-inset ring-ring focus:outline-none focus:ring-2 focus:ring-primary sm:text-sm sm:leading-6">
+            <Listbox.Button className="relative w-full sm:max-w-md cursor-default rounded-md bg-bg py-1.5 pl-3 pr-10 text-left text-text shadow-sm ring-1 ring-inset ring-ring focus:outline-none focus:ring-2 focus:ring-primary sm:text-sm sm:leading-6">
               <span className="block truncate">
                 {options.find((el) => el.id === selected)?.name || "- - -"}
               </span>
@@ -31,7 +31,7 @@ export function SearchMenu({ label, options, setSelected, selected }) {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-bg py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full sm:max-w-md overflow-auto rounded-md bg-bg py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {options.map((option) => (
                   <Listbox.Option
                     key={option.id}
