@@ -1,9 +1,7 @@
 import { SocialMediaRadio } from "../../components/SocialMediaRadio"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { useEffect, useMemo, useState } from "react"
-import { Alert } from "../../components/Alert"
 import { Breadcrumb } from "../../components/Breadcrumb"
-import { Transition } from "@headlessui/react"
 import { Wrapper } from "../../Wrapper"
 import { useNavigate, useParams } from "react-router-dom"
 
@@ -13,30 +11,36 @@ import {
   useResourceList,
   useUpdateResource,
 } from "../../hooks/useResources"
-import { TextAreaField } from "../../components/TextAreaField"
 import { InputField } from "../../components/InputField"
-import { LogoInput } from "../../components/LogoInput"
+import { MessageTransition } from "../../components/MessageTransition"
+
+const statuses = [
+  { id: "new", name: "New" },
+  { id: "sending", name: "Sending" },
+  { id: "resending", name: "Resending" },
+  { id: "failed", name: "Failed" },
+  { id: "sent", name: "Sent" },
+]
 
 export function Edit() {
   const { data } = useResourceList("accounts")
   const accounts = useMemo(() => data ?? [], [data])
-  const { sourceId } = useParams()
-  const { data: source } = useResource("sources", sourceId)
+  const { scheduleId } = useParams()
+  const { data: schedule } = useResource("schedules", scheduleId)
 
+  // form state
   const [socialMedia, setSocialMedia] = useState("")
-  const [name, setName] = useState("")
   const [channel, setChannel] = useState("")
   const [accountId, setAccountId] = useState("")
-  const [crawlId, setCrawlId] = useState("hourly")
-  const [description, setDescription] = useState("")
-  const [logo, setLogo] = useState("")
-  const [socialMediaError, setSocialMediaError] = useState(null)
-  const [accountError, setAccountError] = useState(null)
-  const [requestError, setRequestError] = useState(null)
-  const [logoError, setLogoError] = useState(null)
-  const updateSource = useUpdateResource("sources")
+  const [statusId, setStatusId] = useState("new")
+  const [scheduledAt, setScheduledAt] = useState("")
+  const [error, setError] = useState(null)
+  const [postId, setPostId] = useState("")
+
+  const updateSchedule = useUpdateResource("schedules")
 
   const navigate = useNavigate()
+
   const acceptableAccounts = useMemo(
     () =>
       accounts.filter((a) =>
@@ -45,24 +49,16 @@ export function Edit() {
     [socialMedia, accounts],
   )
 
-  const crawlSchedules = [
-    { id: "hourly", name: "Hourly" },
-    { id: "daily", name: "Daily" },
-    { id: "weekly", name: "Weekly" },
-    { id: "monthly", name: "Monthly" },
-  ]
-
   useEffect(() => {
-    if (source) {
-      setName(source.name)
-      setDescription(source.description)
-      setChannel(source.channel)
-      setSocialMedia(source.social_media)
-      setAccountId(source.account_id)
-      setCrawlId(source.crawl_schedule)
-      setLogo(source.logo)
+    if (schedule) {
+      setSocialMedia(schedule.social_media)
+      setChannel(schedule.channel)
+      setAccountId(schedule.account_id)
+      setStatusId(schedule.status)
+      setScheduledAt(schedule.scheduled_at)
+      setPostId(schedule.post_id)
     }
-  }, [source])
+  }, [schedule])
 
   useEffect(() => {
     if (acceptableAccounts.length > 0) {
@@ -72,75 +68,61 @@ export function Edit() {
     }
   }, [acceptableAccounts])
 
-  useEffect(() => {
-    if (socialMedia) {
-      setSocialMediaError(null)
-    }
-  }, [socialMedia])
+  // useEffect(() => {
+  //   if (socialMedia) {
+  //     setSocialMediaError(null)
+  //   }
+  // }, [socialMedia])
 
   useEffect(() => {
-    if (updateSource.isError) {
-      setRequestError({
-        errorMessage: updateSource.error.message,
+    if (updateSchedule.isError) {
+      setError({
+        status: "danger",
+        message: updateSchedule.error.message,
       })
     }
 
-    if (updateSource.isSuccess) {
-      setRequestError(null)
-      navigate("/sources", {
-        state: { message: "Your source was edited!", status: "success" },
+    if (updateSchedule.isSuccess) {
+      setError(null)
+      navigate("/schedules", {
+        state: { message: "Your schedule has been edited!", status: "success" },
       })
     }
   }, [
+    updateSchedule.isError,
+    updateSchedule.isSuccess,
     navigate,
-    updateSource.isError,
-    updateSource.isSuccess,
-    updateSource.error,
+    updateSchedule.error,
   ])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-
     if (!socialMedia) {
-      setSocialMediaError({
-        errorMessage: "You need to select a social media platform!",
+      setError({
+        status: "danger",
+        message: "You need to select a social media platform!",
       })
       return
     }
 
     if (!accountId) {
-      setAccountError({
-        errorMessage: "You need to select an account!",
-      })
-      return
-    }
-
-    if (!logo) {
-      setLogoError({
-        errorMessage: "You need to select a logo!",
-      })
+      setError({ status: "danger", message: "You need to select an account!" })
       return
     }
 
     const bodyObject = {
-      name,
-      channel,
-      description,
       social_media: socialMedia,
       account_id: accountId,
-      logo,
-      crawl_schedule: crawlId,
-      user_id: "62d7a781d8f8d7627ce212d5",
+      channel,
+      scheduled_at: scheduledAt,
+      status: statusId,
+      post_id: postId,
     }
 
-    updateSource.mutate({
-      _id: sourceId,
+    updateSchedule.mutate({
+      _id: scheduleId,
       data: bodyObject,
     })
-  }
-
-  const handleLogoChange = (newLogo) => {
-    setLogo(newLogo)
   }
 
   return (
@@ -148,8 +130,9 @@ export function Edit() {
       <Wrapper as="header" className="border-b border-border">
         <Breadcrumb
           pages={[
-            { name: "Source", href: "/sources" },
-            { name: source?._id, href: "#" },
+            { name: "Schedules", href: "/schedules" },
+            { name: "Post: " + postId, href: "/posts/" + postId },
+            { name: schedule?._id, href: "#" },
           ]}
         />
       </Wrapper>
@@ -158,21 +141,21 @@ export function Edit() {
           <div className="space-y-12">
             <div className="border-b border-border pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="sm:col-span-4">
-                  <InputField
-                    id="name"
-                    label="Name"
-                    value={name}
-                    setValue={setName}
-                    placeholder={`My ${socialMedia} source`}
-                    required
-                  />
-                </div>
-
                 <div className="col-span-full">
                   <SocialMediaRadio
                     socialMedia={socialMedia}
                     setSocialMedia={setSocialMedia}
+                  />
+                </div>
+
+                <div className="sm:col-span-4">
+                  <InputField
+                    id="scheduledAt"
+                    label="Schedule"
+                    value={scheduledAt}
+                    setValue={setScheduledAt}
+                    type="datetime-local"
+                    required
                   />
                 </div>
 
@@ -200,23 +183,11 @@ export function Edit() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <LogoInput imageUrl={logo} onImageChange={handleLogoChange} />
-                </div>
-
-                <div className="col-span-full">
-                  <TextAreaField
-                    helperText="Write a few sentences about the source."
-                    value={description}
-                    setValue={setDescription}
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
                   <SearchMenu
-                    label="Crawl schedule"
-                    options={crawlSchedules}
-                    setSelected={setCrawlId}
-                    selected={crawlId}
+                    label="Status"
+                    options={statuses}
+                    selected={statusId}
+                    setSelected={setStatusId}
                   />
                 </div>
               </div>
@@ -236,7 +207,7 @@ export function Edit() {
               type="submit"
               className="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
             >
-              {updateSource.isPending ? (
+              {updateSchedule.isPending ? (
                 <div
                   className="mx-2 inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                   role="status"
@@ -250,38 +221,8 @@ export function Edit() {
               )}
             </button>
           </div>
-
           <div className="my-12">
-            <Transition
-              show={Boolean(
-                socialMediaError || accountError || logoError || requestError,
-              )}
-              enter="transition-opacity duration-75"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity duration-150"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Alert
-                status="danger"
-                message={
-                  socialMediaError?.errorMessage ||
-                  accountError?.errorMessage ||
-                  requestError?.errorMessage ||
-                  logoError?.errorMessage
-                }
-                show={Boolean(
-                  socialMediaError || accountError || logoError || requestError,
-                )}
-                setShow={(v) => {
-                  setSocialMediaError(v)
-                  setRequestError(v)
-                  setLogoError(v)
-                  setAccountError(v)
-                }}
-              />
-            </Transition>
+            <MessageTransition message={error} setMessage={setError} />
           </div>
         </form>
       </NarrowWrapper>

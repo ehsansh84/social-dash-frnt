@@ -40,8 +40,9 @@ export function Main() {
         <Route path="sources" element={<SourceIndex />} />
 
         <Route path="schedules/:scheduleId/edit" element={<EditSchedule />} />
-        <Route path="schedules/create" element={<CreateSchedule />} />
-        <Route path="schedules" element={<ScheduleIndex />} />
+        <Route path="schedules/:postId/create" element={<CreateSchedule />} />
+        <Route path="schedules/:postId" element={<ScheduleIndex />} />
+        <Route path="schedules/" element={<ScheduleIndex />} />
 
         <Route path="posts/create" element={<CreatePost />} />
         <Route

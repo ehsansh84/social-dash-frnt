@@ -1,34 +1,37 @@
-import { SocialMediaRadio } from "../../components/SocialMediaRadio"
-import { NarrowWrapper } from "../../NarrowWrapper"
 import { useEffect, useMemo, useState } from "react"
-import { Alert } from "../../components/Alert"
-import { Breadcrumb } from "../../components/Breadcrumb"
-import { Transition } from "@headlessui/react"
+import { useNavigate, useParams } from "react-router-dom"
+import { NarrowWrapper } from "../../NarrowWrapper"
 import { Wrapper } from "../../Wrapper"
-import { useNavigate } from "react-router-dom"
+import { Breadcrumb } from "../../components/Breadcrumb"
+import { SocialMediaRadio } from "../../components/SocialMediaRadio"
 
+import { InputField } from "../../components/InputField"
+import { MessageTransition } from "../../components/MessageTransition"
 import { SearchMenu } from "../../components/SearchMenu"
 import { useCreateResource, useResourceList } from "../../hooks/useResources"
-import { InputField } from "../../components/InputField"
-import { LogoInput } from "../../components/LogoInput"
-import { TextAreaField } from "../../components/TextAreaField"
+
+const statuses = [
+  { id: "new", name: "New" },
+  { id: "sending", name: "Sending" },
+  { id: "resending", name: "Resending" },
+  { id: "failed", name: "Failed" },
+  { id: "sent", name: "Sent" },
+]
 
 export function Create() {
-  const { data } = useResourceList("schedules")
+  const { postId } = useParams()
+  const { data } = useResourceList("accounts")
   const accounts = useMemo(() => data ?? [], [data])
 
+  // form state
   const [socialMedia, setSocialMedia] = useState("")
-  const [name, setName] = useState("")
   const [channel, setChannel] = useState("")
   const [accountId, setAccountId] = useState("")
-  const [crawlId, setCrawlId] = useState("hourly")
-  const [description, setDescription] = useState("")
-  const [logo, setLogo] = useState("")
-  const [socialMediaError, setSocialMediaError] = useState(null)
-  const [accountError, setAccountError] = useState(null)
-  const [requestError, setRequestError] = useState(null)
-  const [logoError, setLogoError] = useState(null)
-  const createResourceMutation = useCreateResource("sources")
+  const [statusId, setStatusId] = useState("new")
+  const [scheduledAt, setScheduledAt] = useState("")
+  const [error, setError] = useState(null)
+
+  const createResourceMutation = useCreateResource("schedules")
 
   const navigate = useNavigate()
   const acceptableAccounts = useMemo(
@@ -39,13 +42,6 @@ export function Create() {
     [socialMedia, accounts],
   )
 
-  const crawlSchedules = [
-    { id: "hourly", name: "Hourly" },
-    { id: "daily", name: "Daily" },
-    { id: "weekly", name: "Weekly" },
-    { id: "monthly", name: "Monthly" },
-  ]
-
   useEffect(() => {
     if (acceptableAccounts.length > 0) {
       setAccountId(acceptableAccounts[0]._id)
@@ -54,23 +50,24 @@ export function Create() {
     }
   }, [acceptableAccounts])
 
-  useEffect(() => {
-    if (socialMedia) {
-      setSocialMediaError(null)
-    }
-  }, [socialMedia])
+  // useEffect(() => {
+  //   if (socialMedia) {
+  //     setSocialMediaError(null)
+  //   }
+  // }, [socialMedia])
 
   useEffect(() => {
     if (createResourceMutation.isError) {
-      setRequestError({
-        errorMessage: createResourceMutation.error.message,
+      setError({
+        status: "danger",
+        message: createResourceMutation.error.message,
       })
     }
 
     if (createResourceMutation.isSuccess) {
-      setRequestError(null)
-      navigate("/sources", {
-        state: { message: "Your source was created!", status: "success" },
+      setError(null)
+      navigate("/schedules", {
+        state: { message: "Your schedule was created!", status: "success" },
       })
     }
   }, [
@@ -82,46 +79,38 @@ export function Create() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-
     if (!socialMedia) {
-      setSocialMediaError({
-        errorMessage: "You need to select a social media platform!",
+      setError({
+        status: "danger",
+        message: "You need to select a social media platform!",
       })
       return
     }
 
     if (!accountId) {
-      setAccountError({
-        errorMessage: "You need to select an account!",
-      })
-      return
-    }
-
-    if (!logo) {
-      setLogoError({
-        errorMessage: "You need to select a logo!",
-      })
+      setError({ status: "danger", message: "You need to select an account!" })
       return
     }
 
     const bodyObject = {
-      name,
-      channel,
-      description,
       social_media: socialMedia,
       account_id: accountId,
-      logo,
-      crawl_schedule: crawlId,
-      user_id: "62d7a781d8f8d7627ce212d5",
+      channel,
+      scheduled_at: scheduledAt,
+      status: statusId,
+      post_id: postId,
     }
 
-    createResourceMutation.mutate(bodyObject, {
-      "Content-Type": "multipart/form-data",
-    })
+    createResourceMutation.mutate(bodyObject)
   }
 
-  const handleLogoChange = (newLogo) => {
-    setLogo(newLogo)
+  const resetForm = () => {
+    setSocialMedia("")
+    setChannel("")
+    setAccountId("")
+    setStatusId("new")
+    setScheduledAt("")
+    setError(null)
   }
 
   return (
@@ -129,8 +118,9 @@ export function Create() {
       <Wrapper as="header" className="border-b border-border">
         <Breadcrumb
           pages={[
-            { name: "Source", href: "/sources" },
-            { name: "Create", href: "/sources/create" },
+            { name: "Schedules", href: "/schedules" },
+            { name: "Post: " + postId, href: "/posts/" + postId },
+            { name: "Create schedule", href: "#" },
           ]}
         />
       </Wrapper>
@@ -139,21 +129,20 @@ export function Create() {
           <div className="space-y-12">
             <div className="border-b border-border pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="sm:col-span-4">
-                  <InputField
-                    id="name"
-                    label="Name"
-                    value={name}
-                    setValue={setName}
-                    placeholder={`My ${socialMedia} source`}
-                    required
-                  />
-                </div>
-
                 <div className="col-span-full">
                   <SocialMediaRadio
                     socialMedia={socialMedia}
                     setSocialMedia={setSocialMedia}
+                  />
+                </div>
+
+                <div className="sm:col-span-4">
+                  <InputField
+                    id="scheduledAt"
+                    label="Schedule"
+                    value={scheduledAt}
+                    setValue={setScheduledAt}
+                    type="datetime-local"
                   />
                 </div>
 
@@ -181,23 +170,11 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <LogoInput onImageChange={handleLogoChange} />
-                </div>
-
-                <div className="col-span-full">
-                  <TextAreaField
-                    helperText="Write a few sentences about the source."
-                    value={description}
-                    setValue={setDescription}
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
                   <SearchMenu
-                    label="Crawl schedule"
-                    options={crawlSchedules}
-                    setSelected={setCrawlId}
-                    selected={crawlId}
+                    label="Status"
+                    options={statuses}
+                    selected={statusId}
+                    setSelected={setStatusId}
                   />
                 </div>
               </div>
@@ -216,13 +193,7 @@ export function Create() {
             <button
               type="button"
               className="text-sm font-semibold leading-6 text-text"
-              onClick={() => {
-                setName("")
-                setSocialMediaError(null)
-                setChannel("")
-                setDescription("")
-                setSocialMedia("")
-              }}
+              onClick={resetForm}
             >
               Reset
             </button>
@@ -245,36 +216,7 @@ export function Create() {
             </button>
           </div>
           <div className="my-12">
-            <Transition
-              show={Boolean(
-                socialMediaError || accountError || logoError || requestError,
-              )}
-              enter="transition-opacity duration-75"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity duration-150"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Alert
-                status="danger"
-                message={
-                  socialMediaError?.errorMessage ||
-                  accountError?.errorMessage ||
-                  requestError?.errorMessage ||
-                  logoError?.errorMessage
-                }
-                show={Boolean(
-                  socialMediaError || accountError || logoError || requestError,
-                )}
-                setShow={(v) => {
-                  setSocialMediaError(v)
-                  setRequestError(v)
-                  setLogoError(v)
-                  setAccountError(v)
-                }}
-              />
-            </Transition>
+            <MessageTransition message={error} setMessage={setError} />
           </div>
         </form>
       </NarrowWrapper>
