@@ -7,7 +7,14 @@ import { Wrapper } from "../Wrapper"
 import { ButtonWithLeadingIcon } from "../components/ButtonWithLeadingIcon"
 import { capitalize } from "../utils"
 
-export function IndexPage({ resourceName, children }) {
+export function IndexPage({
+  resourceName,
+  showButton = true,
+  headerText,
+  addButtonText,
+  addButtonLink,
+  children,
+}) {
   const navigate = useNavigate()
 
   const AddButton = () => {
@@ -15,10 +22,10 @@ export function IndexPage({ resourceName, children }) {
       <ButtonWithLeadingIcon
         Icon={PlusIcon}
         onClick={() => {
-          navigate(`/${pluralize(resourceName)}/create`)
+          navigate(addButtonLink ? addButtonLink : `/${pluralize(resourceName)}/create`)
         }}
       >
-        Add {resourceName}
+        {addButtonText ? addButtonText : `Add ${resourceName}`}
       </ButtonWithLeadingIcon>
     )
   }
@@ -26,8 +33,8 @@ export function IndexPage({ resourceName, children }) {
   return (
     <>
       <Wrapper as="header" className="dark:border-t dark:border-white/5">
-        <SectionHeadingWithActionButton Button={AddButton}>
-          {capitalize(pluralize(resourceName))}
+        <SectionHeadingWithActionButton Button={showButton && AddButton}>
+          {headerText ? headerText : capitalize(pluralize(resourceName))}
         </SectionHeadingWithActionButton>
       </Wrapper>
       {children}
