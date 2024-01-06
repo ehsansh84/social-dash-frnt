@@ -1,42 +1,36 @@
-import { Transition } from "@headlessui/react"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { Wrapper } from "../../Wrapper"
-import { Alert } from "../../components/Alert"
 import { Breadcrumb } from "../../components/Breadcrumb"
-import { SocialMediaRadio } from "../../components/SocialMediaRadio"
-import { useCreateResource } from "../../hooks/useResources"
 import { InputField } from "../../components/InputField"
+import { MessageTransition } from "../../components/MessageTransition"
+import { SocialMediaRadio } from "../../components/SocialMediaRadio"
 import { TextAreaField } from "../../components/TextAreaField"
+import { useCreateResource } from "../../hooks/useResources"
 
 export function Create() {
   const [socialMedia, setSocialMedia] = useState("")
   const [name, setName] = useState("")
   const [token, setToken] = useState("")
   const [description, setDescription] = useState("")
-  const [socialMediaError, setSocialMediaError] = useState(null)
-  const [requestError, setRequestError] = useState(null)
+  const [error, setError] = useState(null)
+
 
   const navigate = useNavigate()
 
   const createResourceMutation = useCreateResource("accounts")
 
   useEffect(() => {
-    if (socialMedia) {
-      setSocialMediaError(null)
-    }
-  }, [socialMedia])
-
-  useEffect(() => {
     if (createResourceMutation.isError) {
-      setRequestError({
-        errorMessage: createResourceMutation.error.message,
+      setError({
+        status: "danger",
+        message: createResourceMutation.error.message,
       })
     }
 
     if (createResourceMutation.isSuccess) {
-      setRequestError(null)
+      setError(null)
       navigate("/accounts", {
         state: { message: "Your account was created!", status: "success" },
       })
@@ -52,8 +46,9 @@ export function Create() {
     event.preventDefault()
 
     if (!socialMedia) {
-      setSocialMediaError({
-        errorMessage: "You need to select a social media platform!",
+      setError({
+        status: "danger",
+        message: "You need to select a social media platform!",
       })
       return
     }
@@ -67,6 +62,14 @@ export function Create() {
     }
 
     createResourceMutation.mutate(bodyObject)
+  }
+
+  const resetForm = () => {
+    setSocialMedia("")
+    setName("")
+    setToken("")
+    setDescription("")
+    setError(null)
   }
 
   return (
@@ -136,12 +139,7 @@ export function Create() {
             <button
               type="button"
               className="text-sm font-semibold leading-6 text-text"
-              onClick={() => {
-                setName("")
-                setSocialMediaError(null)
-                setToken("")
-                setDescription("")
-              }}
+              onClick={resetForm}
             >
               Reset
             </button>
@@ -163,28 +161,8 @@ export function Create() {
               )}
             </button>
           </div>
-          <div className="mt-12">
-            <Transition
-              show={Boolean(socialMediaError || requestError)}
-              enter="transition-opacity duration-75"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity duration-150"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Alert
-                status="danger"
-                message={
-                  socialMediaError?.errorMessage || requestError?.errorMessage
-                }
-                show={Boolean(socialMediaError || requestError)}
-                setShow={(v) => {
-                  setSocialMediaError(v)
-                  setRequestError(v)
-                }}
-              />
-            </Transition>
+          <div className="my-12">
+          <MessageTransition message={error} setMessage={setError} />
           </div>
         </form>
       </NarrowWrapper>

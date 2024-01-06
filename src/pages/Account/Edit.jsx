@@ -1,14 +1,13 @@
-import { Transition } from "@headlessui/react"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { Wrapper } from "../../Wrapper"
-import { Alert } from "../../components/Alert"
 import { Breadcrumb } from "../../components/Breadcrumb"
-import { SocialMediaRadio } from "../../components/SocialMediaRadio"
-import { useResource, useUpdateResource } from "../../hooks/useResources"
 import { InputField } from "../../components/InputField"
+import { MessageTransition } from "../../components/MessageTransition"
+import { SocialMediaRadio } from "../../components/SocialMediaRadio"
 import { TextAreaField } from "../../components/TextAreaField"
+import { useResource, useUpdateResource } from "../../hooks/useResources"
 
 export function Edit() {
   const { accountId } = useParams()
@@ -19,15 +18,10 @@ export function Edit() {
   const [name, setName] = useState("")
   const [token, setToken] = useState("")
   const [description, setDescription] = useState("")
-  const [socialMediaError, setSocialMediaError] = useState(null)
-  const [requestError, setRequestError] = useState(null)
+  const [error, setError] = useState(null)
+
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (socialMedia) {
-      setSocialMediaError(null)
-    }
-  }, [socialMedia])
 
   useEffect(() => {
     if (account) {
@@ -40,15 +34,16 @@ export function Edit() {
 
   useEffect(() => {
     if (updateAccount.isError) {
-      setRequestError({
-        errorMessage: updateAccount.error.message,
+      setError({
+        status: "danger",
+        message: updateAccount.error.message,
       })
     }
 
     if (updateAccount.isSuccess) {
-      setRequestError(null)
+      setError(null)
       navigate("/accounts", {
-        state: { message: "Your account was edited!", status: "success" },
+        state: { message: "Your account was created!", status: "success" },
       })
     }
   }, [
@@ -62,8 +57,9 @@ export function Edit() {
     event.preventDefault()
 
     if (!socialMedia) {
-      setSocialMediaError({
-        errorMessage: "You need to select a social media platform!",
+      setError({
+        status: "danger",
+        message: "You need to select a social media platform!",
       })
       return
     }
@@ -162,28 +158,8 @@ export function Edit() {
               )}
             </button>
           </div>
-          <div className="mt-12">
-            <Transition
-              show={Boolean(socialMediaError || requestError)}
-              enter="transition-opacity duration-75"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity duration-150"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Alert
-                status="danger"
-                message={
-                  socialMediaError?.errorMessage || requestError?.errorMessage
-                }
-                show={Boolean(socialMediaError || requestError)}
-                setShow={(v) => {
-                  setSocialMediaError(v)
-                  setRequestError(v)
-                }}
-              />
-            </Transition>
+          <div className="my-12">
+          <MessageTransition message={error} setMessage={setError} />
           </div>
         </form>
       </NarrowWrapper>
