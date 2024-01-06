@@ -16,6 +16,13 @@ import {
 import { TextAreaField } from "../../components/TextAreaField"
 import { InputField } from "../../components/InputField"
 import { LogoInput } from "../../components/LogoInput"
+import { MessageTransition } from "../../components/MessageTransition"
+const crawlSchedules = [
+  { id: "hourly", name: "Hourly" },
+  { id: "daily", name: "Daily" },
+  { id: "weekly", name: "Weekly" },
+  { id: "monthly", name: "Monthly" },
+]
 
 export function Edit() {
   const { data } = useResourceList("accounts")
@@ -30,10 +37,9 @@ export function Edit() {
   const [crawlId, setCrawlId] = useState("hourly")
   const [description, setDescription] = useState("")
   const [logo, setLogo] = useState("")
-  const [socialMediaError, setSocialMediaError] = useState(null)
-  const [accountError, setAccountError] = useState(null)
-  const [requestError, setRequestError] = useState(null)
-  const [logoError, setLogoError] = useState(null)
+
+  const [error, setError] = useState(null)
+
   const updateSource = useUpdateResource("sources")
 
   const navigate = useNavigate()
@@ -44,13 +50,6 @@ export function Edit() {
       ),
     [socialMedia, accounts],
   )
-
-  const crawlSchedules = [
-    { id: "hourly", name: "Hourly" },
-    { id: "daily", name: "Daily" },
-    { id: "weekly", name: "Weekly" },
-    { id: "monthly", name: "Monthly" },
-  ]
 
   useEffect(() => {
     if (source) {
@@ -73,22 +72,17 @@ export function Edit() {
   }, [acceptableAccounts])
 
   useEffect(() => {
-    if (socialMedia) {
-      setSocialMediaError(null)
-    }
-  }, [socialMedia])
-
-  useEffect(() => {
     if (updateSource.isError) {
-      setRequestError({
-        errorMessage: updateSource.error.message,
+      setError({
+        status: "danger",
+        message: updateSource.error.message,
       })
     }
 
     if (updateSource.isSuccess) {
-      setRequestError(null)
+      setError(null)
       navigate("/sources", {
-        state: { message: "Your source was edited!", status: "success" },
+        state: { message: "Your source was created!", status: "success" },
       })
     }
   }, [
@@ -102,23 +96,20 @@ export function Edit() {
     event.preventDefault()
 
     if (!socialMedia) {
-      setSocialMediaError({
-        errorMessage: "You need to select a social media platform!",
+      setError({
+        status: "danger",
+        message: "You need to select a social media platform!",
       })
       return
     }
 
     if (!accountId) {
-      setAccountError({
-        errorMessage: "You need to select an account!",
-      })
+      setError({ status: "danger", message: "You need to select an account!" })
       return
     }
 
     if (!logo) {
-      setLogoError({
-        errorMessage: "You need to select a logo!",
-      })
+      setError({ status: "danger", message: "You need to select a logo!" })
       return
     }
 
@@ -252,36 +243,7 @@ export function Edit() {
           </div>
 
           <div className="my-12">
-            <Transition
-              show={Boolean(
-                socialMediaError || accountError || logoError || requestError,
-              )}
-              enter="transition-opacity duration-75"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity duration-150"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Alert
-                status="danger"
-                message={
-                  socialMediaError?.errorMessage ||
-                  accountError?.errorMessage ||
-                  requestError?.errorMessage ||
-                  logoError?.errorMessage
-                }
-                show={Boolean(
-                  socialMediaError || accountError || logoError || requestError,
-                )}
-                setShow={(v) => {
-                  setSocialMediaError(v)
-                  setRequestError(v)
-                  setLogoError(v)
-                  setAccountError(v)
-                }}
-              />
-            </Transition>
+            <MessageTransition message={error} setMessage={setError} />
           </div>
         </form>
       </NarrowWrapper>

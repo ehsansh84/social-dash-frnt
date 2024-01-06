@@ -1,9 +1,7 @@
 import { SocialMediaRadio } from "../../components/SocialMediaRadio"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { useEffect, useMemo, useState } from "react"
-import { Alert } from "../../components/Alert"
 import { Breadcrumb } from "../../components/Breadcrumb"
-import { Transition } from "@headlessui/react"
 import { Wrapper } from "../../Wrapper"
 import { useNavigate } from "react-router-dom"
 
@@ -12,6 +10,13 @@ import { useCreateResource, useResourceList } from "../../hooks/useResources"
 import { InputField } from "../../components/InputField"
 import { LogoInput } from "../../components/LogoInput"
 import { TextAreaField } from "../../components/TextAreaField"
+import { MessageTransition } from "../../components/MessageTransition"
+const crawlSchedules = [
+  { id: "hourly", name: "Hourly" },
+  { id: "daily", name: "Daily" },
+  { id: "weekly", name: "Weekly" },
+  { id: "monthly", name: "Monthly" },
+]
 
 export function Create() {
   const { data } = useResourceList("accounts")
@@ -24,10 +29,9 @@ export function Create() {
   const [crawlId, setCrawlId] = useState("hourly")
   const [description, setDescription] = useState("")
   const [logo, setLogo] = useState("")
-  const [socialMediaError, setSocialMediaError] = useState(null)
-  const [accountError, setAccountError] = useState(null)
-  const [requestError, setRequestError] = useState(null)
-  const [logoError, setLogoError] = useState(null)
+  
+  const [error, setError] = useState(null)
+
   const createResourceMutation = useCreateResource("sources")
 
   const navigate = useNavigate()
@@ -39,12 +43,6 @@ export function Create() {
     [socialMedia, accounts],
   )
 
-  const crawlSchedules = [
-    { id: "hourly", name: "Hourly" },
-    { id: "daily", name: "Daily" },
-    { id: "weekly", name: "Weekly" },
-    { id: "monthly", name: "Monthly" },
-  ]
 
   useEffect(() => {
     if (acceptableAccounts.length > 0) {
@@ -55,20 +53,15 @@ export function Create() {
   }, [acceptableAccounts])
 
   useEffect(() => {
-    if (socialMedia) {
-      setSocialMediaError(null)
-    }
-  }, [socialMedia])
-
-  useEffect(() => {
     if (createResourceMutation.isError) {
-      setRequestError({
-        errorMessage: createResourceMutation.error.message,
+      setError({
+        status: "danger",
+        message: createResourceMutation.error.message,
       })
     }
 
     if (createResourceMutation.isSuccess) {
-      setRequestError(null)
+      setError(null)
       navigate("/sources", {
         state: { message: "Your source was created!", status: "success" },
       })
@@ -84,23 +77,20 @@ export function Create() {
     event.preventDefault()
 
     if (!socialMedia) {
-      setSocialMediaError({
-        errorMessage: "You need to select a social media platform!",
+      setError({
+        status: "danger",
+        message: "You need to select a social media platform!",
       })
       return
     }
 
     if (!accountId) {
-      setAccountError({
-        errorMessage: "You need to select an account!",
-      })
+        setError({ status: "danger", message: "You need to select an account!" })
       return
     }
 
     if (!logo) {
-      setLogoError({
-        errorMessage: "You need to select a logo!",
-      })
+        setError({ status: "danger", message: "You need to select a logo!" })
       return
     }
 
@@ -122,6 +112,15 @@ export function Create() {
 
   const handleLogoChange = (newLogo) => {
     setLogo(newLogo)
+  }
+
+  const resetForm = () => {
+    setSocialMedia("")
+    setChannel("")
+    setAccountId("")
+    setName("")
+    setDescription("")
+    setError(null)
   }
 
   return (
@@ -216,13 +215,7 @@ export function Create() {
             <button
               type="button"
               className="text-sm font-semibold leading-6 text-text"
-              onClick={() => {
-                setName("")
-                setSocialMediaError(null)
-                setChannel("")
-                setDescription("")
-                setSocialMedia("")
-              }}
+              onClick={resetForm}
             >
               Reset
             </button>
@@ -245,36 +238,7 @@ export function Create() {
             </button>
           </div>
           <div className="my-12">
-            <Transition
-              show={Boolean(
-                socialMediaError || accountError || logoError || requestError,
-              )}
-              enter="transition-opacity duration-75"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity duration-150"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Alert
-                status="danger"
-                message={
-                  socialMediaError?.errorMessage ||
-                  accountError?.errorMessage ||
-                  requestError?.errorMessage ||
-                  logoError?.errorMessage
-                }
-                show={Boolean(
-                  socialMediaError || accountError || logoError || requestError,
-                )}
-                setShow={(v) => {
-                  setSocialMediaError(v)
-                  setRequestError(v)
-                  setLogoError(v)
-                  setAccountError(v)
-                }}
-              />
-            </Transition>
+          <MessageTransition message={error} setMessage={setError} />
           </div>
         </form>
       </NarrowWrapper>
