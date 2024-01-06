@@ -34,6 +34,7 @@ export function Create() {
   const createResourceMutation = useCreateResource("schedules")
 
   const navigate = useNavigate()
+  
   const acceptableAccounts = useMemo(
     () =>
       accounts.filter((a) =>
@@ -49,12 +50,6 @@ export function Create() {
       setAccountId("")
     }
   }, [acceptableAccounts])
-
-  // useEffect(() => {
-  //   if (socialMedia) {
-  //     setSocialMediaError(null)
-  //   }
-  // }, [socialMedia])
 
   useEffect(() => {
     if (createResourceMutation.isError) {
