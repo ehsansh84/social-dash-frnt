@@ -3,84 +3,11 @@ import { Wrapper } from "../../../Wrapper"
 import { Link } from "react-router-dom"
 import { capitalize } from "../../../utils"
 import { Badge } from "../../../components/Badge"
-
-const people = [
-  {
-    _id: "659b4474278d411b9cec0a77",
-    email_verified: false,
-    role: "admin",
-    name: "Ehsan",
-    family: "Rezaee",
-    status: "enabled",
-    pic: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    email: "admin@gmail.com",
-    last_login: "",
-    username: "admin",
-    mobile_verified: false,
-    created_at: "2024-01-08 00:40:20.025000",
-    updated_at: "2024-01-08 00:40:20.025000",
-    mobile: "+989151112233",
-    password: "$2b$12$aLwZYjO1I7v6AK2rhqJAqui7Ubq5oTdA2kDVQ2WzjwWYHm0ojPZj.",
-    _User__password_is_hashed: false,
-  },
-  {
-    _id: "1",
-    email_verified: true,
-    mobile_verified: false,
-    name: "Leslie Alexander",
-    email: "leslie.alexander@example.com",
-    role: "Co-Founder / CEO",
-    pic: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    last_login: "2024-01-08 00:44:21.219000",
-  },
-  {
-    _id: "2",
-    email_verified: false,
-    mobile_verified: true,
-    name: "Michael Foster",
-    email: "michael.foster@example.com",
-    role: "Co-Founder / CTO",
-    pic: "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    href: "#",
-    last_login: "2024-01-08 00:44:21.219000",
-  },
-  {
-    _id: "3",
-    name: "Dries Vincent",
-    email: "dries.vincent@example.com",
-    role: "Business Relations",
-    pic: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    href: "#",
-    last_login: "",
-  },
-  {
-    _id: "4",
-    name: "Lindsay Walton",
-    email: "lindsay.walton@example.com",
-    role: "Front-end Developer",
-    pic: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    last_login: "2024-01-08 00:44:21.219000",
-  },
-  {
-    _id: "5",
-    name: "Courtney Henry",
-    email: "courtney.henry@example.com",
-    role: "Designer",
-    pic: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-
-    last_login: "2024-01-08 00:44:21.219000",
-  },
-  {
-    _id: "6",
-    name: "Tom Cook",
-    email: "tom.cook@example.com",
-    role: "Director of Product",
-    pic: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    last_login: "",
-  },
-]
+import { useResourceList } from "../../../hooks/useLocalResources"
 
 export function UserList() {
+  const { data } = useResourceList("users")
+  const people = data ?? []
   return (
     <ul className="divide-y divide-gray-100 dark:divide-gray-700 dark:border-t dark:border-white/5">
       {people.map((person) => (
