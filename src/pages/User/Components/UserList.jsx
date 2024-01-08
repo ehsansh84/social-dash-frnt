@@ -29,9 +29,9 @@ export function UserList() {
                   {person.name + (person.family ? ' ' + person.family : '')}
                 </Link>
                 {person.status === 'enabled' ? (
-                  <Badge color="green" variant="pill" className="hidden sm:inline">enabled</Badge>
+                  <Badge color="green" variant="small-flat-pill" className="hidden sm:inline">enabled</Badge>
                 ) : (
-                  <Badge color="gray" variant="pill" className="hidden sm:inline">disabled</Badge>
+                  <Badge color="gray" variant="small-flat-pill" className="hidden sm:inline">disabled</Badge>
                 )}
               </p>
               <p className="mt-1 flex items-baseline gap-2">
@@ -42,9 +42,9 @@ export function UserList() {
                   {person.email}
                 </a>
                 {person.email_verified ? (
-                  <Badge color="green" variant="pill" className="hidden sm:block">verified</Badge>
+                  <Badge color="green" variant="small-flat-pill" className="hidden sm:block">verified</Badge>
                 ) : (
-                  <Badge color="red" variant="pill" className="hidden sm:block">not verified</Badge>
+                  <Badge color="red" variant="small-flat-pill" className="hidden sm:block">not verified</Badge>
                 )}
               </p>
               <p className="sm:hidden text-sm leading-6 text-gray-900 dark:text-gray-100">
