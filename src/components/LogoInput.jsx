@@ -1,35 +1,13 @@
+import { useEffect } from "react"
+import { useImageInput } from "../hooks/useImageInput"
 import { UserCircleIcon } from "@heroicons/react/20/solid"
-import { useEffect, useState } from "react"
 
 export function LogoInput({ imageUrl = "", onImageChange }) {
-  const [selectedImage, setSelectedImage] = useState("")
-  const [inputKey, setInputKey] = useState(Date.now())
-
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0]
-    if (file && file.type.match("image.*")) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        setSelectedImage(e.target.result)
-        onImageChange(e.target.result) // Notify parent component
-      }
-      reader.readAsDataURL(file)
-    } else {
-      console.error("File is not an image.")
-    }
-  }
+  const { selectedImage, inputKey, handleImageUpload, removeImage } = useImageInput(imageUrl)
 
   useEffect(() => {
-    if (imageUrl) {
-      setSelectedImage(imageUrl)
-    }
-  },[imageUrl])
-
-  const removeImage = () => {
-    setSelectedImage("")
-    setInputKey(Date.now()) // Reset the key to current timestamp
-    onImageChange("") // Notify parent component
-  }
+    onImageChange(selectedImage)
+  }, [selectedImage, onImageChange])
 
 
   return (
