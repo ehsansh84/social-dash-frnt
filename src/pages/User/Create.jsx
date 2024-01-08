@@ -8,6 +8,9 @@ import { useCreateResource } from "../../hooks/useLocalResources"
 import { InputField } from "../../components/InputField"
 import { MessageTransition } from "../../components/MessageTransition"
 import { InputPhone } from "../../components/InputPhone"
+import { SearchMenu } from "../../components/SearchMenu"
+import { ProfileImageInput } from "../../components/ProfileImageInput"
+import { InlineRadio } from "../../components/InlineRadio"
 
 const roles = [
   { id: "admin", name: "Admin" },
@@ -15,8 +18,8 @@ const roles = [
 ]
 
 const statuses = [
-  { id: "enabled", name: "Enabled" },
-  { id: "disabled", name: "Disabled" },
+  { id: "enabled", title: "Enabled" },
+  { id: "disabled", title: "Disabled" },
 ]
 
 export function Create() {
@@ -47,7 +50,7 @@ export function Create() {
 
     if (createResourceMutation.isSuccess) {
       setError(null)
-      navigate("/sources", {
+      navigate("/users", {
         state: { message: "User was created!", status: "success" },
       })
     }
@@ -86,7 +89,7 @@ export function Create() {
     })
   }
 
-  const handleLogoChange = (newPic) => {
+  const handlePicChange = (newPic) => {
     setPic(newPic)
   }
 
@@ -109,8 +112,8 @@ export function Create() {
       <Wrapper as="header" className="border-b border-border">
         <Breadcrumb
           pages={[
-            { name: "Source", href: "/sources" },
-            { name: "Create", href: "/sources/create" },
+            { name: "User", href: "/users" },
+            { name: "Create", href: "/users/create" },
           ]}
         />
       </Wrapper>
@@ -119,6 +122,10 @@ export function Create() {
           <div className="space-y-12">
             <div className="border-b border-border pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="col-span-full flex items-center gap-x-8">
+                  <ProfileImageInput onImageChange={handlePicChange} />
+                </div>
+
                 <div className="sm:col-span-4">
                   <InputField
                     id="name"
@@ -143,6 +150,17 @@ export function Create() {
 
                 <div className="sm:col-span-4">
                   <InputField
+                    id="username"
+                    label="Username"
+                    value={username}
+                    setValue={setUsername}
+                    placeholder="Username"
+                    required
+                  />
+                </div>
+
+                <div className="sm:col-span-4">
+                  <InputField
                     id="email"
                     label="Email"
                     value={email}
@@ -159,6 +177,46 @@ export function Create() {
                     label="Mobile"
                     value={mobile}
                     setValue={setMobile}
+                    required
+                  />
+                </div>
+
+                <div className="sm:col-span-4">
+                  <SearchMenu
+                    label="Role"
+                    options={roles}
+                    setSelected={setRole}
+                    selected={role}
+                  />
+                </div>
+                <div className="sm:col-span-4">
+                  <InlineRadio
+                    label="Role"
+                    name="status"
+                    selectedOption={status}
+                    options={statuses}
+                    setSelectedOption={setStatus}
+                  />
+                </div>
+
+                <div className="sm:col-span-4">
+                  <InputField
+                    id="password"
+                    label="Password"
+                    value={password}
+                    setValue={setPassword}
+                    type="password"
+                    required
+                  />
+                </div>
+
+                <div className="sm:col-span-4">
+                  <InputField
+                    id="confirm"
+                    label="Confirm Password"
+                    value={confirm}
+                    setValue={setConfirm}
+                    type="password"
                     required
                   />
                 </div>
