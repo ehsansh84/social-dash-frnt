@@ -29,7 +29,7 @@ export function Create() {
   const [crawlId, setCrawlId] = useState("hourly")
   const [description, setDescription] = useState("")
   const [logo, setLogo] = useState("")
-  
+
   const [error, setError] = useState(null)
 
   const createResourceMutation = useCreateResource("sources")
@@ -42,7 +42,6 @@ export function Create() {
       ),
     [socialMedia, accounts],
   )
-
 
   useEffect(() => {
     if (acceptableAccounts.length > 0) {
@@ -85,12 +84,12 @@ export function Create() {
     }
 
     if (!accountId) {
-        setError({ status: "danger", message: "You need to select an account!" })
+      setError({ status: "danger", message: "You need to select an account!" })
       return
     }
 
     if (!logo) {
-        setError({ status: "danger", message: "You need to select a logo!" })
+      setError({ status: "danger", message: "You need to select a logo!" })
       return
     }
 
@@ -180,7 +179,7 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <LogoInput onImageChange={handleLogoChange} />
+                  <LogoInput imageUrl={logo} onImageChange={handleLogoChange} />
                 </div>
 
                 <div className="col-span-full">
@@ -238,7 +237,7 @@ export function Create() {
             </button>
           </div>
           <div className="my-12">
-          <MessageTransition message={error} setMessage={setError} />
+            <MessageTransition message={error} setMessage={setError} />
           </div>
         </form>
       </NarrowWrapper>
