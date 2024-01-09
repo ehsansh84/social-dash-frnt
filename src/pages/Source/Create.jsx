@@ -1,16 +1,16 @@
-import { SocialMediaRadio } from "../../components/SocialMediaRadio"
-import { NarrowWrapper } from "../../NarrowWrapper"
 import { useEffect, useMemo, useState } from "react"
-import { Breadcrumb } from "../../components/Breadcrumb"
-import { Wrapper } from "../../Wrapper"
 import { useNavigate } from "react-router-dom"
+import { NarrowWrapper } from "../../NarrowWrapper"
+import { Wrapper } from "../../Wrapper"
+import { Breadcrumb } from "../../components/Breadcrumb"
+import { SocialMediaRadio } from "../../components/SocialMediaRadio"
 
-import { SearchMenu } from "../../components/SearchMenu"
-import { useCreateResource, useResourceList } from "../../hooks/useResources"
 import { InputField } from "../../components/InputField"
 import { LogoInput } from "../../components/LogoInput"
-import { TextAreaField } from "../../components/TextAreaField"
 import { MessageTransition } from "../../components/MessageTransition"
+import { SearchMenu } from "../../components/SearchMenu"
+import { TextAreaField } from "../../components/TextAreaField"
+import { useCreateResource, useResourceList } from "../../hooks/useResources"
 const crawlSchedules = [
   { id: "hourly", name: "Hourly" },
   { id: "daily", name: "Daily" },
@@ -80,11 +80,6 @@ export function Create() {
         status: "danger",
         message: "You need to select a social media platform!",
       })
-      return
-    }
-
-    if (!accountId) {
-      setError({ status: "danger", message: "You need to select an account!" })
       return
     }
 
@@ -187,6 +182,7 @@ export function Create() {
                     helperText="Write a few sentences about the source."
                     value={description}
                     setValue={setDescription}
+                    required
                   />
                 </div>
 
