@@ -200,9 +200,10 @@ export function Edit() {
                     selected={role}
                   />
                 </div>
+
                 <div className="sm:col-span-4">
                   <InlineRadio
-                    label="Role"
+                    label="Status"
                     name="status"
                     selectedOption={status}
                     options={statuses}
