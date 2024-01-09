@@ -6,5 +6,6 @@ export const API_CONFIG = {
     sources: "/source",
     schedules: "/schedule",
     posts: "/post",
+    users: "/user",
   },
 }
