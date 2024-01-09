@@ -1,77 +1,63 @@
-import { SocialMediaRadio } from "../../components/SocialMediaRadio"
-import { NarrowWrapper } from "../../NarrowWrapper"
-import { useEffect, useMemo, useState } from "react"
-import { Alert } from "../../components/Alert"
-import { Breadcrumb } from "../../components/Breadcrumb"
-import { Transition } from "@headlessui/react"
-import { Wrapper } from "../../Wrapper"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { NarrowWrapper } from "../../NarrowWrapper"
+import { Wrapper } from "../../Wrapper"
+import { Breadcrumb } from "../../components/Breadcrumb"
 
-import { SearchMenu } from "../../components/SearchMenu"
-import { useCreateResource, useResourceList } from "../../hooks/useResources"
+import { InlineRadio } from "../../components/InlineRadio"
 import { InputField } from "../../components/InputField"
-import { LogoInput } from "../../components/LogoInput"
+import { MessageTransition } from "../../components/MessageTransition"
+import { useCreateResource } from "../../hooks/useResources"
 import { TextAreaField } from "../../components/TextAreaField"
+import { CoverInput } from "../../components/CoverInput"
+import { LogoInput } from "../../components/LogoInput"
 
-const post_type = [
-  { id: "image", name: "Image" },
-  { id: "video", name: "Video" },
-  { id: "gallery", name: "Gallery" },
-  { id: "text", name: "Text" },
+const statuses = [
+  { id: "new", title: "Enabled" },
+  { id: "thumb_created", title: "Thumb created" },
+  { id: "uploaded_to_channel", title: "Uploaded to the channel" },
+]
+
+const postTypes = [
+  { id: "image", title: "Image" },
+  { id: "video", title: "Video" },
+  { id: "gallery", title: "Gallery" },
+  { id: "text", title: "Text" },
 ]
 
 export function Create() {
-  const { data } = useResourceList("accounts")
-  const accounts = useMemo(() => data ?? [], [data])
+  const [caption, setCaption] = useState("")
+  const [likes, setLikes] = useState(0)
+  const [comments, setComments] = useState(0)
+  const [postType, setPostType] = useState("image")
+  const [status, setStatus] = useState("new")
+  const [videUrl, setVideoUrl] = useState("")
+  const [coverUrl, setCoverUrl] = useState("")
+  const [thumbUrl, setThumbUrl] = useState("")
+  const [dateUtc, setDateUtc] = useState("")
+  const [postDate, setPostDate] = useState("")
+  const [postUrl, setPostUrl] = useState("")
+  const [profile, setProfile] = useState("")
+  const [captionHashtags, setCaptionHashtags] = useState([])
 
-  const [socialMedia, setSocialMedia] = useState("")
-  const [name, setName] = useState("")
-  const [channel, setChannel] = useState("")
-  const [accountId, setAccountId] = useState("")
-  const [post_type, setPost_type] = useState("text")
-  const [description, setDescription] = useState("")
-  const [logo, setLogo] = useState("")
-  const [socialMediaError, setSocialMediaError] = useState(null)
-  const [accountError, setAccountError] = useState(null)
-  const [requestError, setRequestError] = useState(null)
-  const [logoError, setLogoError] = useState(null)
-  const createResourceMutation = useCreateResource("sources")
+  const [error, setError] = useState(null)
+
+  const createResourceMutation = useCreateResource("posts")
 
   const navigate = useNavigate()
-  const acceptableAccounts = useMemo(
-    () =>
-      accounts.filter((a) =>
-        socialMedia ? a.social_media === socialMedia : true,
-      ),
-    [socialMedia, accounts],
-  )
-
-
-  useEffect(() => {
-    if (acceptableAccounts.length > 0) {
-      setAccountId(acceptableAccounts[0]._id)
-    } else {
-      setAccountId("")
-    }
-  }, [acceptableAccounts])
-
-  useEffect(() => {
-    if (socialMedia) {
-      setSocialMediaError(null)
-    }
-  }, [socialMedia])
 
   useEffect(() => {
     if (createResourceMutation.isError) {
-      setRequestError({
-        errorMessage: createResourceMutation.error.message,
+      setError({
+        status: "danger",
+        message: createResourceMutation.error.message,
       })
     }
 
     if (createResourceMutation.isSuccess) {
-      setRequestError(null)
-      navigate("/sources", {
-        state: { message: "Your source was created!", status: "success" },
+      setError(null)
+      navigate("/posts", {
+        state: { message: "Post was created!", status: "success" },
       })
     }
   }, [
@@ -84,36 +70,21 @@ export function Create() {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (!socialMedia) {
-      setSocialMediaError({
-        errorMessage: "You need to select a social media platform!",
-      })
-      return
-    }
-
-    if (!accountId) {
-      setAccountError({
-        errorMessage: "You need to select an account!",
-      })
-      return
-    }
-
-    if (!logo) {
-      setLogoError({
-        errorMessage: "You need to select a logo!",
-      })
-      return
-    }
-
     const bodyObject = {
-      name,
-      channel,
-      description,
-      social_media: socialMedia,
-      account_id: accountId,
-      logo,
-      crawl_schedule: crawlId,
+      caption,
+      likes,
+      comments,
+      postType,
+      status,
+      video_url: videUrl,
+      cover_url: coverUrl,
+      thumb_url: thumbUrl,
       user_id: "62d7a781d8f8d7627ce212d5",
+      date_utc: dateUtc,
+      post_date: postDate,
+      post_url: postUrl,
+      profile,
+      captionHashtags,
     }
 
     createResourceMutation.mutate(bodyObject, {
@@ -121,8 +92,20 @@ export function Create() {
     })
   }
 
-  const handleLogoChange = (newLogo) => {
-    setLogo(newLogo)
+  const resetForm = () => {
+    setCaption("")
+    setLikes(0)
+    setComments(0)
+    setPostType("image")
+    setStatus("new")
+    setVideoUrl("")
+    setCoverUrl("")
+    setThumbUrl("")
+    setDateUtc("")
+    setPostDate("")
+    setPostUrl("")
+    setProfile("")
+    setCaptionHashtags([])
   }
 
   return (
@@ -130,8 +113,8 @@ export function Create() {
       <Wrapper as="header" className="border-b border-border">
         <Breadcrumb
           pages={[
-            { name: "Source", href: "/sources" },
-            { name: "Create", href: "/sources/create" },
+            { name: "Post", href: "/posts" },
+            { name: "Create", href: "/posts/create" },
           ]}
         />
       </Wrapper>
@@ -141,66 +124,76 @@ export function Create() {
             <div className="border-b border-border pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-4">
-                  <InputField
-                    id="name"
-                    label="Name"
-                    value={name}
-                    setValue={setName}
-                    placeholder={`My ${socialMedia} source`}
-                    required
+                  <InlineRadio
+                    label="Post type"
+                    name="postType"
+                    selectedOption={postType}
+                    options={postTypes}
+                    setSelectedOption={setPostType}
                   />
                 </div>
 
                 <div className="col-span-full">
-                  <SocialMediaRadio
-                    socialMedia={socialMedia}
-                    setSocialMedia={setSocialMedia}
+                  <CoverInput
+                    imageUrl={coverUrl}
+                    onImageChange={setCoverUrl}
                   />
                 </div>
 
                 <div className="sm:col-span-4">
-                  <InputField
-                    id="channel"
-                    label="Channel"
-                    value={channel}
-                    setValue={setChannel}
-                    placeholder={`my_${socialMedia}_channel`}
-                    required
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
-                  <SearchMenu
-                    label="Account"
-                    options={acceptableAccounts.map((a) => ({
-                      id: a._id,
-                      name: a.name,
-                    }))}
-                    setSelected={setAccountId}
-                    selected={accountId}
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
-                  <LogoInput onImageChange={handleLogoChange} />
-                </div>
-
-                <div className="col-span-full">
                   <TextAreaField
-                    helperText="Write a few sentences about the source."
-                    value={description}
-                    setValue={setDescription}
+                    id="caption"
+                    label="Caption"
+                    value={caption}
+                    setValue={setCaption}
                   />
                 </div>
 
                 <div className="sm:col-span-4">
-                  <SearchMenu
-                    label="Crawl schedule"
-                    options={crawlSchedules}
-                    setSelected={setCrawlId}
-                    selected={crawlId}
+                  <InlineRadio
+                    label="Status"
+                    name="status"
+                    selectedOption={status}
+                    options={statuses}
+                    setSelectedOption={setStatus}
                   />
                 </div>
+
+                <div className="sm:col-span-4">
+                  <InputField
+                    label="Likes"
+                    id="likes"
+                    setValue={setLikes}
+                    value={likes}
+                    type="number"
+                    min="0"
+                  />
+                </div>
+
+                <div className="sm:col-span-4">
+                  <InputField
+                    label="Comments"
+                    id="comments"
+                    setValue={setComments}
+                    value={comments}
+                    type="number"
+                    min="0"
+                  />
+                </div>
+                <div className="sm:col-span-4">
+                  <InputField
+                    label="Video Url"
+                    id="videoUrl"
+                    setValue={setVideoUrl}
+                    value={videUrl}
+                    type="url"
+                  />
+                </div>
+
+                <div className="sm:col-span-4">
+                  <LogoInput imageUrl={thumbUrl} onImageChange={setThumbUrl} label="Thumbnail" />
+                </div>
+
               </div>
             </div>
           </div>
@@ -217,13 +210,7 @@ export function Create() {
             <button
               type="button"
               className="text-sm font-semibold leading-6 text-text"
-              onClick={() => {
-                setName("")
-                setSocialMediaError(null)
-                setChannel("")
-                setDescription("")
-                setSocialMedia("")
-              }}
+              onClick={resetForm}
             >
               Reset
             </button>
@@ -246,36 +233,7 @@ export function Create() {
             </button>
           </div>
           <div className="my-12">
-            <Transition
-              show={Boolean(
-                socialMediaError || accountError || logoError || requestError,
-              )}
-              enter="transition-opacity duration-75"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity duration-150"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Alert
-                status="danger"
-                message={
-                  socialMediaError?.errorMessage ||
-                  accountError?.errorMessage ||
-                  requestError?.errorMessage ||
-                  logoError?.errorMessage
-                }
-                show={Boolean(
-                  socialMediaError || accountError || logoError || requestError,
-                )}
-                setShow={(v) => {
-                  setSocialMediaError(v)
-                  setRequestError(v)
-                  setLogoError(v)
-                  setAccountError(v)
-                }}
-              />
-            </Transition>
+            <MessageTransition message={error} setMessage={setError} />
           </div>
         </form>
       </NarrowWrapper>
