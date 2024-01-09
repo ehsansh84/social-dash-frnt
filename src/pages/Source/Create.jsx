@@ -11,11 +11,17 @@ import { MessageTransition } from "../../components/MessageTransition"
 import { SearchMenu } from "../../components/SearchMenu"
 import { TextAreaField } from "../../components/TextAreaField"
 import { useCreateResource, useResourceList } from "../../hooks/useResources"
+import { InlineRadio } from "../../components/InlineRadio"
 const crawlSchedules = [
   { id: "hourly", name: "Hourly" },
   { id: "daily", name: "Daily" },
   { id: "weekly", name: "Weekly" },
   { id: "monthly", name: "Monthly" },
+]
+
+const statuses = [
+  { id: "enabled", title: "Enabled" },
+  { id: "disabled", title: "Disabled" },
 ]
 
 export function Create() {
@@ -29,6 +35,7 @@ export function Create() {
   const [crawlId, setCrawlId] = useState("hourly")
   const [description, setDescription] = useState("")
   const [logo, setLogo] = useState("")
+  const [status, setStatus] = useState("disabled")
 
   const [error, setError] = useState(null)
 
@@ -96,6 +103,7 @@ export function Create() {
       account_id: accountId,
       logo,
       crawl_schedule: crawlId,
+      status,
       user_id: "62d7a781d8f8d7627ce212d5",
     }
 
@@ -114,6 +122,7 @@ export function Create() {
     setAccountId("")
     setName("")
     setDescription("")
+    setStatus("disabled")
     setError(null)
   }
 
@@ -194,6 +203,17 @@ export function Create() {
                     selected={crawlId}
                   />
                 </div>
+
+                <div className="sm:col-span-4">
+                  <InlineRadio
+                    label="Status"
+                    name="status"
+                    selectedOption={status}
+                    options={statuses}
+                    setSelectedOption={setStatus}
+                  />
+                </div>
+                
               </div>
             </div>
           </div>

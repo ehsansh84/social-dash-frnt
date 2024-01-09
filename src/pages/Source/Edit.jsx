@@ -15,11 +15,18 @@ import {
   useResourceList,
   useUpdateResource,
 } from "../../hooks/useResources"
+import { InlineRadio } from "../../components/InlineRadio"
+
 const crawlSchedules = [
   { id: "hourly", name: "Hourly" },
   { id: "daily", name: "Daily" },
   { id: "weekly", name: "Weekly" },
   { id: "monthly", name: "Monthly" },
+]
+
+const statuses = [
+  { id: "enabled", title: "Enabled" },
+  { id: "disabled", title: "Disabled" },
 ]
 
 export function Edit() {
@@ -35,6 +42,7 @@ export function Edit() {
   const [crawlId, setCrawlId] = useState("hourly")
   const [description, setDescription] = useState("")
   const [logo, setLogo] = useState("")
+  const [status, setStatus] = useState("disabled")
 
   const [error, setError] = useState(null)
 
@@ -58,6 +66,7 @@ export function Edit() {
       setAccountId(source.account_id)
       setCrawlId(source.crawl_schedule)
       setLogo(source.logo)
+      setLogo(source.status)
     }
   }, [source])
 
@@ -114,6 +123,7 @@ export function Edit() {
       account_id: accountId,
       logo,
       crawl_schedule: crawlId,
+      status,
       user_id: "62d7a781d8f8d7627ce212d5",
     }
 
@@ -201,6 +211,16 @@ export function Edit() {
                     options={crawlSchedules}
                     setSelected={setCrawlId}
                     selected={crawlId}
+                  />
+                </div>
+
+                <div className="sm:col-span-4">
+                  <InlineRadio
+                    label="Status"
+                    name="status"
+                    selectedOption={status}
+                    options={statuses}
+                    setSelectedOption={setStatus}
                   />
                 </div>
               </div>
