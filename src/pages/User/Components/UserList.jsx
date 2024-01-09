@@ -1,9 +1,9 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid"
-import { Wrapper } from "../../../Wrapper"
 import { Link } from "react-router-dom"
-import { capitalize } from "../../../utils"
+import { Wrapper } from "../../../Wrapper"
 import { Badge } from "../../../components/Badge"
-import { useResourceList } from "../../../hooks/useLocalResources"
+import { useResourceList } from "../../../hooks/useResources"
+import { capitalize } from "../../../utils"
 
 export function UserList() {
   const { data } = useResourceList("users")
