@@ -7,21 +7,22 @@ import { Index as AccountIndex } from "./pages/Account/Index"
 import Dashboard from "./pages/Dashboard/Dashboard"
 import { PostList } from "./pages/Post/Components/PostList"
 import { Create as CreatePost } from "./pages/Post/Create"
-import { Create as CreateSource } from "./pages/Source/Create"
-import { Edit as EditSource } from "./pages/Source/Edit"
-import { Index as SourceIndex } from "./pages/Source/Index"
 import { Create as CreateSchedule } from "./pages/Schedule/Create"
 import { Edit as EditSchedule } from "./pages/Schedule/Edit"
 import { Index as ScheduleIndex } from "./pages/Schedule/Index"
+import { Create as CreateSource } from "./pages/Source/Create"
+import { Edit as EditSource } from "./pages/Source/Edit"
+import { Index as SourceIndex } from "./pages/Source/Index"
 import { UserList } from "./pages/User/Components/UserList"
 import { Create as CreateUser } from "./pages/User/Create"
+import { Edit as EditUser } from "./pages/User/Edit"
 
 export function Main() {
   return (
     <main>
       <Routes>
         <Route path="users/create" element={<CreateUser />} />
-        <Route path="users/:userId/edit" element={<div>edit user</div>} />
+        <Route path="users/:userId/edit" element={<EditUser />} />
         <Route
           path="users"
           element={
