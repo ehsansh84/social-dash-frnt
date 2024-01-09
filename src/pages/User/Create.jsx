@@ -72,6 +72,14 @@ export function Create() {
       return
     }
 
+    if (password !== confirm) {
+      setError({
+        status: "danger",
+        message: "Passwords do not match!",
+      })
+      return
+    }
+
     const bodyObject = {
       name,
       family,
