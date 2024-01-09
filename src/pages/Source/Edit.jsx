@@ -1,9 +1,7 @@
 import { SocialMediaRadio } from "../../components/SocialMediaRadio"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { useEffect, useMemo, useState } from "react"
-import { Alert } from "../../components/Alert"
 import { Breadcrumb } from "../../components/Breadcrumb"
-import { Transition } from "@headlessui/react"
 import { Wrapper } from "../../Wrapper"
 import { useNavigate, useParams } from "react-router-dom"
 
