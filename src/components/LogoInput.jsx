@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useImageInput } from "../hooks/useImageInput"
 import { UserCircleIcon } from "@heroicons/react/20/solid"
 
-export function LogoInput({ imageUrl = "", onImageChange }) {
+export function LogoInput({ label="Logo", imageUrl = "", onImageChange }) {
   const { selectedImage, inputKey, handleImageUpload, removeImage } = useImageInput(imageUrl)
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export function LogoInput({ imageUrl = "", onImageChange }) {
         htmlFor="channel-logo"
         className="block text-sm font-medium leading-6 text-text"
       >
-        Logo
+        {label}
       </label>
       <div className="mt-2 flex items-center gap-x-3">
         <div className="h-12 w-12 overflow-hidden rounded-full">
