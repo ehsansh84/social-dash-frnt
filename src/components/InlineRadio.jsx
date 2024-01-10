@@ -21,13 +21,13 @@ export function InlineRadio({
                 name={name}
                 type="radio"
                 defaultChecked={option.id === selectedOption}
-                className="text-primry h-4 w-4 border-gray-300 focus:ring-primary"
+                className="text-primry h-4 w-4 border-gray-300 focus:ring-primary cursor-pointer"
                 onChange={(e) => setSelectedOption(e.target.value)}
                 {...delegated}
               />
               <label
                 htmlFor={option.id}
-                className="ml-3 block text-sm font-medium leading-6 text-text"
+                className="ml-3 block text-sm font-medium leading-6 text-text cursor-pointer"
               >
                 {option.title}
               </label>
