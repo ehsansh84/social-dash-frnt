@@ -194,6 +194,46 @@ export function Create() {
                   <LogoInput imageUrl={thumbUrl} onImageChange={setThumbUrl} label="Thumbnail" />
                 </div>
 
+                <div className="sm:col-span-4">
+                  <InputField
+                    id="postDate"
+                    label="Post date"
+                    value={postDate}
+                    setValue={setPostDate}
+                    type="datetime-local"
+                  />
+                </div>
+
+                <div className="sm:col-span-4">
+                  <InputField
+                    id="dateUtc"
+                    label="Date UTC"
+                    value={dateUtc}
+                    setValue={setDateUtc}
+                    type="datetime-local"
+                  />
+                </div>
+
+                <div className="sm:col-span-4">
+                  <InputField
+                    id="postUrl"
+                    label="Post url"
+                    value={postUrl}
+                    setValue={setPostUrl}
+                    type="url"
+                  />
+                </div>
+
+                <div className="sm:col-span-4">
+                  <InputField
+                    id="profile"
+                    label="Profile"
+                    value={profile}
+                    setValue={setProfile}
+                    type="url"
+                  />
+                </div>
+
               </div>
             </div>
           </div>
