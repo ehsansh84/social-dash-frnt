@@ -11,6 +11,9 @@ import { useCreateResource } from "../../hooks/useResources"
 import { TextAreaField } from "../../components/TextAreaField"
 import { CoverInput } from "../../components/CoverInput"
 import { LogoInput } from "../../components/LogoInput"
+import { ListInput } from "../../components/ListInput"
+import { InputWithValidation } from "../../components/InputWithValidation"
+import { validateHashtag } from "../../utils"
 
 const statuses = [
   { id: "new", title: "Enabled" },
@@ -39,6 +42,8 @@ export function Create() {
   const [postUrl, setPostUrl] = useState("")
   const [profile, setProfile] = useState("")
   const [captionHashtags, setCaptionHashtags] = useState([])
+
+  const [isChecking, setIsChecking] = useState(false)
 
   const [error, setError] = useState(null)
 
@@ -158,6 +163,28 @@ export function Create() {
                     setSelectedOption={setStatus}
                   />
                 </div>
+
+                <div className="sm:col-span-4">
+                  <ListInput
+                  id="captionHashtags"
+                  label="Caption hashtags"
+                  items={captionHashtags}
+                  setItems={setCaptionHashtags}
+                  />
+                </div>
+
+                <div className="sm:col-span-4">
+                  <InputWithValidation
+                  id="name"
+                  label="Name"
+                  isChecking={isChecking}
+                  setIsChecking={setIsChecking}
+                  validateCallback={validateHashtag}
+                  value={caption}
+                  setValue={setCaption}
+                  />
+                </div>
+
 
                 <div className="sm:col-span-4">
                   <InputField

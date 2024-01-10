@@ -16,7 +16,7 @@ export function InputField({ id, label, value, setValue, ...delegated }) {
           type="text"
           name={id}
           id={id}
-          className="ring-inset ring-gray-300 block w-full flex-1 rounded-md border-0 bg-transparent py-1.5 ps-3 text-text shadow-sm ring-1 placeholder:text-placeholder focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+          className="ring-inset ring-primary block w-full rounded-md border-0 bg-transparent py-1.5 ps-3 text-text shadow-sm ring-1 placeholder:text-placeholder focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
           {...delegated}
         />
       </div>
