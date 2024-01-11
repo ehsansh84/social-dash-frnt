@@ -216,6 +216,7 @@ export function Create() {
                     value={postDate}
                     setValue={setPostDate}
                     type="datetime-local"
+                    required
                   />
                 </div>
 
@@ -226,6 +227,7 @@ export function Create() {
                     value={dateUtc}
                     setValue={setDateUtc}
                     type="datetime-local"
+                    required
                   />
                 </div>
 
