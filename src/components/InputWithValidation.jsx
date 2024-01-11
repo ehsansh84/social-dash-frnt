@@ -1,36 +1,21 @@
 import { ExclamationCircleIcon } from "@heroicons/react/20/solid"
-import { useEffect, useState } from "react"
 
 export function InputWithValidation({
   id,
   label,
   value,
   setValue,
-  validateCallback,
-  isChecking,
-  setIsChecking,
-  messageOnInvalid='Invalid input',
+  messageOnInvalid = "Invalid input",
+  isValid,
+  helpText="",
   ...delegated
 }) {
-  const [isValid, setIsValid] = useState(true)
-
   const baseClassNames =
     "block w-full bg-transparent rounded-md border-0 py-1.5 ring-1 ring-inset sm:text-sm sm:leading-6 focus:ring-2 focus:ring-inset ps-3"
   const invalidClassNames =
     "text-red-900 ring-red-300 placepe-10 placeholder:text-red-300 pr-10 "
   const validClassNames =
-    "text-text ring-gray-300 placeholder:text-placeholder focus:ring-primary"
-
-  useEffect(() => {
-    if (isChecking) {
-      setIsValid(validateCallback(value))
-    }
-  }, [isChecking, validateCallback, value])
-
-  useEffect(() => {
-    setIsValid(true)
-    setIsChecking(false)
-  }, [value, setIsChecking])
+    "text-text ring-primary placeholder:text-placeholder focus:ring-primary"
 
   return (
     <>
@@ -69,6 +54,9 @@ export function InputWithValidation({
           {messageOnInvalid}
         </p>
       )}
+      <p className="mt-2 text-sm text-gray-500" id="email-description">
+        {helpText}
+      </p>
     </>
   )
 }

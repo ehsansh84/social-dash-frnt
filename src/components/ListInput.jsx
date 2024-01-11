@@ -1,18 +1,44 @@
-import React, { useState } from "react"
-import { InputField } from "./InputField"
+import React, { useEffect, useState } from "react"
 import { InputWithValidation } from "./InputWithValidation"
+import { HashtagButton } from "./HashtagButton"
 
-export function ListInput({ id, label, items, setItems, ...delegated }) {
+export function ListInput({
+  id,
+  label,
+  items,
+  setItems,
+  validateCallback,
+  helpText = "Press enter to add to the list",
+  ...delegated
+}) {
   const [input, setInput] = useState("")
+  const [isValid, setIsValid] = useState(true)
 
   const handleEnter = (event) => {
-    setInput(event.target.value)
     if (event.key === "Enter") {
       event.preventDefault()
-      setItems([...items, input])
-      setInput("")
+      if (input && isValid) {
+        if (!items.includes(input)) {
+          setItems([...items, input])
+          setInput("")
+        }
+      }
+    } else {
+      setInput(event.target.value)
     }
   }
+
+  const removeItem = (index) => {
+    setItems(items.filter((item, i) => i !== index))
+  }
+
+  useEffect(() => {
+    if (input) {
+      setIsValid(validateCallback(input))
+    } else {
+      setIsValid(true)
+    }
+  }, [input, validateCallback])
 
   return (
     <div>
@@ -22,13 +48,17 @@ export function ListInput({ id, label, items, setItems, ...delegated }) {
         setValue={setInput}
         value={input}
         onKeyPress={handleEnter}
+        isValid={isValid}
+        helpText={helpText}
         {...delegated}
       />
-      <ul>
+      <div className="flex gap-2 pt-2">
         {items.map((item, index) => (
-          <li key={index}>{item}</li>
+          <HashtagButton key={index} onClick={() => removeItem(index)}>
+            {item}
+          </HashtagButton>
         ))}
-      </ul>
+      </div>
     </div>
   )
 }

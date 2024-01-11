@@ -1,4 +1,4 @@
-export function InputField({ id, label, value, setValue, ...delegated }) {
+export function InputField({ id, label, value, setValue, helpText="", ...delegated }) {
   return (
     <>
       <label
@@ -7,7 +7,7 @@ export function InputField({ id, label, value, setValue, ...delegated }) {
       >
         {label}
       </label>
-      <div className="mt-2">
+      <div className="mt-1">
         <input
           value={value}
           onChange={(e) => {
@@ -20,6 +20,9 @@ export function InputField({ id, label, value, setValue, ...delegated }) {
           {...delegated}
         />
       </div>
+      <p className="mt-2 text-sm text-gray-500" id="email-description">
+        {helpText}
+      </p>
     </>
   )
 }

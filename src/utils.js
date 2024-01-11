@@ -7,9 +7,6 @@ export function capitalize(word) {
 }
 
 export function validateHashtag(text) {
-  // The regex pattern for a hashtag
-  const hashtagPattern = /^#[a-zA-Z0-9_]+$/
-
-  // Test the input against the pattern
-  return hashtagPattern.test(text)
+  const textPattern = /^[\p{L}\p{N}_]+$/u
+  return textPattern.test(text)
 }

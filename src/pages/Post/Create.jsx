@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { Wrapper } from "../../Wrapper"
@@ -12,7 +12,6 @@ import { TextAreaField } from "../../components/TextAreaField"
 import { CoverInput } from "../../components/CoverInput"
 import { LogoInput } from "../../components/LogoInput"
 import { ListInput } from "../../components/ListInput"
-import { InputWithValidation } from "../../components/InputWithValidation"
 import { validateHashtag } from "../../utils"
 
 const statuses = [
@@ -43,7 +42,7 @@ export function Create() {
   const [profile, setProfile] = useState("")
   const [captionHashtags, setCaptionHashtags] = useState([])
 
-  const [isChecking, setIsChecking] = useState(false)
+  const memoizedValidateHashtag = useCallback(validateHashtag, [])
 
   const [error, setError] = useState(null)
 
@@ -89,7 +88,7 @@ export function Create() {
       post_date: postDate,
       post_url: postUrl,
       profile,
-      captionHashtags,
+      caption_hashtags: captionHashtags,
     }
 
     createResourceMutation.mutate(bodyObject, {
@@ -139,10 +138,7 @@ export function Create() {
                 </div>
 
                 <div className="col-span-full">
-                  <CoverInput
-                    imageUrl={coverUrl}
-                    onImageChange={setCoverUrl}
-                  />
+                  <CoverInput imageUrl={coverUrl} onImageChange={setCoverUrl} />
                 </div>
 
                 <div className="sm:col-span-4">
@@ -166,25 +162,13 @@ export function Create() {
 
                 <div className="sm:col-span-4">
                   <ListInput
-                  id="captionHashtags"
-                  label="Caption hashtags"
-                  items={captionHashtags}
-                  setItems={setCaptionHashtags}
+                    id="captionHashtags"
+                    label="Caption hashtags"
+                    items={captionHashtags}
+                    setItems={setCaptionHashtags}
+                    validateCallback={memoizedValidateHashtag}
                   />
                 </div>
-
-                <div className="sm:col-span-4">
-                  <InputWithValidation
-                  id="name"
-                  label="Name"
-                  isChecking={isChecking}
-                  setIsChecking={setIsChecking}
-                  validateCallback={validateHashtag}
-                  value={caption}
-                  setValue={setCaption}
-                  />
-                </div>
-
 
                 <div className="sm:col-span-4">
                   <InputField
@@ -218,7 +202,11 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <LogoInput imageUrl={thumbUrl} onImageChange={setThumbUrl} label="Thumbnail" />
+                  <LogoInput
+                    imageUrl={thumbUrl}
+                    onImageChange={setThumbUrl}
+                    label="Thumbnail"
+                  />
                 </div>
 
                 <div className="sm:col-span-4">
@@ -260,7 +248,6 @@ export function Create() {
                     type="url"
                   />
                 </div>
-
               </div>
             </div>
           </div>
