@@ -7,6 +7,7 @@ import { Index as AccountIndex } from "./pages/Account/Index"
 import Dashboard from "./pages/Dashboard/Dashboard"
 import { PostList } from "./pages/Post/Components/PostList"
 import { Create as CreatePost } from "./pages/Post/Create"
+import { Edit as EditPost } from "./pages/Post/Edit"
 import { Create as CreateSchedule } from "./pages/Schedule/Create"
 import { Edit as EditSchedule } from "./pages/Schedule/Edit"
 import { Index as ScheduleIndex } from "./pages/Schedule/Index"
@@ -54,7 +55,7 @@ export function Main() {
             </IndexPage>
           }
         />
-        <Route path="posts/:postId/edit" element={<div>edit post</div>} />
+        <Route path="posts/:postId/edit" element={<EditPost />} />
 
         <Route path="settings" element={<div>settings</div>} />
         <Route path="/" element={<Dashboard />} />
