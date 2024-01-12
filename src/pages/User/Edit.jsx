@@ -10,7 +10,7 @@ import { InputPhone } from "../../components/InputPhone"
 import { MessageTransition } from "../../components/MessageTransition"
 import { ProfileImageInput } from "../../components/ProfileImageInput"
 import { SearchMenu } from "../../components/SearchMenu"
-import {  useUpdateResource } from "../../hooks/useResources"
+import {  useResource, useUpdateResource } from "../../hooks/useResources"
 
 const roles = [
   { id: "admin", name: "Admin" },
@@ -24,7 +24,7 @@ const statuses = [
 
 export function Edit() {
   const { userId } = useParams()
-  const { data: user } = useUpdateResource("users", userId)
+  const { data: user } = useResource("users", userId)
 
   const [name, setName] = useState("")
   const [family, setFamily] = useState("")
