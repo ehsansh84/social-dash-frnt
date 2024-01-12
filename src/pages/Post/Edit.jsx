@@ -33,14 +33,14 @@ export function Edit() {
 
   const { postId } = useParams()
   const { data: post } = useResource("posts", postId)
-  console.log(postId);
-  console.log(post);
+  console.log(postId)
+  console.log(post)
   const [caption, setCaption] = useState("")
   const [likes, setLikes] = useState(0)
   const [comments, setComments] = useState(0)
   const [postType, setPostType] = useState("image")
   const [status, setStatus] = useState("new")
-  const [videUrl, setVideoUrl] = useState("")
+  const [videoUrl, setVideoUrl] = useState("")
   const [coverUrl, setCoverUrl] = useState("")
   const [thumbUrl, setThumbUrl] = useState("")
   const [dateUtc, setDateUtc] = useState("")
@@ -64,7 +64,7 @@ export function Edit() {
       setComments(post.comments)
       setPostType(post.post_type)
       setStatus(post.status)
-      setVideoUrl(post.vide_url)
+      setVideoUrl(post.video_url)
       setCoverUrl(post.cover_url)
       setThumbUrl(post.thumb_url)
       setDateUtc(post.date_utc)
@@ -105,7 +105,7 @@ export function Edit() {
       comments,
       postType,
       status,
-      video_url: videUrl,
+      video_url: videoUrl,
       cover_url: coverUrl,
       thumb_url: thumbUrl,
       user_id: "62d7a781d8f8d7627ce212d5",
@@ -118,7 +118,7 @@ export function Edit() {
 
     updateResource.mutate({
       id: postId,
-      data: bodyObject
+      data: bodyObject,
     })
   }
 
@@ -190,7 +190,6 @@ export function Edit() {
                     min="0"
                   />
                 </div>
-
                 <div className="sm:col-span-4">
                   <InputField
                     label="Comments"
@@ -201,12 +200,13 @@ export function Edit() {
                     min="0"
                   />
                 </div>
+
                 <div className="sm:col-span-4">
                   <InputField
                     label="Video Url"
                     id="videoUrl"
                     setValue={setVideoUrl}
-                    value={videUrl}
+                    value={videoUrl}
                     type="url"
                   />
                 </div>
@@ -293,8 +293,7 @@ export function Edit() {
           </div>
           <div className="my-12">
             <MessageTransition message={error} setMessage={setError} />
-          <MessageTransition message={message} setMessage={setMessage} />
-
+            <MessageTransition message={message} setMessage={setMessage} />
           </div>
         </form>
       </NarrowWrapper>

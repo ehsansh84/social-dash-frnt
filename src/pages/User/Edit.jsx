@@ -109,7 +109,7 @@ export function Edit() {
     }
 
     updateSource.mutate({
-      _id: userId,
+      id: userId,
       data: bodyObject
     })
   }

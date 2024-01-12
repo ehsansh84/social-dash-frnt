@@ -72,7 +72,7 @@ export function Edit() {
 
   useEffect(() => {
     if (acceptableAccounts.length > 0) {
-      setAccountId(acceptableAccounts[0]._id)
+      setAccountId(acceptableAccounts[0].id)
     } else {
       setAccountId("")
     }
@@ -128,7 +128,7 @@ export function Edit() {
     }
 
     updateSource.mutate({
-      _id: sourceId,
+      id: sourceId,
       data: bodyObject,
     })
   }
@@ -143,7 +143,7 @@ export function Edit() {
         <Breadcrumb
           pages={[
             { name: "Source", href: "/sources" },
-            { name: source?._id, href: "#" },
+            { name: source?.id, href: "#" },
           ]}
         />
       </Wrapper>
@@ -185,7 +185,7 @@ export function Edit() {
                   <SearchMenu
                     label="Account"
                     options={acceptableAccounts.map((a) => ({
-                      id: a._id,
+                      id: a.id,
                       name: a.name,
                     }))}
                     setSelected={setAccountId}

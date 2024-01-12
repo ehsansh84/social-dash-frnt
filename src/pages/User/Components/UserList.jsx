@@ -13,7 +13,7 @@ export function UserList() {
       {people.map((person) => (
         <Wrapper
           as="li"
-          key={person._id}
+          key={person.id}
           className="relative flex justify-between gap-x-6 py-5 hover:bg-bg-hover"
         >
           <div className="flex gap-x-4">
@@ -24,7 +24,7 @@ export function UserList() {
             />
             <div className="min-w-0 flex-auto">
               <p>
-                <Link to={"/users/" + person._id + "/edit"} className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 me-2">
+                <Link to={"/users/" + person.id + "/edit"} className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 me-2">
                   <span className="absolute inset-x-0 -top-px bottom-0" />
                   {person.name + (person.family ? ' ' + person.family : '')}
                 </Link>

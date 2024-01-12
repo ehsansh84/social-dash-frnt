@@ -45,7 +45,7 @@ export function Create() {
 
   useEffect(() => {
     if (acceptableAccounts.length > 0) {
-      setAccountId(acceptableAccounts[0]._id)
+      setAccountId(acceptableAccounts[0].id)
     } else {
       setAccountId("")
     }
@@ -156,7 +156,7 @@ export function Create() {
                   <SearchMenu
                     label="Account"
                     options={acceptableAccounts.map((a) => ({
-                      id: a._id,
+                      id: a.id,
                       name: a.name,
                     }))}
                     setSelected={setAccountId}

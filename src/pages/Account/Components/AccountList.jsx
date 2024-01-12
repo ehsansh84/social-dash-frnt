@@ -41,7 +41,7 @@ export function AccountList({ setMessage }) {
         const SocialIcon = socialMediaDictionary[account.social_media].icon
         return (
           <li
-            key={account._id}
+            key={account.id}
             className="col-span-1 divide-y divide-border rounded-lg bg-bg-card shadow"
           >
             <div className="flex w-full items-center justify-between space-x-6 p-6">
@@ -66,7 +66,7 @@ export function AccountList({ setMessage }) {
               <div className="-mt-px flex divide-x divide-border">
                 <div className="flex w-0 flex-1 hover:bg-bg-hover">
                   <Link
-                    to={`/accounts/${account._id}/edit`}
+                    to={`/accounts/${account.id}/edit`}
                     className="relative -me-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-es-lg border border-transparent py-4 text-sm font-semibold text-text"
                   >
                     <PencilIcon
@@ -81,11 +81,11 @@ export function AccountList({ setMessage }) {
                     type="button"
                     className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-ee-lg border border-transparent py-4 text-sm font-semibold text-text"
                     onClick={() => {
-                      setIdToDelete(account._id)
-                      deleteAccountMutation.mutate(account._id)
+                      setIdToDelete(account.id)
+                      deleteAccountMutation.mutate(account.id)
                     }}
                   >
-                    {idToDelete === account._id &&
+                    {idToDelete === account.id &&
                     deleteAccountMutation.isPending ? (
                       <div
                         className="inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"

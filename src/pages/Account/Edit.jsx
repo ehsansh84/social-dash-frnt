@@ -71,7 +71,7 @@ export function Edit() {
       social_media: socialMedia,
       user_id: "62d7a781d8f8d7627ce212d5",
     }
-    updateAccount.mutate({ _id: accountId, data: bodyObject })
+    updateAccount.mutate({ id: accountId, data: bodyObject })
   }
 
   return (

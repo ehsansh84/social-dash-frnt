@@ -62,7 +62,7 @@ export function Edit() {
 
   useEffect(() => {
     if (acceptableAccounts.length > 0) {
-      setAccountId(acceptableAccounts[0]._id)
+      setAccountId(acceptableAccounts[0].id)
     } else {
       setAccountId("")
     }
@@ -120,7 +120,7 @@ export function Edit() {
     }
 
     updateSchedule.mutate({
-      _id: scheduleId,
+      id: scheduleId,
       data: bodyObject,
     })
   }
@@ -132,7 +132,7 @@ export function Edit() {
           pages={[
             { name: "Schedules", href: "/schedules" },
             { name: "Post: " + postId, href: "/posts/" + postId },
-            { name: schedule?._id, href: "#" },
+            { name: schedule?.id, href: "#" },
           ]}
         />
       </Wrapper>
@@ -174,7 +174,7 @@ export function Edit() {
                   <SearchMenu
                     label="Account"
                     options={acceptableAccounts.map((a) => ({
-                      id: a._id,
+                      id: a.id,
                       name: a.name,
                     }))}
                     setSelected={setAccountId}

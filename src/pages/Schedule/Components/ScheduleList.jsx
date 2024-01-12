@@ -52,7 +52,7 @@ export function ScheduleList({ setMessage }) {
           return (
             <Wrapper
               as="li"
-              key={schedule._id}
+              key={schedule.id}
               className="flex items-center justify-between gap-x-6 py-5"
             >
               <div className="flex min-w-0 items-center gap-4">
@@ -64,7 +64,7 @@ export function ScheduleList({ setMessage }) {
                 <div className="flex flex-col">
                   <div className="flex items-start gap-x-3">
                     <p className="text-sm font-semibold leading-6 text-text">
-                      {schedule._id}
+                      {schedule.id}
                     </p>
                     <p
                       className={classNames(
@@ -119,14 +119,14 @@ export function ScheduleList({ setMessage }) {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            to={`/schedules/${schedule._id}/edit`}
+                            to={`/schedules/${schedule.id}/edit`}
                             className={classNames(
                               active ? "bg-primary" : "",
                               "block px-3 py-1 text-sm leading-6 text-text",
                             )}
                           >
                             Edit
-                            <span className="sr-only">, {schedule._id}</span>
+                            <span className="sr-only">, {schedule.id}</span>
                           </Link>
                         )}
                       </Menu.Item>
@@ -139,11 +139,11 @@ export function ScheduleList({ setMessage }) {
                             )}
                             onClick={(e) => {
                               e.preventDefault()
-                              deleteScheduleMutation.mutate(schedule._id)
+                              deleteScheduleMutation.mutate(schedule.id)
                             }}
                           >
                             Delete
-                            <span className="sr-only">, {schedule._id}</span>
+                            <span className="sr-only">, {schedule.id}</span>
                           </Link>
                         )}
                       </Menu.Item>

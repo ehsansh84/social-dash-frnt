@@ -10,7 +10,7 @@ export function PostList() {
   return (
     <ul className="-my-6 divide-y divide-gray-200 sm:-my-10">
       {posts.map((p) => (
-        <div key={p._id} className="flex py-6 sm:py-10">
+        <div key={p.id} className="flex py-6 sm:py-10">
           <div className="min-w-0 flex-1 lg:flex lg:flex-col">
             <div className="lg:flex-1">
               <div className="sm:flex">
@@ -33,7 +33,7 @@ export function PostList() {
                 </a>
                 <div className="ml-4 border-l border-gray-200 pl-4 sm:ml-6 sm:pl-6">
                   <Link
-                    to={"/posts/" + p._id + "/edit"}
+                    to={"/posts/" + p.id + "/edit"}
                     className="text-indigo-600 hover:text-indigo-500"
                   >
                     Edit

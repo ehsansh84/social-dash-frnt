@@ -26,7 +26,7 @@ export const useResource = (resourceName, id) => {
 
       if (listData) {
         // If the data is in the cache, find the specific item
-        const item = listData.find((item) => item._id === id)
+        const item = listData.find((item) => item.id === id)
         if (item) {
           return Promise.resolve(item)
         }
@@ -50,13 +50,13 @@ export const useCreateResource = (resourceName) => {
       if (currentData) {
         queryClient.setQueryData(
           [resourceName],
-          [...currentData, { _id: data.data.id, ...sentData }],
+          [...currentData, { id: data.data.id, ...sentData }],
         )
       }
 
       // Also update the individual resource in the cache
-      queryClient.setQueryData([resourceName, data._id], {
-        _id: data.data.id,
+      queryClient.setQueryData([resourceName, data.id], {
+        id: data.data.id,
         ...sentData,
       })
     },
@@ -67,16 +67,16 @@ export const useUpdateResource = (resourceName) => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationKey: [resourceName],
-    mutationFn: ({ _id, data, headers }) =>
-      updateResource(resourceName, _id, data, headers),
+    mutationFn: ({ id, data, headers }) =>
+      updateResource(resourceName, id, data, headers),
     onSuccess: (data, sentData) => {
       // Update the list in the cache
       const currentData = queryClient.getQueryData([resourceName])
       // console.log(sentData)
       if (currentData) {
         const updatedData = currentData.map((item) =>
-          item._id === sentData._id
-            ? { _id: sentData._id, ...sentData.data }
+          item.id === sentData.id
+            ? { id: sentData.id, ...sentData.data }
             : item,
         )
         queryClient.setQueryData([resourceName], updatedData)
@@ -84,8 +84,8 @@ export const useUpdateResource = (resourceName) => {
 
       console.log(sentData)
       // Also update the individual resource in the cache
-      queryClient.setQueryData([resourceName, sentData._id], {
-        _id: sentData._id,
+      queryClient.setQueryData([resourceName, sentData.id], {
+        id: sentData.id,
         ...sentData.data
       })
     },
