@@ -13,6 +13,7 @@ import { CoverInput } from "../../components/CoverInput"
 import { LogoInput } from "../../components/LogoInput"
 import { ListInput } from "../../components/ListInput"
 import { validateHashtag } from "../../utils"
+import { useMessageNavigation } from "../../hooks/useMessageNavigation"
 
 const statuses = [
   { id: "new", title: "Enabled" },
@@ -28,6 +29,7 @@ const postTypes = [
 ]
 
 export function Edit() {
+  const { message, setMessage } = useMessageNavigation()
 
   const { postId } = useParams()
   const { data: post } = useResource("posts", postId)
@@ -115,7 +117,7 @@ export function Edit() {
     }
 
     updateResource.mutate({
-      _id: postId,
+      id: postId,
       data: bodyObject
     })
   }
@@ -126,7 +128,7 @@ export function Edit() {
         <Breadcrumb
           pages={[
             { name: "Post", href: "/posts" },
-            { name: post?._id, href: "#" },
+            { name: post?.id, href: "#" },
           ]}
         />
       </Wrapper>
@@ -291,6 +293,8 @@ export function Edit() {
           </div>
           <div className="my-12">
             <MessageTransition message={error} setMessage={setError} />
+          <MessageTransition message={message} setMessage={setMessage} />
+
           </div>
         </form>
       </NarrowWrapper>
