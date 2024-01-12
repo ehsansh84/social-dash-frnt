@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { Wrapper } from "../../Wrapper"
@@ -7,7 +7,7 @@ import { Breadcrumb } from "../../components/Breadcrumb"
 import { InlineRadio } from "../../components/InlineRadio"
 import { InputField } from "../../components/InputField"
 import { MessageTransition } from "../../components/MessageTransition"
-import { useResource, useUpdateResource } from "../../hooks/useResources"
+import { useResource, useResourceList, useUpdateResource } from "../../hooks/useResources"
 import { TextAreaField } from "../../components/TextAreaField"
 import { CoverInput } from "../../components/CoverInput"
 import { LogoInput } from "../../components/LogoInput"
@@ -31,10 +31,11 @@ const postTypes = [
 export function Edit() {
   const { message, setMessage } = useMessageNavigation()
 
+  const { data : schedules } = useResourceList("schedules")
+
+
   const { postId } = useParams()
   const { data: post } = useResource("posts", postId)
-  console.log(postId)
-  console.log(post)
   const [caption, setCaption] = useState("")
   const [likes, setLikes] = useState(0)
   const [comments, setComments] = useState(0)
@@ -51,6 +52,18 @@ export function Edit() {
 
   const memoizedValidateHashtag = useCallback(validateHashtag, [])
 
+  const postSchedules = useMemo(
+    () => {
+      if (schedules) {
+        return schedules.filter(
+          (s) => post ? s.post_id === post.id : false
+        )
+      }
+    },
+    [post, schedules],
+  )
+
+  console.log(postSchedules);
   const [error, setError] = useState(null)
 
   const updateResource = useUpdateResource("posts")
