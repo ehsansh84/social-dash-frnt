@@ -43,7 +43,7 @@ export function Edit() {
     if (updateAccount.isSuccess) {
       setError(null)
       navigate("/accounts", {
-        state: { message: "Your account was created!", status: "success" },
+        state: { message: "Account was edited!", status: "success" },
       })
     }
   }, [
