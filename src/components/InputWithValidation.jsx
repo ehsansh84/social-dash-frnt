@@ -1,15 +1,19 @@
 import { ExclamationCircleIcon } from "@heroicons/react/20/solid"
+import { forwardRef } from "react"
 
-export function InputWithValidation({
-  id,
-  label,
-  value,
-  setValue,
-  messageOnInvalid = "Invalid input",
-  isValid,
-  helpText="",
-  ...delegated
-}) {
+function InputWithValidation2(
+  {
+    id,
+    label,
+    value,
+    setValue,
+    messageOnInvalid = "Invalid input",
+    isValid,
+    helpText = "",
+    ...delegated
+  },
+  ref,
+) {
   const baseClassNames =
     "block w-full bg-transparent rounded-md border-0 py-1.5 ring-1 ring-inset sm:text-sm sm:leading-6 focus:ring-2 focus:ring-inset ps-3"
   const invalidClassNames =
@@ -27,6 +31,7 @@ export function InputWithValidation({
       </label>
       <div className="relative mt-2">
         <input
+          ref={ref}
           value={value}
           onChange={(e) => {
             setValue(e.target.value)
@@ -60,3 +65,5 @@ export function InputWithValidation({
     </>
   )
 }
+
+export const InputWithValidation = forwardRef(InputWithValidation2)
