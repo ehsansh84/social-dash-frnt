@@ -273,13 +273,36 @@ export function Edit() {
                     type="url"
                   />
                 </div>
-              </div>
 
-              {postSchedules.length > 0 ? (
-                <Link to={`/schedules/${postId}`}>see schedules</Link>
-              ) : (
-                <p>There are no schedules set for this post. <Link to={`/schedules/${postId}/create`}>Create one.</Link></p>
-              )}
+                <div className="sm:col-span-4">
+                  <div className="text-sm font-medium leading-6 text-text">
+                    Schedules
+                  </div>
+
+                  <div className="mt-1">
+                    {postSchedules.length > 0 ? (
+                      <p className="mt-4 text-sm">
+                        <Link
+                          className="text-primary hover:underline"
+                          to={`/schedules/${postId}`}
+                        >
+                          See schedules for this post.
+                        </Link>
+                      </p>
+                    ) : (
+                      <p className="mt-4 text-sm">
+                        No schedules set for this post.{" "}
+                        <Link
+                          className="text-primary hover:underline"
+                          to={`/schedules/${postId}/create`}
+                        >
+                          Create one.
+                        </Link>
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

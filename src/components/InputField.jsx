@@ -7,7 +7,7 @@ export function InputField({ id, label, value, setValue, helpText="", ...delegat
       >
         {label}
       </label>
-      <div className="mt-1">
+      <div className="mt-2">
         <input
           value={value}
           onChange={(e) => {
