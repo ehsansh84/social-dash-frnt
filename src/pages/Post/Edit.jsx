@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { Wrapper } from "../../Wrapper"
 import { Breadcrumb } from "../../components/Breadcrumb"
@@ -7,7 +7,11 @@ import { Breadcrumb } from "../../components/Breadcrumb"
 import { InlineRadio } from "../../components/InlineRadio"
 import { InputField } from "../../components/InputField"
 import { MessageTransition } from "../../components/MessageTransition"
-import { useResource, useResourceList, useUpdateResource } from "../../hooks/useResources"
+import {
+  useResource,
+  useResourceList,
+  useUpdateResource,
+} from "../../hooks/useResources"
 import { TextAreaField } from "../../components/TextAreaField"
 import { CoverInput } from "../../components/CoverInput"
 import { LogoInput } from "../../components/LogoInput"
@@ -31,8 +35,7 @@ const postTypes = [
 export function Edit() {
   const { message, setMessage } = useMessageNavigation()
 
-  const { data : schedules } = useResourceList("schedules")
-
+  const { data: schedules } = useResourceList("schedules")
 
   const { postId } = useParams()
   const { data: post } = useResource("posts", postId)
@@ -52,18 +55,15 @@ export function Edit() {
 
   const memoizedValidateHashtag = useCallback(validateHashtag, [])
 
-  const postSchedules = useMemo(
-    () => {
-      if (schedules) {
-        return schedules.filter(
-          (s) => post ? s.post_id === post.id : false
-        )
-      }
-    },
-    [post, schedules],
-  )
+  const postSchedules = useMemo(() => {
+    if (schedules) {
+      return schedules.filter((s) => (post ? s.post_id === post.id : false))
+    } else {
+      return []
+    }
+  }, [post, schedules])
 
-  console.log(postSchedules);
+  console.log(postSchedules)
   const [error, setError] = useState(null)
 
   const updateResource = useUpdateResource("posts")
@@ -274,6 +274,12 @@ export function Edit() {
                   />
                 </div>
               </div>
+
+              {postSchedules.length > 0 ? (
+                <Link to={`/schedules/${postId}`}>see schedules</Link>
+              ) : (
+                <p>There are no schedules set for this post. <Link to={`/schedules/${postId}/create`}>Create one.</Link></p>
+              )}
             </div>
           </div>
 

@@ -1,10 +1,14 @@
 import { Menu, Transition } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid"
-import { Fragment, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Fragment, useEffect, useMemo } from "react"
+import { Link, useParams } from "react-router-dom"
 import { Wrapper } from "../../../Wrapper"
 import { socialMediaDictionary } from "../../../components/SocialMedia"
-import { useDeleteResource, useResourceList } from "../../../hooks/useResources"
+import {
+  useDeleteResource,
+  useResource,
+  useResourceList,
+} from "../../../hooks/useResources"
 import { classNames } from "../../../utils"
 import { Loading } from "../../../components/Loading"
 
@@ -17,7 +21,11 @@ const statuses = {
 }
 
 export function ScheduleList({ setMessage }) {
-  const { data } = useResourceList("schedules")
+  const { postId } = useParams()
+  const { data: schedules } = useResourceList("schedules")
+
+  const { data: post } = useResource("posts", postId)
+
   const deleteScheduleMutation = useDeleteResource("schedules")
 
   useEffect(() => {
@@ -30,7 +38,7 @@ export function ScheduleList({ setMessage }) {
 
     if (deleteScheduleMutation.isSuccess) {
       setMessage({
-        message: "Account deleted",
+        message: "Schedule deleted",
         status: "success",
       })
     }
@@ -41,13 +49,23 @@ export function ScheduleList({ setMessage }) {
     setMessage,
   ])
 
-  const schedules = data ?? []
+  const postSchedules = useMemo(() => {
+    if (post && schedules) {
+      return schedules.filter((s) => (s.post_id === post.id))
+    } else if (schedules) {
+      return schedules
+    } else {
+      return []
+    }
+  }, [post, schedules])
+
+
 
   return (
     <>
       <ul className="relative isolate divide-y divide-gray-100 dark:divide-gray-700 dark:border-t dark:border-white/5">
         {deleteScheduleMutation.isPending && <Loading />}
-        {schedules.map((schedule) => {
+        {postSchedules.map((schedule) => {
           const SocialIcon = socialMediaDictionary[schedule.social_media].icon
           return (
             <Wrapper

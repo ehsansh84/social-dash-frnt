@@ -84,7 +84,7 @@ export function Edit() {
 
     if (updateSchedule.isSuccess) {
       setError(null)
-      navigate("/schedules", {
+      navigate(`/schedules/${postId}`, {
         state: { message: "Your schedule has been edited!", status: "success" },
       })
     }
@@ -93,6 +93,7 @@ export function Edit() {
     updateSchedule.isSuccess,
     navigate,
     updateSchedule.error,
+    postId
   ])
 
   const handleSubmit = async (event) => {

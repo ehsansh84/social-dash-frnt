@@ -33,7 +33,11 @@ export const useResource = (resourceName, id) => {
       }
 
       // If the item is not in the cache, fetch it
-      return fetchResource(resourceName, id)
+      if (id) {
+        return fetchResource(resourceName, id)
+      } else {
+        return null
+      }
     },
     staleTime: Infinity,
   })
@@ -86,7 +90,7 @@ export const useUpdateResource = (resourceName) => {
       // Also update the individual resource in the cache
       queryClient.setQueryData([resourceName, sentData.id], {
         id: sentData.id,
-        ...sentData.data
+        ...sentData.data,
       })
     },
   })

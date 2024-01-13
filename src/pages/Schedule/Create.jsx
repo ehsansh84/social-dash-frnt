@@ -61,7 +61,7 @@ export function Create() {
 
     if (createResourceMutation.isSuccess) {
       setError(null)
-      navigate("/schedules", {
+      navigate(`/schedules/${postId}`, {
         state: { message: "Your schedule was created!", status: "success" },
       })
     }
@@ -70,6 +70,7 @@ export function Create() {
     createResourceMutation.isSuccess,
     navigate,
     createResourceMutation.error,
+    postId
   ])
 
   const handleSubmit = async (event) => {
