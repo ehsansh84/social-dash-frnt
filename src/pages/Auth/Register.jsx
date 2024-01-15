@@ -1,202 +1,240 @@
-import axios from "axios"
 import { useEffect, useRef, useState } from "react"
-import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { InputWithValidation } from "../../components/InputWithValidation"
+import { MessageTransition } from "../../components/MessageTransition"
+import { Link } from "react-router-dom"
+// import { validatePassword, validateUsername } from "../../utils"
 import { InputField } from "../../components/InputField"
+import { useRegisterUser } from "../../hooks/useResources"
 
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
-const REGISTER_URL = "/register"
+const validateUsername = () => ({ test: () => true, instructions: [] })
+const validatePassword = () => ({ test: () => true, instructions: [] })
 
 export function Register() {
-  const usernameRef = useRef()
-  const errRef = useRef()
+  const registerUser = useRegisterUser()
 
+  const [error, setError] = useState(null)
+  const errorRef = useRef()
+
+  // username
   const [username, setUsername] = useState("")
-  const [name, setName] = useState("")
-  const [family, setFamily] = useState("")
-  const [email, setEmail] = useState("")
-  const [mobile, setMobile] = useState("")
+  const [isValidUsername, setIsValidUsername] = useState(false)
+  const [isUsernameFocused, setIsUsernameFocused] = useState(false)
+  const usernameRef = useRef()
+
   const [password, setPassword] = useState("")
+  const [isValidPassword, setIsValidPassword] = useState(false)
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false)
+
   const [confirm, setConfirm] = useState("")
+  const [isValidConfirm, setIsValidConfirm] = useState(false)
+  const [isConfirmFocused, setIsConfirmFocused] = useState(false)
 
-  const [isValidUsername, setIsValidUsername] = useState(true)
-  const [usernameFocus, setUsernameFocus] = useState(false)
-
-  const [errMsg, setErrMsg] = useState("")
-  const [success, setSuccess] = useState(false)
+  const [email, setEmail] = useState("")
 
   useEffect(() => {
     usernameRef.current.focus()
   }, [])
 
   useEffect(() => {
-    setIsValidUsername(USER_REGEX.test(username))
+    setIsValidUsername(validateUsername(username).test())
   }, [username])
 
   useEffect(() => {
-    setErrMsg("")
-  }, [username])
+    setIsValidPassword(validatePassword(password).test())
+    const match = password === confirm
+    setIsValidConfirm(match)
+  }, [password, confirm])
+
+  // clear error after change in fields
+  useEffect(() => {
+    setError(null)
+  }, [username, password, confirm])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // if button enabled with JS hack
-    const v1 = USER_REGEX.test(username)
-    if (!v1) {
-      setErrMsg("Invalid Entry")
+    if (!isValidConfirm || !isValidUsername || !isValidPassword) {
+      setError({
+        status: "danger",
+        message: "Your information is not valid!",
+      })
       return
     }
-    try {
-      const response = await axios.post(
-        REGISTER_URL,
-        JSON.stringify({ username, password, name, family, email, mobile }),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        },
-      )
-      console.log(response?.data)
-      console.log(response?.accessToken)
-      console.log(JSON.stringify(response))
-      setSuccess(true)
-      //clear state and controlled inputs
-      //need value attrib on inputs for this
-      setUsername("")
-    } catch (err) {
-      if (!err?.response) {
-        setErrMsg("No Server Response")
-      } else if (err.response?.status === 409) {
-        setErrMsg("Username Taken")
-      } else {
-        setErrMsg("Registration Failed")
-      }
-      errRef.current.focus()
+    const bodyObject = {
+      username,
+      email,
+      password,
+      name:"",
+      family:"",
+      mobile:""
     }
+
+    registerUser.mutate(bodyObject)
   }
 
+  if (registerUser.isError) {
+    console.log(registerUser)
+  } else if (registerUser.isSuccess) {
+    console.log(registerUser)
+  }
+  // try {
+  //   const response = await axios.post(
+  //     REGISTER_URL,
+  //     JSON.stringify({ username, password, name, family, email, mobile }),
+  //     {
+  //       headers: { "Content-Type": "application/json" },
+  //       withCredentials: true,
+  //     },
+  //   )
+  //   console.log(response?.data)
+  //   console.log(response?.accessToken)
+  //   console.log(JSON.stringify(response))
+  //   //clear state and controlled inputs
+  //   //need value attrib on inputs for this
+  //   setUsername("")
+  // } catch (err) {
+  //   if (!err?.response) {
+  //     setError({
+  //       status: "danger",
+  //       message: "No Server Response",
+  //     })
+  //   } else if (err.response?.status === 409) {
+  //     setError({
+  //       status: "danger",
+  //       message: "Username Taken",
+  //     })
+  //   } else {
+  //     setError({
+  //       status: "danger",
+  //       message: "Registration failed",
+  //     })
+  //   }
+  //   errorRef.current.focus()
+  // }
+  // }
+
   return (
-    <>
-      {success ? (
-        <section>
-          <h1>Success!</h1>
-          <p>
-            <a href="#">Sign In</a>
-          </p>
-        </section>
-      ) : (
-        <section className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-          <p
-            ref={errRef}
-            className={errMsg ? "text-red-500" : "sr-only"}
-            aria-live="assertive"
-          >
-            {errMsg}
-          </p>
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
-              className="mx-auto h-10 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="Your Company"
+    <section className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mx-auto w-20">
+          <img
+            className="mx-auto h-auto w-full"
+            src="/logo.svg"
+            alt="Your Company"
+          />
+        </div>
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-text">
+          Sign in to your account
+        </h2>
+      </div>
+
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div>
+            <InputWithValidation
+              isValid={!username || isValidUsername}
+              setValue={setUsername}
+              value={username}
+              label="Username"
+              id="username"
+              autoComplete="off"
+              placeholder="username"
+              inputRef={usernameRef}
+              required
+              aria-invalid={isValidUsername ? "false" : "true"}
+              aria-describedby="username_instruction"
+              onFocus={() => setIsUsernameFocused(true)}
+              onBlur={() => setIsUsernameFocused(false)}
             />
-            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-              Sign in to your account
-            </h2>
+            {isUsernameFocused && username && !isValidUsername && (
+              <ul id="username_instruction">
+                {validateUsername(username).instructions.map((i) => (
+                  <li key={i}>{i}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+          <div>
+            <InputField
+              type="email"
+              setValue={setEmail}
+              value={email}
+              placeholder="email@example.com"
+              label="Email"
+              id="email"
+              autoComplete="off"
+              required
+            />
           </div>
 
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
-              <div>
-                <InputField
-                  setValue={setUsername}
-                  value={name}
-                  label="name"
-                  id="name"
-                  required
-                  onFocus={() => setUsernameFocus(true)}
-                  onBlur={() => setUsernameFocus(false)}
-                />
-              </div>
-              <div>
-                <InputWithValidation
-                  isValid={!username || isValidUsername}
-                  setValue={setUsername}
-                  value={username}
-                  label="Username"
-                  id="username"
-                  autoComplete="off"
-                  ref={usernameRef}
-                  required
-                  aria-invalid={isValidUsername ? "false" : true}
-                  aria-describedby="uidnote"
-                  onFocus={() => setUsernameFocus(true)}
-                  onBlur={() => setUsernameFocus(false)}
-                />
-                {/* <p
-                  id="uidnote"
-                  className={
-                    usernameFocus && username && !isValidUsername ? "" : "sr-only"
-                  }
-                >
-                  <InformationCircleIcon />
-                  4 to 24 characters.
-                  <br />
-                  Must begin with a letter.
-                  <br />
-                  Letters, numbers, underscores, hyphens allowed.
-                </p> */}
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Password
-                  </label>
-                  <div className="text-sm">
-                    <a
-                      href="#"
-                      className="font-semibold text-indigo-600 hover:text-indigo-500"
-                    >
-                      Forgot password?
-                    </a>
-                  </div>
-                </div>
-                <div className="mt-2">
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Sign in
-                </button>
-              </div>
-            </form>
-
-            <p className="mt-10 text-center text-sm text-gray-500">
-              Not a member?{" "}
-              <a
-                href="#"
-                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-              >
-                Start a 14 day free trial
-              </a>
-            </p>
+          <div>
+            <InputWithValidation
+              isValid={!password || isValidPassword}
+              setValue={setPassword}
+              type="password"
+              value={password}
+              label="Password"
+              id="password"
+              required
+              aria-invalid={isValidPassword ? "false" : "true"}
+              aria-describedby="password_instructions"
+              onFocus={() => setIsPasswordFocused(true)}
+              onBlur={() => setIsPasswordFocused(false)}
+            />
+            {isPasswordFocused && password && !isValidPassword && (
+              <ul id="password_instructions">
+                {validatePassword(password).instructions.map((i) => (
+                  <li key={i}>{i}</li>
+                ))}
+              </ul>
+            )}
           </div>
-        </section>
-      )}
-    </>
+
+          <div>
+            <InputWithValidation
+              isValid={!confirm || isValidConfirm}
+              setValue={setConfirm}
+              type="password"
+              value={confirm}
+              label="Confirm Password"
+              id="confirm"
+              required
+              aria-invalid={isValidConfirm ? "false" : "true"}
+              aria-describedby="confirm_instructions"
+              onFocus={() => setIsConfirmFocused(true)}
+              onBlur={() => setIsConfirmFocused(false)}
+            />
+            {isConfirmFocused && confirm && !isValidConfirm && (
+              <p id="confirm_instructions">
+                Must match the first password input field.
+              </p>
+            )}
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-primary-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+            >
+              Register
+            </button>
+          </div>
+        </form>
+
+        <p className="mt-10 text-center text-sm text-gray-500">
+          Already a member?{" "}
+          <Link
+            to="/signin"
+            className="font-semibold leading-6 text-primary-600 hover:text-primary-500"
+          >
+            Sign in
+          </Link>
+        </p>
+      </div>
+      <MessageTransition
+        message={error}
+        setMessage={setError}
+        messageRef={errorRef}
+      />
+    </section>
   )
 }

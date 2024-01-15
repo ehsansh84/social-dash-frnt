@@ -26,3 +26,9 @@ export const deleteResource = (resourceName, id) => {
   const url = `${API_CONFIG.baseUrl}${API_CONFIG.endpoints[resourceName]}/${id}`
   return axios.delete(url).then((res) => res.data)
 }
+
+export const registerUser = (data, headers = {}) => {
+  const url = `${API_CONFIG.baseUrl}${API_CONFIG.endpoints.register}`
+  return axios.post(url, data, { headers }).then((res) => res.data)
+}
+

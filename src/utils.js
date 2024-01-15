@@ -13,6 +13,29 @@ export function validateHashtag(text) {
   return textPattern.test(text)
 }
 
+export function validateUsername(text) {
+  const textPattern = /^[A-z][A-z0-9-_]{3,23}$/
+  return {
+    test: () => textPattern.test(text),
+    instructions: [
+      '4 to 24 characters.',
+      'Must begin with a letter',
+      'Letters, numbers, underscores. hyphons allowed.'
+    ]
+  }
+}
+
+export function validatePassword(text) {
+  const textPattern =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
+  return {
+    test: () => textPattern.test(text),
+    instructions: [
+      '8 to 24 characters.',
+      'Must include uppercase and lowercase letters, a number and a special character.'
+    ]
+  }
+}
+
 const phoneUtil = PhoneNumberUtil.getInstance()
 
 export const isPhoneValid = (phone) => {
@@ -22,3 +45,4 @@ export const isPhoneValid = (phone) => {
     return false
   }
 }
+

@@ -5,6 +5,7 @@ import {
   updateResource,
   deleteResource,
   fetchResourceList,
+  registerUser,
 } from "../api"
 
 export const useResourceList = (resourceName) => {
@@ -103,6 +104,21 @@ export const useDeleteResource = (resourceName) => {
     mutationFn: (id) => deleteResource(resourceName, id),
     onSuccess: () => {
       queryClient.invalidateQueries(resourceName)
+    },
+  })
+}
+
+export const useRegisterUser = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationKey: 'register',
+    mutationFn: (data, headers) => registerUser(data, headers),
+    onSuccess: (data, sentData) => {
+      // Update the user in the cache
+      queryClient.setQueryData('user', {
+        id: data.data.id,
+        ...sentData,
+      })
     },
   })
 }
