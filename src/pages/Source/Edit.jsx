@@ -34,7 +34,6 @@ export function Edit() {
   const accounts = useMemo(() => data ?? [], [data])
   const { sourceId } = useParams()
   const { data: source } = useResource("sources", sourceId)
-
   const [socialMedia, setSocialMedia] = useState("")
   const [name, setName] = useState("")
   const [channel, setChannel] = useState("")
@@ -66,7 +65,7 @@ export function Edit() {
       setAccountId(source.account_id)
       setCrawlId(source.crawl_schedule)
       setLogo(source.logo)
-      setLogo(source.status)
+      setStatus(source.status)
     }
   }, [source])
 
