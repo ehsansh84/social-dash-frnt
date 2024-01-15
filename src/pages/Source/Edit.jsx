@@ -89,7 +89,7 @@ export function Edit() {
     if (updateSource.isSuccess) {
       setError(null)
       navigate("/sources", {
-        state: { message: "Your source was created!", status: "success" },
+        state: { message: "The source was edited!", status: "success" },
       })
     }
   }, [
