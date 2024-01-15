@@ -20,10 +20,11 @@ export function InlineRadio({
                 id={option.id}
                 name={name}
                 type="radio"
-                defaultChecked={option.id === selectedOption}
+                checked={option.id === selectedOption}
                 className="text-primry h-4 w-4 border-gray-300 focus:ring-primary cursor-pointer"
                 onChange={(e) => setSelectedOption(e.target.value)}
                 {...delegated}
+                value={option.id}
               />
               <label
                 htmlFor={option.id}
