@@ -1,3 +1,4 @@
+import { NarrowWrapper } from "../../NarrowWrapper"
 import { Wrapper } from "../../Wrapper"
 import { MessageTransition } from "../../components/MessageTransition"
 import { useMessageNavigation } from "../../hooks/useMessageNavigation"
@@ -12,7 +13,9 @@ export function Index() {
       <Wrapper>
         <AccountList setMessage={setMessage} />
         <div className="mt-12">
-          <MessageTransition message={message} setMessage={setMessage} />
+          <NarrowWrapper>
+            <MessageTransition message={message} setMessage={setMessage} />
+          </NarrowWrapper>
         </div>
       </Wrapper>
     </IndexPage>
