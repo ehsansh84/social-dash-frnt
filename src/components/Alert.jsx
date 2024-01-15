@@ -1,6 +1,17 @@
-import { CheckCircleIcon, XMarkIcon, ExclamationCircleIcon } from "@heroicons/react/20/solid"
+import {
+  CheckCircleIcon,
+  XMarkIcon,
+  ExclamationCircleIcon,
+} from "@heroicons/react/20/solid"
+import { useEffect, useRef } from "react"
 
-export function Alert({ status = "success", message, show, setShow }) {
+export function Alert({
+  status = "success",
+  message,
+  show,
+  setShow,
+  messageRef,
+}) {
   const statusObject = {
     success: {
       Icon: CheckCircleIcon,
@@ -17,6 +28,13 @@ export function Alert({ status = "success", message, show, setShow }) {
       x: "bg-red-200 text-red-500 hover:bg-red-100 focus:ring-red-600 focus:ring-offset-red-50",
     },
   }
+
+  const dismissRef = useRef(null)
+
+  // useEffect(() => {
+  //   dismissRef.current.focus()
+  // }, [])
+
   const IconComponent = statusObject[status].Icon
   return (
     show && (
@@ -30,7 +48,9 @@ export function Alert({ status = "success", message, show, setShow }) {
           </div>
           <div className="ms-3">
             <p
+              ref={messageRef}
               className={`text-sm font-medium ${statusObject[status].message}`}
+              aria-live="assertive"
             >
               {message}
             </p>
@@ -38,6 +58,7 @@ export function Alert({ status = "success", message, show, setShow }) {
           <div className="ms-auto ps-3">
             <div className="-mx-1.5 -my-1.5">
               <button
+                ref={dismissRef}
                 onClick={() => {
                   setShow(null)
                 }}

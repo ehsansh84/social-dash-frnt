@@ -1,7 +1,7 @@
 import { Transition } from "@headlessui/react"
 import { Alert } from "./Alert"
 
-export function MessageTransition({ message, setMessage }) {
+export function MessageTransition({ message, setMessage, messageRef }) {
   return (
     <Transition
       show={Boolean(message)}
@@ -17,6 +17,7 @@ export function MessageTransition({ message, setMessage }) {
         message={message?.message}
         show={Boolean(message)}
         setShow={setMessage}
+        messageRef={messageRef}
       />
     </Transition>
   )
