@@ -63,7 +63,6 @@ export function Edit() {
     }
   }, [post, schedules])
 
-  console.log(postSchedules)
   const [error, setError] = useState(null)
 
   const updateResource = useUpdateResource("posts")
@@ -75,7 +74,7 @@ export function Edit() {
       setCaption(post.caption)
       setLikes(post.likes)
       setComments(post.comments)
-      setPostType(post.post_type)
+      setPostType(post.postType)
       setStatus(post.status)
       setVideoUrl(post.video_url)
       setCoverUrl(post.cover_url)
