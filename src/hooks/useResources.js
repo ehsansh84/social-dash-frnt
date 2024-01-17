@@ -77,7 +77,6 @@ export const useUpdateResource = (resourceName) => {
     onSuccess: (data, sentData) => {
       // Update the list in the cache
       const currentData = queryClient.getQueryData([resourceName])
-      // console.log(sentData)
       if (currentData) {
         const updatedData = currentData.map((item) =>
           item.id === sentData.id
@@ -87,7 +86,6 @@ export const useUpdateResource = (resourceName) => {
         queryClient.setQueryData([resourceName], updatedData)
       }
 
-      console.log(sentData)
       // Also update the individual resource in the cache
       queryClient.setQueryData([resourceName, sentData.id], {
         id: sentData.id,

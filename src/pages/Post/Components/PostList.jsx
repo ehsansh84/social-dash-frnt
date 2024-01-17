@@ -1,10 +1,7 @@
 import {
   CheckCircleIcon,
-  CheckIcon,
-  ChevronRightIcon,
   EllipsisVerticalIcon,
 } from "@heroicons/react/20/solid"
-import { Wrapper } from "../../../Wrapper"
 import { Link } from "react-router-dom"
 import { useResourceList } from "../../../hooks/useResources"
 import { Menu, Transition } from "@headlessui/react"
@@ -14,7 +11,6 @@ import { classNames } from "../../../utils"
 export function PostList() {
   const { data } = useResourceList("posts")
   const posts = data ?? []
-  console.log(posts)
   return (
     <div className="mx-auto max-w-7xl sm:px-2 lg:px-8">
       <div className="mx-auto max-w-2xl space-y-8 sm:px-4 lg:max-w-4xl lg:px-0">

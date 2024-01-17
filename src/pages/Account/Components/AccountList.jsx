@@ -12,7 +12,6 @@ export function AccountList({ setMessage }) {
   const { data } = useResourceList("accounts")
   const accounts = data ?? []
   const deleteAccountMutation = useDeleteResource("accounts")
-  // console.log(accounts);
   useEffect(() => {
     if (deleteAccountMutation.isError) {
       setMessage({
