@@ -99,17 +99,17 @@ export function ScheduleList({ setMessage }) {
                         {schedule.scheduled_at}
                       </time>
                     </p>
-                    <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
+                    <svg viewBox="0 0 2 2" className="hidden md:inline h-0.5 w-0.5 fill-current">
                       <circle cx={1} cy={1} r={1} />
                     </svg>
-                    <p className="truncate">for desination: <Link className="text-gray-400 text-primary hover:underline">{schedule.destination_id}</Link></p>
+                    <p className="hidden md:inline truncate">for desination: <Link className= "text-gray-400 text-primary hover:underline">{schedule.destination_id}</Link></p>
                   </div>
                 </div>
               </div>
               <div className="flex flex-none items-center gap-x-4">
                 <Link
                   to={`/posts/${schedule.post_id}/edit`}
-                  className="hidden rounded-md bg-bg px-2.5 py-1.5 text-sm font-semibold text-text shadow-sm ring-1 ring-inset ring-ring hover:bg-bg-hover sm:block"
+                  className="rounded-md bg-bg px-2.5 py-1.5 text-sm font-semibold text-text shadow-sm ring-1 ring-inset ring-ring hover:bg-bg-hover sm:block"
                 >
                   View post
                   <span className="sr-only">, {schedule.scheduled_at}</span>
