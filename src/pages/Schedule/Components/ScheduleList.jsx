@@ -102,7 +102,7 @@ export function ScheduleList({ setMessage }) {
                     <svg viewBox="0 0 2 2" className="hidden md:inline h-0.5 w-0.5 fill-current">
                       <circle cx={1} cy={1} r={1} />
                     </svg>
-                    <p className="hidden md:inline truncate">for desination: <Link className= "text-gray-400 text-primary hover:underline">{schedule.destination_id}</Link></p>
+                    <p className="hidden md:inline truncate"><Link className= "text-gray-400 text-primary hover:underline" to={schedule.destination_id}>See destination</Link></p>
                   </div>
                 </div>
               </div>

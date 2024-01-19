@@ -8,8 +8,8 @@ import { ScheduleList } from "./Components/ScheduleList"
 export function Index() {
   const { message, setMessage } = useMessageNavigation()
   const { postId } = useParams()
-  const headerTextSuffix = postId ? ': ' + postId : '' 
-  const addButtonText = postId ? 'Add schedule for ' + postId : '' 
+  const headerTextSuffix = postId ? ' for '  + postId : '' 
+  const addButtonText = 'Add schedule'
   const addButtonLink = postId ? `/schedules/${postId}/create` : ''
   return (
     <IndexPage
