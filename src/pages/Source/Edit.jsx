@@ -141,7 +141,7 @@ export function Edit() {
       <Wrapper as="header" className="border-b border-border">
         <Breadcrumb
           pages={[
-            { name: "Source", href: "/sources" },
+            { name: "Sources", href: "/sources" },
             { name: source?.id, href: "#" },
           ]}
         />
