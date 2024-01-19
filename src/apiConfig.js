@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-  baseUrl: import.meta.env.VITE_BASE_URL ||"http://social.devserver.ir",
+  baseUrl: import.meta.env.VITE_BASE_URL || "http://social.devserver.ir",
   endpoints: {
     accounts: "/account",
     dashboard: "/dashboard",
@@ -7,6 +7,7 @@ export const API_CONFIG = {
     schedules: "/schedule",
     posts: "/post",
     users: "/user",
-    register: '/user/register'
+    destinations: "/destination",
+    register: "/user/register",
   },
 }

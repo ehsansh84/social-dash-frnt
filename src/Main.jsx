@@ -14,6 +14,9 @@ import { Index as ScheduleIndex } from "./pages/Schedule/Index"
 import { Create as CreateSource } from "./pages/Source/Create"
 import { Edit as EditSource } from "./pages/Source/Edit"
 import { Index as SourceIndex } from "./pages/Source/Index"
+import { Create as CreateDestination } from "./pages/Destination/Create"
+import { Edit as EditDestination } from "./pages/Destination/Edit"
+import { Index as DestinationIndex } from "./pages/Destination/Index"
 import { UserList } from "./pages/User/Components/UserList"
 import { Create as CreateUser } from "./pages/User/Create"
 import { Edit as EditUser } from "./pages/User/Edit"
@@ -40,6 +43,10 @@ export function Main() {
         <Route path="sources/:sourceId/edit" element={<EditSource />} />
         <Route path="sources/create" element={<CreateSource />} />
         <Route path="sources" element={<SourceIndex />} />
+
+        <Route path="destinations/:destinationId/edit" element={<EditDestination />} />
+        <Route path="destinations/create" element={<CreateDestination />} />
+        <Route path="destinations" element={<DestinationIndex />} />
 
         <Route path="schedules/:scheduleId/edit" element={<EditSchedule />} />
         <Route path="schedules/:postId/create" element={<CreateSchedule />} />

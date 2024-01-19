@@ -16,6 +16,7 @@ const navigation = [
   { name: "Users", href: "users", icon: UserIcon },
   { name: "Posts", href: "posts", icon: DocumentIcon },
   { name: "Sources", href: "sources", icon: FolderIcon },
+  { name: "Destinations", href: "destinations", icon: FolderIcon },
   { name: "Accounts", href: "accounts", icon: UserCircleIcon },
   { name: "Schedules", href: "schedules", icon: ClockIcon },
   { name: "Settings", href: "settings", icon: Cog6ToothIcon },

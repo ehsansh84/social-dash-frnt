@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { Wrapper } from "../../Wrapper"
 import { Breadcrumb } from "../../components/Breadcrumb"
@@ -10,12 +10,17 @@ import { LogoInput } from "../../components/LogoInput"
 import { MessageTransition } from "../../components/MessageTransition"
 import { SearchMenu } from "../../components/SearchMenu"
 import { TextAreaField } from "../../components/TextAreaField"
-import { useCreateResource, useResourceList } from "../../hooks/useResources"
+import {
+  useResource,
+  useResourceList,
+  useUpdateResource,
+} from "../../hooks/useResources"
 
-export function Create() {
+export function Edit() {
   const { data } = useResourceList("accounts")
   const accounts = useMemo(() => data ?? [], [data])
-
+  const { destinationId } = useParams()
+  const { data: destination } = useResource("destinations", destinationId)
   const [socialMedia, setSocialMedia] = useState("")
   const [name, setName] = useState("")
   const [channel, setChannel] = useState("")
@@ -25,7 +30,7 @@ export function Create() {
 
   const [error, setError] = useState(null)
 
-  const createResourceMutation = useCreateResource("destinations")
+  const updateResource = useUpdateResource("destinations")
 
   const navigate = useNavigate()
   const acceptableAccounts = useMemo(
@@ -37,6 +42,17 @@ export function Create() {
   )
 
   useEffect(() => {
+    if (destination) {
+      setName(destination.name)
+      setDescription(destination.description)
+      setChannel(destination.channel)
+      setSocialMedia(destination.social_media)
+      setAccountId(destination.account_id)
+      setLogo(destination.logo)
+    }
+  }, [destination])
+
+  useEffect(() => {
     if (acceptableAccounts.length > 0) {
       setAccountId(acceptableAccounts[0].id)
     } else {
@@ -45,24 +61,24 @@ export function Create() {
   }, [acceptableAccounts])
 
   useEffect(() => {
-    if (createResourceMutation.isError) {
+    if (updateResource.isError) {
       setError({
         status: "danger",
-        message: createResourceMutation.error.message,
+        message: updateResource.error.message,
       })
     }
 
-    if (createResourceMutation.isSuccess) {
+    if (updateResource.isSuccess) {
       setError(null)
       navigate("/destinations", {
-        state: { message: "Destination was created!", status: "success" },
+        state: { message: "The Destination was edited!", status: "success" },
       })
     }
   }, [
-    createResourceMutation.isError,
-    createResourceMutation.isSuccess,
     navigate,
-    createResourceMutation.error,
+    updateResource.isError,
+    updateResource.isSuccess,
+    updateResource.error,
   ])
 
   const handleSubmit = async (event) => {
@@ -91,22 +107,14 @@ export function Create() {
       user_id: "62d7a781d8f8d7627ce212d5",
     }
 
-    createResourceMutation.mutate(bodyObject, {
-      "Content-Type": "multipart/form-data",
+    updateResource.mutate({
+      id: destinationId,
+      data: bodyObject,
     })
   }
 
   const handleLogoChange = (newLogo) => {
     setLogo(newLogo)
-  }
-
-  const resetForm = () => {
-    setSocialMedia("")
-    setChannel("")
-    setAccountId("")
-    setName("")
-    setDescription("")
-    setError(null)
   }
 
   return (
@@ -115,7 +123,7 @@ export function Create() {
         <Breadcrumb
           pages={[
             { name: "Destinations", href: "/destinations" },
-            { name: "Create", href: "/destinations/create" },
+            { name: destination?.id, href: "#" },
           ]}
         />
       </Wrapper>
@@ -174,7 +182,6 @@ export function Create() {
                     helperText="Write a few sentences about the destination."
                     value={description}
                     setValue={setDescription}
-                    required
                   />
                 </div>
               </div>
@@ -191,17 +198,10 @@ export function Create() {
             </button>
 
             <button
-              type="button"
-              className="text-sm font-semibold leading-6 text-text"
-              onClick={resetForm}
-            >
-              Reset
-            </button>
-            <button
               type="submit"
               className="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
             >
-              {createResourceMutation.isPending ? (
+              {updateResource.isPending ? (
                 <div
                   className="mx-2 inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                   role="status"
@@ -211,10 +211,11 @@ export function Create() {
                   </span>
                 </div>
               ) : (
-                <p>Save</p>
+                <p>Edit</p>
               )}
             </button>
           </div>
+
           <div className="my-12">
             <MessageTransition message={error} setMessage={setError} />
           </div>
