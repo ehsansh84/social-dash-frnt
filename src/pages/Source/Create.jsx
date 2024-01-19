@@ -132,7 +132,7 @@ export function Create() {
       <Wrapper as="header" className="border-b border-border">
         <Breadcrumb
           pages={[
-            { name: "Source", href: "/sources" },
+            { name: "Sources", href: "/sources" },
             { name: "Create", href: "/sources/create" },
           ]}
         />
