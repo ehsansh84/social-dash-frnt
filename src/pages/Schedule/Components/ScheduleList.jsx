@@ -59,8 +59,6 @@ export function ScheduleList({ setMessage }) {
     }
   }, [post, schedules])
 
-
-
   return (
     <>
       <ul className="relative isolate divide-y divide-gray-100 dark:divide-gray-700 dark:border-t dark:border-white/5">
@@ -73,13 +71,13 @@ export function ScheduleList({ setMessage }) {
               key={schedule.id}
               className="flex items-center justify-between gap-x-6 py-5"
             >
-              <div className="flex min-w-0 items-center gap-4">
+              <div className="flex min-w-0 items-center gap-6">
                 <div>
                   <SocialIcon
                     className={`h-10 w-10 fill-${schedule.social_media}`}
                   />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col gap-1">
                   <div className="flex items-start gap-x-3">
                     <p className="text-sm font-semibold leading-6 text-text">
                       {schedule.id}
@@ -95,7 +93,7 @@ export function ScheduleList({ setMessage }) {
                   </div>
 
                   <div className="flex items-center gap-x-2 text-xs leading-5 text-gray-500">
-                    <p className="whitespace-nowrap">
+                    <p className="whitespace-nowrap text-gray-400">
                       Scheduled on{" "}
                       <time dateTime={schedule.scheduled_at}>
                         {schedule.scheduled_at}
@@ -104,7 +102,7 @@ export function ScheduleList({ setMessage }) {
                     <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
                       <circle cx={1} cy={1} r={1} />
                     </svg>
-                    <p className="truncate">for channel {schedule.channel}</p>
+                    <p className="truncate">for desination: <Link className="text-gray-400 text-primary hover:underline">{schedule.destination_id}</Link></p>
                   </div>
                 </div>
               </div>

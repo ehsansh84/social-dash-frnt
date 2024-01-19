@@ -20,13 +20,12 @@ const statuses = [
 
 export function Create() {
   const { postId } = useParams()
-  const { data } = useResourceList("accounts")
-  const accounts = useMemo(() => data ?? [], [data])
+  const { data } = useResourceList("destinations")
+  const destinations = useMemo(() => data ?? [], [data])
 
   // form state
   const [socialMedia, setSocialMedia] = useState("")
-  const [channel, setChannel] = useState("")
-  const [accountId, setAccountId] = useState("")
+  const [destinationId, setDestinationId] = useState("")
   const [statusId, setStatusId] = useState("new")
   const [scheduledAt, setScheduledAt] = useState("")
   const [error, setError] = useState(null)
@@ -35,21 +34,21 @@ export function Create() {
 
   const navigate = useNavigate()
   
-  const acceptableAccounts = useMemo(
+  const acceptableDestinations = useMemo(
     () =>
-      accounts.filter((a) =>
+      destinations.filter((a) =>
         socialMedia ? a.social_media === socialMedia : true,
       ),
-    [socialMedia, accounts],
+    [socialMedia, destinations],
   )
 
   useEffect(() => {
-    if (acceptableAccounts.length > 0) {
-      setAccountId(acceptableAccounts[0].id)
+    if (acceptableDestinations.length > 0) {
+      setDestinationId(acceptableDestinations[0].id)
     } else {
-      setAccountId("")
+      setDestinationId("")
     }
-  }, [acceptableAccounts])
+  }, [acceptableDestinations])
 
   useEffect(() => {
     if (createResourceMutation.isError) {
@@ -62,7 +61,7 @@ export function Create() {
     if (createResourceMutation.isSuccess) {
       setError(null)
       navigate(`/schedules/${postId}`, {
-        state: { message: "Your schedule was created!", status: "success" },
+        state: { message: "Schedule was created!", status: "success" },
       })
     }
   }, [
@@ -75,26 +74,18 @@ export function Create() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    if (!socialMedia) {
-      setError({
-        status: "danger",
-        message: "You need to select a social media platform!",
-      })
-      return
-    }
 
-    if (!accountId) {
-      setError({ status: "danger", message: "You need to select an account!" })
+    if (!destinationId) {
+      setError({ status: "danger", message: "You need to select a destination!" })
       return
     }
 
     const bodyObject = {
-      social_media: socialMedia,
-      account_id: accountId,
-      channel,
+      destination_id: destinationId,
       scheduled_at: scheduledAt,
       status: statusId,
       post_id: postId,
+      social_media: socialMedia,
     }
 
     createResourceMutation.mutate(bodyObject)
@@ -102,8 +93,7 @@ export function Create() {
 
   const resetForm = () => {
     setSocialMedia("")
-    setChannel("")
-    setAccountId("")
+    setDestinationId("")
     setStatusId("new")
     setScheduledAt("")
     setError(null)
@@ -143,25 +133,14 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <InputField
-                    id="channel"
-                    label="Channel"
-                    value={channel}
-                    setValue={setChannel}
-                    placeholder={`my_${socialMedia}_channel`}
-                    required
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
                   <SearchMenu
-                    label="Account"
-                    options={acceptableAccounts.map((a) => ({
-                      id: a.id,
-                      name: a.name,
+                    label="Destination"
+                    options={acceptableDestinations.map((d) => ({
+                      id: d.id,
+                      name: d.name,
                     }))}
-                    setSelected={setAccountId}
-                    selected={accountId}
+                    setSelected={setDestinationId}
+                    selected={destinationId}
                   />
                 </div>
 
