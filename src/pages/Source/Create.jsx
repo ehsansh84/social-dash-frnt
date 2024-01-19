@@ -123,6 +123,7 @@ export function Create() {
     setName("")
     setDescription("")
     setStatus("disabled")
+    setCrawlId("hourly")
     setError(null)
   }
 
