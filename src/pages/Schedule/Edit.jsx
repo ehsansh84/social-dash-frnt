@@ -147,7 +147,7 @@ export function Edit() {
                   />
                 </div>
 
-                <div className="sm:col-span-4">
+                <div className="sm:col-span-4  sm:max-w-md">
                   <InputField
                     id="scheduledAt"
                     label="Schedule"
