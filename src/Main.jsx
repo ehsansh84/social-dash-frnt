@@ -17,7 +17,10 @@ import { Index as SourceIndex } from "./pages/Source/Index"
 import { Create as CreateDestination } from "./pages/Destination/Create"
 import { Edit as EditDestination } from "./pages/Destination/Edit"
 import { Index as DestinationIndex } from "./pages/Destination/Index"
-import { UserList } from "./pages/User/Components/UserList"
+import { Create as CreateRole } from "./pages/Role/Create"
+import { Edit as EditRole } from "./pages/Role/Edit"
+import { Index as RoleIndex } from "./pages/Role/Index"
+import { Index as UserIndex } from "./pages/User/Index"
 import { Create as CreateUser } from "./pages/User/Create"
 import { Edit as EditUser } from "./pages/User/Edit"
 
@@ -27,14 +30,7 @@ export function Main() {
       <Routes>
         <Route path="users/create" element={<CreateUser />} />
         <Route path="users/:userId/edit" element={<EditUser />} />
-        <Route
-          path="users"
-          element={
-            <IndexPage resourceName="user">
-              <UserList />
-            </IndexPage>
-          }
-        />
+        <Route path="users" element={<UserIndex />} />
 
         <Route path="accounts/:accountId/edit" element={<EditAccount />} />
         <Route path="accounts/create" element={<CreateAccount />} />
@@ -44,9 +40,16 @@ export function Main() {
         <Route path="sources/create" element={<CreateSource />} />
         <Route path="sources" element={<SourceIndex />} />
 
-        <Route path="destinations/:destinationId/edit" element={<EditDestination />} />
+        <Route
+          path="destinations/:destinationId/edit"
+          element={<EditDestination />}
+        />
         <Route path="destinations/create" element={<CreateDestination />} />
         <Route path="destinations" element={<DestinationIndex />} />
+
+        <Route path="roles/:roleId/edit" element={<EditRole />} />
+        <Route path="roles/create" element={<CreateRole />} />
+        <Route path="roles" element={<RoleIndex />} />
 
         <Route path="schedules/:scheduleId/edit" element={<EditSchedule />} />
         <Route path="schedules/:postId/create" element={<CreateSchedule />} />
@@ -68,8 +71,6 @@ export function Main() {
         <Route path="/" element={<Dashboard />} />
 
         <Route path="*" element={<div>not found</div>} />
-
-
       </Routes>
     </main>
   )
