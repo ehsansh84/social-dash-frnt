@@ -1,13 +1,12 @@
 import { Route, Routes } from "react-router-dom"
-import { IndexPage } from "./pages/IndexPage"
 
 import { Create as CreateAccount } from "./pages/Account/Create"
 import { Edit as EditAccount } from "./pages/Account/Edit"
 import { Index as AccountIndex } from "./pages/Account/Index"
 import Dashboard from "./pages/Dashboard/Dashboard"
-import { PostList } from "./pages/Post/Components/PostList"
 import { Create as CreatePost } from "./pages/Post/Create"
 import { Edit as EditPost } from "./pages/Post/Edit"
+import { Index as PostIndex } from "./pages/Post/Index"
 import { Create as CreateSchedule } from "./pages/Schedule/Create"
 import { Edit as EditSchedule } from "./pages/Schedule/Edit"
 import { Index as ScheduleIndex } from "./pages/Schedule/Index"
@@ -57,14 +56,7 @@ export function Main() {
         <Route path="schedules/" element={<ScheduleIndex />} />
 
         <Route path="posts/create" element={<CreatePost />} />
-        <Route
-          path="posts"
-          element={
-            <IndexPage resourceName="post">
-              <PostList />
-            </IndexPage>
-          }
-        />
+        <Route path="posts" element={<PostIndex />} />
         <Route path="posts/:postId/edit" element={<EditPost />} />
 
         <Route path="settings" element={<div>settings</div>} />
