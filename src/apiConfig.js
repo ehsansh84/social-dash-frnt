@@ -8,6 +8,7 @@ export const API_CONFIG = {
     posts: "/post",
     users: "/user",
     destinations: "/destination",
+    roles: "/role",
     register: "/user/register",
   },
 }
