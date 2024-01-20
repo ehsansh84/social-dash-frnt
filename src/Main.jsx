@@ -19,6 +19,9 @@ import { Index as DestinationIndex } from "./pages/Destination/Index"
 import { Create as CreateRole } from "./pages/Role/Create"
 import { Edit as EditRole } from "./pages/Role/Edit"
 import { Index as RoleIndex } from "./pages/Role/Index"
+import { Create as CreatePermission } from "./pages/Permission/Create"
+import { Edit as EditPermission } from "./pages/Permission/Edit"
+import { Index as PermissionIndex } from "./pages/Permission/Index"
 import { Index as UserIndex } from "./pages/User/Index"
 import { Create as CreateUser } from "./pages/User/Create"
 import { Edit as EditUser } from "./pages/User/Edit"
@@ -49,6 +52,10 @@ export function Main() {
         <Route path="roles/:roleId/edit" element={<EditRole />} />
         <Route path="roles/create" element={<CreateRole />} />
         <Route path="roles" element={<RoleIndex />} />
+
+        <Route path="permissions/:permissionId/edit" element={<EditPermission />} />
+        <Route path="permissions/create" element={<CreatePermission />} />
+        <Route path="permissions" element={<PermissionIndex />} />
 
         <Route path="schedules/:scheduleId/edit" element={<EditSchedule />} />
         <Route path="schedules/:postId/create" element={<CreateSchedule />} />
