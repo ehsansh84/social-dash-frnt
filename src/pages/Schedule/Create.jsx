@@ -129,6 +129,7 @@ export function Create() {
                     value={scheduledAt}
                     setValue={setScheduledAt}
                     type="datetime-local"
+                    required
                   />
                 </div>
 
