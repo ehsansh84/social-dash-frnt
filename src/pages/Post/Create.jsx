@@ -33,7 +33,7 @@ export function Create() {
   const [comments, setComments] = useState(0)
   const [postType, setPostType] = useState("image")
   const [status, setStatus] = useState("new")
-  const [videUrl, setVideoUrl] = useState("")
+  const [videoUrl, setVideoUrl] = useState("")
   const [coverUrl, setCoverUrl] = useState("")
   const [thumbUrl, setThumbUrl] = useState("")
   const [dateUtc, setDateUtc] = useState("")
@@ -81,7 +81,7 @@ export function Create() {
       comments,
       postType,
       status,
-      video_url: videUrl,
+      video_url: videoUrl,
       cover_url: coverUrl,
       thumb_url: thumbUrl,
       user_id: "62d7a781d8f8d7627ce212d5",
@@ -197,7 +197,7 @@ export function Create() {
                     label="Video Url"
                     id="videoUrl"
                     setValue={setVideoUrl}
-                    value={videUrl}
+                    value={videoUrl}
                     type="url"
                   />
                 </div>
