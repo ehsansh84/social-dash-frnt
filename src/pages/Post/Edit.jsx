@@ -98,7 +98,7 @@ export function Edit() {
     if (updateResource.isSuccess) {
       setError(null)
       navigate("/posts", {
-        state: { message: "Post was created!", status: "success" },
+        state: { message: "Post was edited!", status: "success" },
       })
     }
   }, [
