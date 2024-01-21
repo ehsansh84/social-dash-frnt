@@ -25,6 +25,7 @@ export function Edit() {
   const [description, setDescription] = useState("")
 
   const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(null)
 
   const rolePermissions = useMemo(() => {
     if (permissions) {
@@ -54,15 +55,14 @@ export function Edit() {
 
     if (updateResource.isSuccess) {
       setError(null)
-      navigate("/roles", {
-        state: { message: "Role was edited!", status: "success" },
-      })
+      setSuccess(true)
     }
   }, [
     updateResource.isError,
     updateResource.isSuccess,
     navigate,
     updateResource.error,
+    roleId,
   ])
 
   const handleSubmit = async (event) => {
@@ -73,10 +73,10 @@ export function Edit() {
       description,
     }
 
-    updateResource.mutate(bodyObject)
+    updateResource.mutate({ id: roleId, data: bodyObject })
   }
 
-  console.log(roleId);
+  console.log({ roleId, name })
   return (
     <div className="border-t border-border pb-16">
       <Wrapper as="header" className="border-b border-border">
@@ -173,6 +173,12 @@ export function Edit() {
           <div className="my-12">
             <MessageTransition message={error} setMessage={setError} />
             <MessageTransition message={message} setMessage={setMessage} />
+            {success && (
+              <MessageTransition
+                message={{status: 'success', message: "Role was edited!"}}
+                setMessage={setSuccess}
+              />
+            )}
           </div>
         </form>
       </NarrowWrapper>
