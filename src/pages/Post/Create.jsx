@@ -79,7 +79,7 @@ export function Create() {
       caption,
       likes,
       comments,
-      postType,
+      post_type:postType,
       status,
       video_url: videoUrl,
       cover_url: coverUrl,
