@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { Wrapper } from "../../Wrapper"
 import { Breadcrumb } from "../../components/Breadcrumb"
 
 import { InputField } from "../../components/InputField"
 import { MessageTransition } from "../../components/MessageTransition"
-import { useCreateResource, useResourceList } from "../../hooks/useResources"
+import { useCreateResource, useResource } from "../../hooks/useResources"
 import { TextAreaField } from "../../components/TextAreaField"
 import { SearchMenu } from "../../components/SearchMenu"
 import { InlineRadio } from "../../components/InlineRadio"
@@ -26,9 +26,11 @@ const postPermissions = [
 ]
 
 export function Create() {
+  const { roleId } = useParams()
+  const {data: role} = useResource("roles", roleId)
+
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
-  const [roleId, setRoleId] = useState("")
   const [routeId, setRouteId] = useState(routes[0].id)
   const [get, setGet] = useState("no")
   const [post, setPost] = useState("no")
@@ -38,8 +40,6 @@ export function Create() {
   const [error, setError] = useState(null)
 
   const createResourceMutation = useCreateResource("permissions")
-  const { data } = useResourceList("roles")
-  const roles = data ?? []
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export function Create() {
 
     if (createResourceMutation.isSuccess) {
       setError(null)
-      navigate("/permissions", {
+      navigate(`/permissions/${roleId}`, {
         state: { message: "Permission was created!", status: "success" },
       })
     }
@@ -61,6 +61,7 @@ export function Create() {
     createResourceMutation.isSuccess,
     navigate,
     createResourceMutation.error,
+    roleId
   ])
 
   const handleSubmit = async (event) => {
@@ -84,7 +85,6 @@ export function Create() {
   const resetForm = () => {
     setName("")
     setDescription("")
-    setRoleId("")
     setRouteId(routes[0].id)
     setGet("no")
     setPost("no")
@@ -93,13 +93,15 @@ export function Create() {
     setError(null)
   }
 
+  console.log({get, put, post});
   return (
     <div className="border-t border-border pb-16">
       <Wrapper as="header" className="border-b border-border">
         <Breadcrumb
           pages={[
-            { name: "Role", href: "/roles" },
-            { name: "Create", href: "/roles/create" },
+            { name: "Permissions", href: "/permissions" },
+            { name: "Role: " + role?.name, href: "/roles/" + roleId + '/edit' },
+            { name: "Create permission", href: "#" },
           ]}
         />
       </Wrapper>
@@ -123,19 +125,7 @@ export function Create() {
                   <TextAreaField
                     value={description}
                     setValue={setDescription}
-                    helperText="Write a few sentences about the role"
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
-                  <SearchMenu
-                    label="Role"
-                    options={roles.map((role) => ({
-                      id: role.id,
-                      name: role.name,
-                    }))}
-                    setSelected={setRoleId}
-                    selected={roleId}
+                    helperText="Write a few sentences about the permission"
                   />
                 </div>
 

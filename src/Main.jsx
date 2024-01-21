@@ -54,8 +54,9 @@ export function Main() {
         <Route path="roles" element={<RoleIndex />} />
 
         <Route path="permissions/:permissionId/edit" element={<EditPermission />} />
-        <Route path="permissions/create" element={<CreatePermission />} />
-        <Route path="permissions" element={<PermissionIndex />} />
+        <Route path="permissions/:roleId/create" element={<CreatePermission />} />
+        <Route path="permissions/:roleId" element={<PermissionIndex />} />
+        <Route path="permissions/" element={<PermissionIndex />} />
 
         <Route path="schedules/:scheduleId/edit" element={<EditSchedule />} />
         <Route path="schedules/:postId/create" element={<CreateSchedule />} />

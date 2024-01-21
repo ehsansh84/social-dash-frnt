@@ -19,7 +19,7 @@ export function PermissionList() {
             </div>
             <div className="min-w-0 flex-1">
               <Link
-                to={`/roles/${permission.id}/edit`}
+                to={`/permissions/${permission.id}/edit`}
                 className="focus:outline-none"
               >
                 <span className="absolute inset-0" aria-hidden="true" />
@@ -28,7 +28,7 @@ export function PermissionList() {
                   {permission.route}
                 </p>
                 <p className="truncate text-sm text-gray-500">
-                  {permission.role_id}
+                 role: {permission.role_id}
                 </p>
               </Link>
             </div>

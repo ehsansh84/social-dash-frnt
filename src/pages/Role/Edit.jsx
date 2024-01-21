@@ -1,130 +1,89 @@
-import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useEffect, useMemo, useState } from "react"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { Wrapper } from "../../Wrapper"
 import { Breadcrumb } from "../../components/Breadcrumb"
 
-import { InlineRadio } from "../../components/InlineRadio"
 import { InputField } from "../../components/InputField"
-import { InputPhone } from "../../components/InputPhone"
 import { MessageTransition } from "../../components/MessageTransition"
-import { ProfileImageInput } from "../../components/ProfileImageInput"
-import { SearchMenu } from "../../components/SearchMenu"
-import {  useResource, useUpdateResource } from "../../hooks/useResources"
-
-const roles = [
-  { id: "admin", name: "Admin" },
-  { id: "normal", name: "Normal User" },
-]
-
-const statuses = [
-  { id: "enabled", title: "Enabled" },
-  { id: "disabled", title: "Disabled" },
-]
+import {
+  useResource,
+  useResourceList,
+  useUpdateResource,
+} from "../../hooks/useResources"
+import { TextAreaField } from "../../components/TextAreaField"
+import { useMessageNavigation } from "../../hooks/useMessageNavigation"
 
 export function Edit() {
-  const { userId } = useParams()
-  const { data: user } = useResource("users", userId)
+  const { message, setMessage } = useMessageNavigation()
+  const { data: permissions } = useResourceList("permissions")
+
+  const { roleId } = useParams()
+  const { data: role } = useResource("roles", roleId)
 
   const [name, setName] = useState("")
-  const [family, setFamily] = useState("")
-  const [email, setEmail] = useState("")
-  const [mobile, setMobile] = useState("")
-  const [role, setRole] = useState("admin")
-  const [status, setStatus] = useState("enabled")
-  const [pic, setPic] = useState("")
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirm, setConfirm] = useState("")
+  const [description, setDescription] = useState("")
 
   const [error, setError] = useState(null)
 
-  const updateSource = useUpdateResource("users")
+  const rolePermissions = useMemo(() => {
+    if (permissions) {
+      return permissions.filter((p) => (role ? p.role_id === role.id : false))
+    } else {
+      return []
+    }
+  }, [role, permissions])
 
   const navigate = useNavigate()
+  const updateResource = useUpdateResource("roles")
 
   useEffect(() => {
-    if (user) {
-      setName(user.name)
-      setFamily(user.family)
-      setEmail(user.email)
-      setMobile(user.mobile)
-      setRole(user.role)
-      setStatus(user.statue)
-      setPic(user.pic)
-      setUsername(user.username)
+    if (role) {
+      setName(role.name)
+      setDescription(role.description)
     }
-  }, [user])
+  }, [role])
 
   useEffect(() => {
-    if (updateSource.isError) {
+    if (updateResource.isError) {
       setError({
         status: "danger",
-        message: updateSource.error.message,
+        message: updateResource.error.message,
       })
     }
 
-    if (updateSource.isSuccess) {
+    if (updateResource.isSuccess) {
       setError(null)
-      navigate("/users", {
-        state: { message: "User was edited!", status: "success" },
+      navigate("/roles", {
+        state: { message: "Role was edited!", status: "success" },
       })
     }
   }, [
-    updateSource.isError,
-    updateSource.isSuccess,
+    updateResource.isError,
+    updateResource.isSuccess,
     navigate,
-    updateSource.error,
+    updateResource.error,
   ])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (!pic) {
-      setError({
-        status: "danger",
-        message: "You need to select a profile picture!",
-      })
-      return
-    }
-
-    if (password !== confirm) {
-      setError({
-        status: "danger",
-        message: "Passwords do not match!",
-      })
-      return
-    }
-
     const bodyObject = {
       name,
-      family,
-      email,
-      mobile,
-      password,
-      username,
-      pic,
-      status,
-      role,
+      description,
     }
 
-    updateSource.mutate({
-      id: userId,
-      data: bodyObject
-    })
+    updateResource.mutate(bodyObject)
   }
 
-  const handlePicChange = (newPic) => {
-    setPic(newPic)
-  }
-
+  console.log(roleId);
   return (
     <div className="border-t border-border pb-16">
       <Wrapper as="header" className="border-b border-border">
         <Breadcrumb
           pages={[
-            { name: "User", href: "/users" },
-            { name: user?.username, href: "#" },
+            { name: "Role", href: "/roles" },
+            { name: role?.id, href: "#" },
           ]}
         />
       </Wrapper>
@@ -133,11 +92,7 @@ export function Edit() {
           <div className="space-y-12">
             <div className="border-b border-border pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="col-span-full flex items-center gap-x-8">
-                  <ProfileImageInput onImageChange={handlePicChange} imageUrl={pic} />
-                </div>
-
-                <div className="sm:col-span-4">
+                <div className="sm:col-span-4 md:max-w-md">
                   <InputField
                     id="name"
                     label="Name"
@@ -148,89 +103,41 @@ export function Edit() {
                   />
                 </div>
 
-                <div className="sm:col-span-4">
-                  <InputField
-                    id="family"
-                    label="Last Name"
-                    value={family}
-                    setValue={setFamily}
-                    placeholder="Last Name"
-                    required
+                <div className="col-span-full lg:max-w-xl">
+                  <TextAreaField
+                    value={description}
+                    setValue={setDescription}
+                    helperText="Write a few sentences about the role"
                   />
                 </div>
 
                 <div className="sm:col-span-4">
-                  <InputField
-                    id="username"
-                    label="Username"
-                    value={username}
-                    setValue={setUsername}
-                    placeholder="Username"
-                    required
-                  />
-                </div>
+                  <div className="text-sm font-medium leading-6 text-text">
+                    Permissions
+                  </div>
 
-                <div className="sm:col-span-4">
-                  <InputField
-                    id="email"
-                    label="Email"
-                    value={email}
-                    setValue={setEmail}
-                    placeholder="you@example.com"
-                    type="email"
-                    required
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
-                  <InputPhone
-                    id="mobile"
-                    label="Mobile"
-                    value={mobile}
-                    setValue={setMobile}
-                    required
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
-                  <SearchMenu
-                    label="Role"
-                    options={roles}
-                    setSelected={setRole}
-                    selected={role}
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
-                  <InlineRadio
-                    label="Status"
-                    name="status"
-                    selectedOption={status}
-                    options={statuses}
-                    setSelectedOption={setStatus}
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
-                  <InputField
-                    id="password"
-                    label="Password"
-                    value={password}
-                    setValue={setPassword}
-                    type="password"
-                    required
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
-                  <InputField
-                    id="confirm"
-                    label="Confirm Password"
-                    value={confirm}
-                    setValue={setConfirm}
-                    type="password"
-                    required
-                  />
+                  <div className="mt-1">
+                    {rolePermissions.length > 0 ? (
+                      <p className="mt-4 text-sm">
+                        <Link
+                          className="text-primary hover:underline"
+                          to={`/permissions/${roleId}`}
+                        >
+                          See permissions for this role.
+                        </Link>
+                      </p>
+                    ) : (
+                      <p className="mt-4 text-sm">
+                        No permissions set for this role yet!{" "}
+                        <Link
+                          className="text-primary hover:underline"
+                          to={`/permissions/${roleId}/create`}
+                        >
+                          Create one.
+                        </Link>
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -249,7 +156,7 @@ export function Edit() {
               type="submit"
               className="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
             >
-              {updateSource.isPending ? (
+              {updateResource.isPending ? (
                 <div
                   className="mx-2 inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                   role="status"
@@ -265,6 +172,7 @@ export function Edit() {
           </div>
           <div className="my-12">
             <MessageTransition message={error} setMessage={setError} />
+            <MessageTransition message={message} setMessage={setMessage} />
           </div>
         </form>
       </NarrowWrapper>

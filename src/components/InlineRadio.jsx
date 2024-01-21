@@ -14,21 +14,21 @@ export function InlineRadio({
       <fieldset className="mt-4">
         <legend className="sr-only">Notification method</legend>
         <div className="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-          {options.map((option) => (
+          {options.map((option, index) => (
             <div key={option.id} className="flex items-center">
               <input
-                id={option.id}
+                id={`${name}-${option.title}-${index}`}
                 name={name}
                 type="radio"
                 checked={option.id === selectedOption}
-                className="text-primry h-4 w-4 border-gray-300 focus:ring-primary cursor-pointer"
+                className="text-primry h-4 w-4 cursor-pointer border-gray-300 focus:ring-primary"
                 onChange={(e) => setSelectedOption(e.target.value)}
                 {...delegated}
                 value={option.id}
               />
               <label
-                htmlFor={option.id}
-                className="ml-3 block text-sm font-medium leading-6 text-text cursor-pointer"
+                htmlFor={`${name}-${option.title}-${index}`}
+                className="ml-3 block cursor-pointer text-sm font-medium leading-6 text-text"
               >
                 {option.title}
               </label>

@@ -4,127 +4,108 @@ import { NarrowWrapper } from "../../NarrowWrapper"
 import { Wrapper } from "../../Wrapper"
 import { Breadcrumb } from "../../components/Breadcrumb"
 
-import { InlineRadio } from "../../components/InlineRadio"
 import { InputField } from "../../components/InputField"
-import { InputPhone } from "../../components/InputPhone"
 import { MessageTransition } from "../../components/MessageTransition"
-import { ProfileImageInput } from "../../components/ProfileImageInput"
+import { useResource, useUpdateResource } from "../../hooks/useResources"
+import { TextAreaField } from "../../components/TextAreaField"
 import { SearchMenu } from "../../components/SearchMenu"
-import {  useResource, useUpdateResource } from "../../hooks/useResources"
+import { InlineRadio } from "../../components/InlineRadio"
 
-const roles = [
-  { id: "admin", name: "Admin" },
-  { id: "normal", name: "Normal User" },
+const routes = [
+  { id: "/source", name: "/source" },
+  { id: "/account", name: "/account" },
 ]
-
-const statuses = [
-  { id: "enabled", title: "Enabled" },
-  { id: "disabled", title: "Disabled" },
+const commonPermissions = [
+  { id: "yes", title: "Yes" },
+  { id: "no", title: "No" },
+  { id: "yes_limited", title: "Limited" },
+]
+const postPermissions = [
+  { id: "yes", title: "Yes" },
+  { id: "no", title: "No" },
 ]
 
 export function Edit() {
-  const { userId } = useParams()
-  const { data: user } = useResource("users", userId)
+  const { permissionId } = useParams()
+  const { data: permission } = useResource("permissions", permissionId)
 
   const [name, setName] = useState("")
-  const [family, setFamily] = useState("")
-  const [email, setEmail] = useState("")
-  const [mobile, setMobile] = useState("")
-  const [role, setRole] = useState("admin")
-  const [status, setStatus] = useState("enabled")
-  const [pic, setPic] = useState("")
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirm, setConfirm] = useState("")
+  const [description, setDescription] = useState("")
+  const [routeId, setRouteId] = useState(routes[0].id)
+  const [get, setGet] = useState("no")
+  const [post, setPost] = useState("no")
+  const [put, setPut] = useState("no")
+  const [destroy, setDestroy] = useState("no")
+
+  const [roleId, setRoleId] = useState("")
 
   const [error, setError] = useState(null)
 
-  const updateSource = useUpdateResource("users")
-
+  const updateResource = useUpdateResource("permissions")
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (user) {
-      setName(user.name)
-      setFamily(user.family)
-      setEmail(user.email)
-      setMobile(user.mobile)
-      setRole(user.role)
-      setStatus(user.statue)
-      setPic(user.pic)
-      setUsername(user.username)
+    if (permission) {
+      setName(permission.name)
+      setDescription(permission.description)
+      setRouteId(permission.route)
+      setGet(permission.get)
+      setPost(permission.post)
+      setPut(permission.put)
+      setDestroy(permission["delete"])
+      setRoleId(permission.role_id)
     }
-  }, [user])
+  }, [permission])
 
   useEffect(() => {
-    if (updateSource.isError) {
+    if (updateResource.isError) {
       setError({
         status: "danger",
-        message: updateSource.error.message,
+        message: updateResource.error.message,
       })
     }
 
-    if (updateSource.isSuccess) {
+    if (updateResource.isSuccess) {
       setError(null)
-      navigate("/users", {
-        state: { message: "User was edited!", status: "success" },
+      navigate(`/permissions/${roleId}`, {
+        state: { message: "Permission has been edited!", status: "success" },
       })
     }
   }, [
-    updateSource.isError,
-    updateSource.isSuccess,
+    updateResource.isError,
+    updateResource.isSuccess,
     navigate,
-    updateSource.error,
+    updateResource.error,
+    roleId,
   ])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (!pic) {
-      setError({
-        status: "danger",
-        message: "You need to select a profile picture!",
-      })
-      return
-    }
-
-    if (password !== confirm) {
-      setError({
-        status: "danger",
-        message: "Passwords do not match!",
-      })
-      return
-    }
-
     const bodyObject = {
       name,
-      family,
-      email,
-      mobile,
-      password,
-      username,
-      pic,
-      status,
-      role,
+      description,
+      role_id: roleId,
+      route: routeId,
+      get,
+      post,
+      put,
+      delete: destroy,
     }
 
-    updateSource.mutate({
-      id: userId,
-      data: bodyObject
-    })
+    updateResource.mutate({ id: permissionId, data: bodyObject })
   }
 
-  const handlePicChange = (newPic) => {
-    setPic(newPic)
-  }
-
+  console.log(permission);
+  console.log(routeId);
   return (
     <div className="border-t border-border pb-16">
       <Wrapper as="header" className="border-b border-border">
         <Breadcrumb
           pages={[
-            { name: "User", href: "/users" },
-            { name: user?.username, href: "#" },
+            { name: "Permissions", href: "/permissions" },
+            { name: "Role: " + permission?.role_id, href: "/roles/" + roleId },
+            { name: permission?.id, href: "#" },
           ]}
         />
       </Wrapper>
@@ -133,11 +114,7 @@ export function Edit() {
           <div className="space-y-12">
             <div className="border-b border-border pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="col-span-full flex items-center gap-x-8">
-                  <ProfileImageInput onImageChange={handlePicChange} imageUrl={pic} />
-                </div>
-
-                <div className="sm:col-span-4">
+                <div className="sm:col-span-4 md:max-w-md">
                   <InputField
                     id="name"
                     label="Name"
@@ -148,88 +125,59 @@ export function Edit() {
                   />
                 </div>
 
-                <div className="sm:col-span-4">
-                  <InputField
-                    id="family"
-                    label="Last Name"
-                    value={family}
-                    setValue={setFamily}
-                    placeholder="Last Name"
-                    required
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
-                  <InputField
-                    id="username"
-                    label="Username"
-                    value={username}
-                    setValue={setUsername}
-                    placeholder="Username"
-                    required
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
-                  <InputField
-                    id="email"
-                    label="Email"
-                    value={email}
-                    setValue={setEmail}
-                    placeholder="you@example.com"
-                    type="email"
-                    required
-                  />
-                </div>
-
-                <div className="sm:col-span-4">
-                  <InputPhone
-                    id="mobile"
-                    label="Mobile"
-                    value={mobile}
-                    setValue={setMobile}
-                    required
+                <div className="col-span-full lg:max-w-xl">
+                  <TextAreaField
+                    value={description}
+                    setValue={setDescription}
+                    helperText="Write a few sentences about the permission"
                   />
                 </div>
 
                 <div className="sm:col-span-4">
                   <SearchMenu
-                    label="Role"
-                    options={roles}
-                    setSelected={setRole}
-                    selected={role}
+                    label="Route"
+                    options={routes}
+                    setSelected={setRouteId}
+                    selected={routeId}
+                  />
+                </div>
+                <div className="sm:col-span-4">
+                  <InlineRadio
+                    label="GET Permission"
+                    name="get"
+                    selectedOption={get}
+                    options={commonPermissions}
+                    setSelectedOption={setGet}
                   />
                 </div>
 
                 <div className="sm:col-span-4">
                   <InlineRadio
-                    label="Status"
-                    name="status"
-                    selectedOption={status}
-                    options={statuses}
-                    setSelectedOption={setStatus}
+                    label="POST Permission"
+                    name="post"
+                    selectedOption={post}
+                    options={postPermissions}
+                    setSelectedOption={setPost}
                   />
                 </div>
 
                 <div className="sm:col-span-4">
-                  <InputField
-                    id="password"
-                    label="Password"
-                    value={password}
-                    setValue={setPassword}
-                    type="password"
-                    required
+                  <InlineRadio
+                    label="PUT Permission"
+                    name="put"
+                    selectedOption={put}
+                    options={commonPermissions}
+                    setSelectedOption={setPut}
                   />
                 </div>
 
                 <div className="sm:col-span-4">
-                  <InputField
-                    id="confirm"
-                    label="Confirm Password"
-                    value={confirm}
-                    setValue={setConfirm}
-                    type="password"
-                    required
+                  <InlineRadio
+                    label="Delete Permission"
+                    name="destroy"
+                    selectedOption={destroy}
+                    options={commonPermissions}
+                    setSelectedOption={setDestroy}
                   />
                 </div>
               </div>
@@ -249,7 +197,7 @@ export function Edit() {
               type="submit"
               className="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
             >
-              {updateSource.isPending ? (
+              {updateResource.isPending ? (
                 <div
                   className="mx-2 inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                   role="status"

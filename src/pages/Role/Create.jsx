@@ -29,7 +29,7 @@ export function Create() {
 
     if (createResourceMutation.isSuccess) {
       setError(null)
-      navigate("/roles", {
+      navigate(`/roles/${createResourceMutation?.data?.data?.id}/edit`, {
         state: { message: "Role was created!", status: "success" },
       })
     }
@@ -38,6 +38,7 @@ export function Create() {
     createResourceMutation.isSuccess,
     navigate,
     createResourceMutation.error,
+    createResourceMutation.data?.data?.id,
   ])
 
   const handleSubmit = async (event) => {
@@ -85,11 +86,10 @@ export function Create() {
                   />
                 </div>
 
-
                 <div className="col-span-full lg:max-w-xl">
                   <TextAreaField
                     value={description}
-                    setValue={setDescription}                  
+                    setValue={setDescription}
                     helperText="Write a few sentences about the role"
                   />
                 </div>
