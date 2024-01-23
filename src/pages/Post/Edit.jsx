@@ -8,6 +8,7 @@ import { InlineRadio } from "../../components/InlineRadio"
 import { InputField } from "../../components/InputField"
 import { MessageTransition } from "../../components/MessageTransition"
 import {
+  useDeleteResource,
   useResource,
   useResourceList,
   useUpdateResource,
@@ -66,6 +67,7 @@ export function Edit() {
   const [error, setError] = useState(null)
 
   const updateResource = useUpdateResource("posts")
+  const deleteResource = useDeleteResource("posts")
 
   const navigate = useNavigate()
 
@@ -108,6 +110,27 @@ export function Edit() {
     updateResource.error,
   ])
 
+  useEffect(() => {
+    if (deleteResource.isError) {
+      setError({
+        message: deleteResource.error.message,
+        status: "danger",
+      })
+    }
+
+    if (deleteResource.isSuccess) {
+      setError(null)
+      navigate(`/posts`, {
+        state: { message: "Post has been deleted!", status: "success" },
+      })
+    }
+  }, [
+    deleteResource.isError,
+    deleteResource.isSuccess,
+    deleteResource.error,
+    navigate,
+  ])
+
   const handleSubmit = async (event) => {
     event.preventDefault()
 
@@ -115,7 +138,7 @@ export function Edit() {
       caption,
       likes,
       comments,
-      post_type:postType,
+      post_type: postType,
       status,
       video_url: videoUrl,
       cover_url: coverUrl,
@@ -305,33 +328,58 @@ export function Edit() {
             </div>
           </div>
 
-          <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              className="text-sm font-semibold leading-6 text-text"
-              onClick={() => navigate(-1)}
-            >
-              Cancel
-            </button>
+          <div className="mt-6 flex items-center justify-between">
+            <div>
+              <button
+                type="button"
+                className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+                onClick={() => {
+                  deleteResource.mutate(post?.id ?? "")
+                }}
+              >
+                {deleteResource.isPending ? (
+                  <div
+                    className="mx-2 inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                    role="status"
+                  >
+                    <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                      Loading...
+                    </span>
+                  </div>
+                ) : (
+                  <p>Delete</p>
+                )}
+              </button>
+            </div>
+            <div className="flex items-center justify-between gap-x-6">
+              <button
+                type="button"
+                className="text-sm font-semibold leading-6 text-text"
+                onClick={() => navigate(-1)}
+              >
+                Cancel
+              </button>
 
-            <button
-              type="submit"
-              className="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
-            >
-              {updateResource.isPending ? (
-                <div
-                  className="mx-2 inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                  role="status"
-                >
-                  <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                    Loading...
-                  </span>
-                </div>
-              ) : (
-                <p>Edit</p>
-              )}
-            </button>
+              <button
+                type="submit"
+                className="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+              >
+                {updateResource.isPending ? (
+                  <div
+                    className="mx-2 inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                    role="status"
+                  >
+                    <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                      Loading...
+                    </span>
+                  </div>
+                ) : (
+                  <p>Edit</p>
+                )}
+              </button>
+            </div>
           </div>
+
           <div className="my-12">
             <MessageTransition message={error} setMessage={setError} />
             <MessageTransition message={message} setMessage={setMessage} />
