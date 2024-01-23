@@ -8,7 +8,7 @@ import { SocialMediaRadio } from "../../components/SocialMediaRadio"
 import { InputField } from "../../components/InputField"
 import { LogoInput } from "../../components/LogoInput"
 import { MessageTransition } from "../../components/MessageTransition"
-import { SearchMenu } from "../../components/SearchMenu"
+import { SelectMenu } from "../../components/SelectMenu"
 import { TextAreaField } from "../../components/TextAreaField"
 import { useCreateResource, useResourceList } from "../../hooks/useResources"
 import { InlineRadio } from "../../components/InlineRadio"
@@ -172,7 +172,7 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <SearchMenu
+                  <SelectMenu
                     label="Account"
                     options={acceptableAccounts.map((a) => ({
                       id: a.id,
@@ -197,7 +197,7 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <SearchMenu
+                  <SelectMenu
                     label="Crawl schedule"
                     options={crawlSchedules}
                     setSelected={setCrawlId}

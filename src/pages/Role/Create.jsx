@@ -95,7 +95,7 @@ export function Create() {
                 </div>
 
                 {/* <div className="sm:col-span-4">
-                  <SearchMenu
+                  <SelectMenu
                     label="Role"
                     options={roles}
                     setSelected={setRole}

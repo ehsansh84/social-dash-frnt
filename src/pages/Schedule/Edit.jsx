@@ -5,7 +5,7 @@ import { Breadcrumb } from "../../components/Breadcrumb"
 import { Wrapper } from "../../Wrapper"
 import { useNavigate, useParams } from "react-router-dom"
 
-import { SearchMenu } from "../../components/SearchMenu"
+import { SelectMenu } from "../../components/SelectMenu"
 import {
   useResource,
   useResourceList,
@@ -159,7 +159,7 @@ export function Edit() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <SearchMenu
+                  <SelectMenu
                     label="Destination"
                     options={acceptableDestinations.map((d) => ({
                       id: d.id,
@@ -171,7 +171,7 @@ export function Edit() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <SearchMenu
+                  <SelectMenu
                     label="Status"
                     options={statuses}
                     selected={statusId}

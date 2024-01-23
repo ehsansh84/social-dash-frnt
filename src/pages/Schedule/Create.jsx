@@ -7,7 +7,7 @@ import { SocialMediaRadio } from "../../components/SocialMediaRadio"
 
 import { InputField } from "../../components/InputField"
 import { MessageTransition } from "../../components/MessageTransition"
-import { SearchMenu } from "../../components/SearchMenu"
+import { SelectMenu } from "../../components/SelectMenu"
 import { useCreateResource, useResourceList } from "../../hooks/useResources"
 
 const statuses = [
@@ -134,7 +134,7 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <SearchMenu
+                  <SelectMenu
                     label="Destination"
                     options={acceptableDestinations.map((d) => ({
                       id: d.id,
@@ -146,7 +146,7 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <SearchMenu
+                  <SelectMenu
                     label="Status"
                     options={statuses}
                     selected={statusId}

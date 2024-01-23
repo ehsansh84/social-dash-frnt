@@ -12,7 +12,7 @@ import {
   useResourceList,
 } from "../../hooks/useResources"
 import { TextAreaField } from "../../components/TextAreaField"
-import { SearchMenu } from "../../components/SearchMenu"
+import { SelectMenu } from "../../components/SelectMenu"
 import { InlineRadio } from "../../components/InlineRadio"
 
 const routes = [
@@ -140,7 +140,7 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <SearchMenu
+                  <SelectMenu
                     label="Route"
                     options={allowedRoutes}
                     setSelected={setRouteId}

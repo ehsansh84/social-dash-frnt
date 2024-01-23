@@ -3,7 +3,7 @@ import { Listbox, Transition } from "@headlessui/react"
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid"
 import { classNames } from "../utils"
 
-export function SearchMenu({ label, options, setSelected, selected, disabled=false }) {
+export function SelectMenu({ label, options, setSelected, selected, disabled=false }) {
   return (
     <Listbox value={selected} onChange={setSelected} disabled={disabled}>
       {({ open }) => (

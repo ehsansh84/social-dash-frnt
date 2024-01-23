@@ -9,7 +9,7 @@ import { InputField } from "../../components/InputField"
 import { InputPhone } from "../../components/InputPhone"
 import { MessageTransition } from "../../components/MessageTransition"
 import { ProfileImageInput } from "../../components/ProfileImageInput"
-import { SearchMenu } from "../../components/SearchMenu"
+import { SelectMenu } from "../../components/SelectMenu"
 import {  useResource, useUpdateResource } from "../../hooks/useResources"
 
 const roles = [
@@ -193,7 +193,7 @@ export function Edit() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <SearchMenu
+                  <SelectMenu
                     label="Role"
                     options={roles}
                     setSelected={setRole}
