@@ -76,7 +76,6 @@ export function Edit() {
     updateResource.mutate({ id: roleId, data: bodyObject })
   }
 
-  console.log({ roleId, name })
   return (
     <div className="border-t border-border pb-16">
       <Wrapper as="header" className="border-b border-border">
