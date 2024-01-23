@@ -3,9 +3,9 @@ import { Listbox, Transition } from "@headlessui/react"
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid"
 import { classNames } from "../utils"
 
-export function SearchMenu({ label, options, setSelected, selected }) {
+export function SearchMenu({ label, options, setSelected, selected, disabled=false }) {
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox value={selected} onChange={setSelected} disabled={disabled}>
       {({ open }) => (
         <>
           <Listbox.Label className="block text-sm font-medium leading-6 text-text">

@@ -6,7 +6,10 @@ import { Breadcrumb } from "../../components/Breadcrumb"
 
 import { InputField } from "../../components/InputField"
 import { MessageTransition } from "../../components/MessageTransition"
-import { useResource, useUpdateResource } from "../../hooks/useResources"
+import {
+  useResource,
+  useUpdateResource,
+} from "../../hooks/useResources"
 import { TextAreaField } from "../../components/TextAreaField"
 import { SearchMenu } from "../../components/SearchMenu"
 import { InlineRadio } from "../../components/InlineRadio"
@@ -14,6 +17,7 @@ import { InlineRadio } from "../../components/InlineRadio"
 const routes = [
   { id: "/source", name: "/source" },
   { id: "/account", name: "/account" },
+  { id: "/user", name: "/user" },
 ]
 const commonPermissions = [
   { id: "yes", title: "Yes" },
@@ -137,6 +141,7 @@ export function Edit() {
                     options={routes}
                     setSelected={setRouteId}
                     selected={routeId}
+                    disabled
                   />
                 </div>
                 <div className="sm:col-span-4">
