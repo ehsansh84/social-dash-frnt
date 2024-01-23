@@ -106,7 +106,7 @@ export function Edit() {
         <Breadcrumb
           pages={[
             { name: "Permissions", href: "/permissions" },
-            { name: "Role: " + permission?.role_id, href: "/roles/" + roleId },
+            { name: "Role: " + permission?.role_id, href: "/roles/" + roleId + '/edit' },
             { name: permission?.id, href: "#" },
           ]}
         />
