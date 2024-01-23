@@ -100,8 +100,14 @@ export const useDeleteResource = (resourceName) => {
   return useMutation({
     mutationKey: [resourceName],
     mutationFn: (id) => deleteResource(resourceName, id),
-    onSuccess: () => {
-      queryClient.invalidateQueries(resourceName)
+    onSuccess: (data, variables) => {
+      // Update the list in the cache
+      const currentData = queryClient.getQueryData([resourceName])
+      if (currentData) {
+        const updatedData = currentData.filter((item) => item.id !== variables)
+        queryClient.setQueryData([resourceName], updatedData)
+      }
+      console.log(queryClient)
     },
   })
 }
@@ -109,11 +115,11 @@ export const useDeleteResource = (resourceName) => {
 export const useRegisterUser = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationKey: 'register',
+    mutationKey: "register",
     mutationFn: (data, headers) => registerUser(data, headers),
     onSuccess: (data, sentData) => {
       // Update the user in the cache
-      queryClient.setQueryData('user', {
+      queryClient.setQueryData("user", {
         id: data.data.id,
         ...sentData,
       })
