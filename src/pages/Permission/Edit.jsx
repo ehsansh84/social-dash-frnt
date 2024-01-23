@@ -96,8 +96,6 @@ export function Edit() {
     updateResource.mutate({ id: permissionId, data: bodyObject })
   }
 
-  console.log(permission);
-  console.log(routeId);
   return (
     <div className="border-t border-border pb-16">
       <Wrapper as="header" className="border-b border-border">
