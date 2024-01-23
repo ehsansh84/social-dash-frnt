@@ -7,6 +7,7 @@ import { Breadcrumb } from "../../components/Breadcrumb"
 import { InputField } from "../../components/InputField"
 import { MessageTransition } from "../../components/MessageTransition"
 import {
+  useDeleteResource,
   useResource,
   useResourceList,
   useUpdateResource,
@@ -37,6 +38,7 @@ export function Edit() {
 
   const navigate = useNavigate()
   const updateResource = useUpdateResource("roles")
+  const deleteRoleMutation = useDeleteResource("roles")
 
   useEffect(() => {
     if (role) {
@@ -62,6 +64,28 @@ export function Edit() {
     updateResource.isSuccess,
     navigate,
     updateResource.error,
+    roleId,
+  ])
+
+  useEffect(() => {
+    if (deleteRoleMutation.isError) {
+      setError({
+        message: deleteRoleMutation.error.message,
+        status: "danger",
+      })
+    }
+
+    if (deleteRoleMutation.isSuccess) {
+      setError(null)
+      navigate(`/roles`, {
+        state: { message: "Role has been deleted!", status: "success" },
+      })
+    }
+  }, [
+    deleteRoleMutation.isError,
+    deleteRoleMutation.isSuccess,
+    deleteRoleMutation.error,
+    navigate,
     roleId,
   ])
 
@@ -142,39 +166,64 @@ export function Edit() {
             </div>
           </div>
 
-          <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              className="text-sm font-semibold leading-6 text-text"
-              onClick={() => navigate(-1)}
-            >
-              Cancel
-            </button>
+          <div className="mt-6 flex items-center justify-between">
 
-            <button
-              type="submit"
-              className="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
-            >
-              {updateResource.isPending ? (
-                <div
-                  className="mx-2 inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                  role="status"
-                >
-                  <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                    Loading...
-                  </span>
-                </div>
-              ) : (
-                <p>Edit</p>
-              )}
-            </button>
+            <div>
+              <button
+                type="button"
+                className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+                onClick={() => {
+                  deleteRoleMutation.mutate(role?.id ?? "")
+                }}
+              >
+                {deleteRoleMutation.isPending ? (
+                  <div
+                    className="mx-2 inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                    role="status"
+                  >
+                    <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                      Loading...
+                    </span>
+                  </div>
+                ) : (
+                  <p>Delete</p>
+                )}
+              </button>
+            </div>
+            <div className="flex items-center justify-between gap-x-6">
+              <button
+                type="button"
+                className="text-sm font-semibold leading-6 text-text"
+                onClick={() => navigate(-1)}
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                className="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+              >
+                {updateResource.isPending ? (
+                  <div
+                    className="mx-2 inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                    role="status"
+                  >
+                    <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                      Loading...
+                    </span>
+                  </div>
+                ) : (
+                  <p>Edit</p>
+                )}
+              </button>
+            </div>
           </div>
           <div className="my-12">
             <MessageTransition message={error} setMessage={setError} />
             <MessageTransition message={message} setMessage={setMessage} />
             {success && (
               <MessageTransition
-                message={{status: 'success', message: "Role was edited!"}}
+                message={{ status: "success", message: "Role was edited!" }}
                 setMessage={setSuccess}
               />
             )}
