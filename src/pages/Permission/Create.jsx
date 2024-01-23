@@ -18,6 +18,7 @@ import { InlineRadio } from "../../components/InlineRadio"
 const routes = [
   { id: "/source", name: "/source" },
   { id: "/account", name: "/account" },
+  { id: "/user", name: "/user" },
 ]
 const commonPermissions = [
   { id: "yes", title: "Yes" },
@@ -39,6 +40,7 @@ export function Create() {
   const rolePermissions = permissions?.filter((p) => p.role_id === roleId) ?? []
   const routesDefined = rolePermissions.map((r) => r.route)
   const allowedRoutes = routes.filter((r) => !routesDefined.includes(r.id))
+
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [routeId, setRouteId] = useState(routes[0].id)
