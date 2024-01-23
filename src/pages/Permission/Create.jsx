@@ -6,7 +6,11 @@ import { Breadcrumb } from "../../components/Breadcrumb"
 
 import { InputField } from "../../components/InputField"
 import { MessageTransition } from "../../components/MessageTransition"
-import { useCreateResource, useResource } from "../../hooks/useResources"
+import {
+  useCreateResource,
+  useResource,
+  useResourceList,
+} from "../../hooks/useResources"
 import { TextAreaField } from "../../components/TextAreaField"
 import { SearchMenu } from "../../components/SearchMenu"
 import { InlineRadio } from "../../components/InlineRadio"
@@ -27,8 +31,14 @@ const postPermissions = [
 
 export function Create() {
   const { roleId } = useParams()
-  const {data: role} = useResource("roles", roleId)
+  const { data: role } = useResource("roles", roleId)
 
+  // getting all permissions then filtering for the current role
+  // this should be done on the backend
+  const { data: permissions } = useResourceList("permissions")
+  const rolePermissions = permissions?.filter((p) => p.role_id === roleId) ?? []
+  const routesDefined = rolePermissions.map((r) => r.route)
+  const allowedRoutes = routes.filter((r) => !routesDefined.includes(r.id))
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [routeId, setRouteId] = useState(routes[0].id)
@@ -61,7 +71,7 @@ export function Create() {
     createResourceMutation.isSuccess,
     navigate,
     createResourceMutation.error,
-    roleId
+    roleId,
   ])
 
   const handleSubmit = async (event) => {
@@ -78,7 +88,6 @@ export function Create() {
       delete: destroy,
     }
 
-    console.log(bodyObject);
     createResourceMutation.mutate(bodyObject)
   }
 
@@ -93,14 +102,13 @@ export function Create() {
     setError(null)
   }
 
-  console.log({get, put, post});
   return (
     <div className="border-t border-border pb-16">
       <Wrapper as="header" className="border-b border-border">
         <Breadcrumb
           pages={[
             { name: "Permissions", href: "/permissions" },
-            { name: "Role: " + role?.name, href: "/roles/" + roleId + '/edit' },
+            { name: "Role: " + role?.name, href: "/roles/" + roleId + "/edit" },
             { name: "Create permission", href: "#" },
           ]}
         />
@@ -132,7 +140,7 @@ export function Create() {
                 <div className="sm:col-span-4">
                   <SearchMenu
                     label="Route"
-                    options={routes}
+                    options={allowedRoutes}
                     setSelected={setRouteId}
                     selected={routeId}
                   />
