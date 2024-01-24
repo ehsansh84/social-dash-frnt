@@ -10,7 +10,7 @@ export function Index() {
   return (
     <IndexPage resourceName="posts">
       <PostList />
-      <NarrowWrapper className="mt-12">
+      <NarrowWrapper className="mt-12 pb-16">
         <MessageTransition message={message} setMessage={setMessage} />
       </NarrowWrapper>
     </IndexPage>
