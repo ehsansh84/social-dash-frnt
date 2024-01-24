@@ -10,7 +10,6 @@ import { MessageTransition } from "../../components/MessageTransition"
 import { useCreateResource } from "../../hooks/useResources"
 import { TextAreaField } from "../../components/TextAreaField"
 import { CoverInput } from "../../components/CoverInput"
-import { LogoInput } from "../../components/LogoInput"
 import { ListInput } from "../../components/ListInput"
 import { validateHashtag } from "../../utils"
 
@@ -203,10 +202,12 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <LogoInput
-                    imageUrl={thumbUrl}
-                    onImageChange={setThumbUrl}
-                    label="Thumbnail"
+                <InputField
+                    label="Thumbnail Url"
+                    id="thumbUrl"
+                    setValue={setThumbUrl}
+                    value={thumbUrl}
+                    type="url"
                   />
                 </div>
 

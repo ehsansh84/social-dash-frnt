@@ -15,13 +15,12 @@ import {
 } from "../../hooks/useResources"
 import { TextAreaField } from "../../components/TextAreaField"
 import { CoverInput } from "../../components/CoverInput"
-import { LogoInput } from "../../components/LogoInput"
 import { ListInput } from "../../components/ListInput"
 import { validateHashtag } from "../../utils"
 import { useMessageNavigation } from "../../hooks/useMessageNavigation"
 
 const statuses = [
-  { id: "new", title: "Enabled" },
+  { id: "new", title: "New" },
   { id: "thumb_created", title: "Thumb created" },
   { id: "uploaded_to_channel", title: "Uploaded to the channel" },
 ]
@@ -76,7 +75,7 @@ export function Edit() {
       setCaption(post.caption)
       setLikes(post.likes)
       setComments(post.comments)
-      setPostType(post.postType)
+      setPostType(post.post_type)
       setStatus(post.status)
       setVideoUrl(post.video_url)
       setCoverUrl(post.cover_url)
@@ -247,12 +246,15 @@ export function Edit() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <LogoInput
-                    imageUrl={thumbUrl}
-                    onImageChange={setThumbUrl}
-                    label="Thumbnail"
+                  <InputField
+                    label="Thumbnail Url"
+                    id="thumbUrl"
+                    setValue={setThumbUrl}
+                    value={thumbUrl}
+                    type="url"
                   />
                 </div>
+
 
                 <div className="sm:col-span-4">
                   <InputField
