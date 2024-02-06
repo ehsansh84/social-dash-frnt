@@ -24,14 +24,29 @@ export function UserList() {
             />
             <div className="min-w-0 flex-auto">
               <p>
-                <Link to={"/users/" + person.id + "/edit"} className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 me-2">
+                <Link
+                  to={"/users/" + person.id + "/edit"}
+                  className="me-2 text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100"
+                >
                   <span className="absolute inset-x-0 -top-px bottom-0" />
-                  {person.name + (person.family ? ' ' + person.family : '')}
+                  {person.name + (person.family ? " " + person.family : "")}
                 </Link>
-                {person.status === 'enabled' ? (
-                  <Badge color="green" variant="small-flat-pill" className="hidden sm:inline">enabled</Badge>
+                {person.status === "enabled" ? (
+                  <Badge
+                    color="green"
+                    variant="small-flat-pill"
+                    className="hidden sm:inline"
+                  >
+                    enabled
+                  </Badge>
                 ) : (
-                  <Badge color="gray" variant="small-flat-pill" className="hidden sm:inline">disabled</Badge>
+                  <Badge
+                    color="gray"
+                    variant="small-flat-pill"
+                    className="hidden sm:inline"
+                  >
+                    disabled
+                  </Badge>
                 )}
               </p>
               <p className="mt-1 flex items-baseline gap-2">
@@ -42,22 +57,34 @@ export function UserList() {
                   {person.email}
                 </a>
                 {person.email_verified ? (
-                  <Badge color="green" variant="small-flat-pill" className="hidden sm:block">verified</Badge>
+                  <Badge
+                    color="green"
+                    variant="small-flat-pill"
+                    className="hidden sm:block"
+                  >
+                    verified
+                  </Badge>
                 ) : (
-                  <Badge color="red" variant="small-flat-pill" className="hidden sm:block">not verified</Badge>
+                  <Badge
+                    color="red"
+                    variant="small-flat-pill"
+                    className="hidden sm:block"
+                  >
+                    not verified
+                  </Badge>
                 )}
               </p>
-              <p className="sm:hidden text-sm leading-6 text-gray-900 dark:text-gray-100">
-                {capitalize(person.role)}
+              <p className="text-sm leading-6 text-gray-900 dark:text-gray-100 sm:hidden">
+                role id: {capitalize(person.role_id)}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-x-4">
             <div className="hidden sm:flex sm:flex-col sm:items-end">
               <p className="text-sm leading-6 text-gray-900 dark:text-gray-100">
-                {capitalize(person.role)}
+                role id: {capitalize(person.role_id)}
               </p>
-              <p className="mt-1 text-xs leading-5 text-gray-500 text">
+              <p className="text mt-1 text-xs leading-5 text-gray-500">
                 Last seen{" "}
                 <time dateTime={person.last_login}>
                   {person.last_login ? person.last_login : "unknown"}

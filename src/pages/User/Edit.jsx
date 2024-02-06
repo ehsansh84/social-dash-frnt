@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { Wrapper } from "../../Wrapper"
@@ -10,12 +10,8 @@ import { InputPhone } from "../../components/InputPhone"
 import { MessageTransition } from "../../components/MessageTransition"
 import { ProfileImageInput } from "../../components/ProfileImageInput"
 import { SelectMenu } from "../../components/SelectMenu"
-import {  useResource, useUpdateResource } from "../../hooks/useResources"
+import {  useResource, useResourceList, useUpdateResource } from "../../hooks/useResources"
 
-const roles = [
-  { id: "admin", name: "Admin" },
-  { id: "normal", name: "Normal User" },
-]
 
 const statuses = [
   { id: "enabled", title: "Enabled" },
@@ -30,7 +26,7 @@ export function Edit() {
   const [family, setFamily] = useState("")
   const [email, setEmail] = useState("")
   const [mobile, setMobile] = useState("")
-  const [role, setRole] = useState("admin")
+  const [role, setRole] = useState("")
   const [status, setStatus] = useState("enabled")
   const [pic, setPic] = useState("")
   const [username, setUsername] = useState("")
@@ -40,7 +36,9 @@ export function Edit() {
   const [error, setError] = useState(null)
 
   const updateSource = useUpdateResource("users")
-
+  const { data } = useResourceList("roles")
+  let roles = useMemo(() => data ?? [], [data])
+  roles = roles.map(r => ({id: r.id, name: r.name }))
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -49,8 +47,8 @@ export function Edit() {
       setFamily(user.family)
       setEmail(user.email)
       setMobile(user.mobile)
-      setRole(user.role)
-      setStatus(user.statue)
+      setRole(user.role_id)
+      setStatus(user.status)
       setPic(user.pic)
       setUsername(user.username)
     }
@@ -105,7 +103,7 @@ export function Edit() {
       username,
       pic,
       status,
-      role,
+      role_id: role,
     }
 
     updateSource.mutate({

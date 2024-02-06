@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { NarrowWrapper } from "../../NarrowWrapper"
 import { Wrapper } from "../../Wrapper"
@@ -10,12 +10,7 @@ import { InputPhone } from "../../components/InputPhone"
 import { MessageTransition } from "../../components/MessageTransition"
 import { ProfileImageInput } from "../../components/ProfileImageInput"
 import { SelectMenu } from "../../components/SelectMenu"
-import { useCreateResource } from "../../hooks/useResources"
-
-const roles = [
-  { id: "admin", name: "Admin" },
-  { id: "normal", name: "Normal User" },
-]
+import { useCreateResource, useResourceList } from "../../hooks/useResources"
 
 const statuses = [
   { id: "enabled", title: "Enabled" },
@@ -27,7 +22,7 @@ export function Create() {
   const [family, setFamily] = useState("")
   const [email, setEmail] = useState("")
   const [mobile, setMobile] = useState("")
-  const [role, setRole] = useState("admin")
+  const [role, setRole] = useState("")
   const [status, setStatus] = useState("enabled")
   const [pic, setPic] = useState("")
   const [username, setUsername] = useState("")
@@ -37,7 +32,9 @@ export function Create() {
   const [error, setError] = useState(null)
 
   const createResourceMutation = useCreateResource("users")
-
+  const { data } = useResourceList("roles")
+  let roles = useMemo(() => data ?? [], [data])
+  roles = roles.map(r => ({id: r.id, name: r.name }))
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -89,7 +86,7 @@ export function Create() {
       username,
       pic,
       status,
-      role,
+      role_id: role
     }
 
     createResourceMutation.mutate(bodyObject, {
@@ -106,7 +103,7 @@ export function Create() {
     setFamily("")
     setEmail("")
     setMobile("")
-    setRole("admin")
+    setRole("")
     setPic("")
     setStatus("enabled")
     setUsername("")
@@ -195,6 +192,7 @@ export function Create() {
                     options={roles}
                     setSelected={setRole}
                     selected={role}
+                    required
                   />
                 </div>
                 <div className="sm:col-span-4">
