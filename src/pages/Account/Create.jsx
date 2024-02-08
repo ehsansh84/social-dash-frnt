@@ -87,7 +87,7 @@ export function Create() {
           <div className="space-y-12">
             <div className="border-b border-border pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="sm:col-span-4">
+                <div className="sm:col-span-3">
                   <InputField
                     id="name"
                     label="Name"
@@ -105,7 +105,7 @@ export function Create() {
                   />
                 </div>
 
-                <div className="sm:col-span-4">
+                <div className="sm:col-span-3">
                   <InputField
                     id="token"
                     label="Token"
@@ -116,7 +116,7 @@ export function Create() {
                   />
                 </div>
 
-                <div className="col-span-full">
+                <div className="col-span-4">
                   <TextAreaField 
                     value={description}
                     setValue={setDescription}                  
