@@ -42,20 +42,20 @@ export function Create() {
   const createResourceMutation = useCreateResource("sources")
 
   const navigate = useNavigate()
-  const acceptableAccounts = useMemo(
-    () =>
-      accounts.filter((a) =>
-        socialMedia ? a.social_media === socialMedia : true,
-      ),
-    [socialMedia, accounts],
-  )
+  const acceptableAccounts = useMemo(() => {
+    if (socialMedia) {
+      return [
+        { id: "", name: "---" },
+        ...accounts
+          .filter((a) => a.social_media === socialMedia)
+          .map((a) => ({ id: a.id, name: a.name })),
+      ]
+    }
+    return []
+  }, [socialMedia, accounts])
 
   useEffect(() => {
-    if (acceptableAccounts.length > 0) {
-      setAccountId(acceptableAccounts[0].id)
-    } else {
-      setAccountId("")
-    }
+    setAccountId("")
   }, [acceptableAccounts])
 
   useEffect(() => {
@@ -174,10 +174,7 @@ export function Create() {
                 <div className="sm:col-span-4">
                   <SelectMenu
                     label="Account"
-                    options={acceptableAccounts.map((a) => ({
-                      id: a.id,
-                      name: a.name,
-                    }))}
+                    options={acceptableAccounts}
                     setSelected={setAccountId}
                     selected={accountId}
                   />
@@ -214,7 +211,6 @@ export function Create() {
                     setSelectedOption={setStatus}
                   />
                 </div>
-                
               </div>
             </div>
           </div>

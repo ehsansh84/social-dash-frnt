@@ -48,13 +48,19 @@ export function Edit() {
   const updateSource = useUpdateResource("sources")
 
   const navigate = useNavigate()
-  const acceptableAccounts = useMemo(
-    () =>
-      accounts.filter((a) =>
-        socialMedia ? a.social_media === socialMedia : true,
-      ),
-    [socialMedia, accounts],
-  )
+
+  const acceptableAccounts = useMemo(() => {
+    if (socialMedia) {
+      return [
+        { id: "", name: "---" },
+        ...accounts
+          .filter((a) => a.social_media === socialMedia)
+          .map((a) => ({ id: a.id, name: a.name })),
+      ]
+    }
+    return []
+  }, [socialMedia, accounts])
+
 
   useEffect(() => {
     if (source) {
@@ -68,14 +74,6 @@ export function Edit() {
       setStatus(source.status)
     }
   }, [source])
-
-  useEffect(() => {
-    if (acceptableAccounts.length > 0) {
-      setAccountId(acceptableAccounts[0].id)
-    } else {
-      setAccountId("")
-    }
-  }, [acceptableAccounts])
 
   useEffect(() => {
     if (updateSource.isError) {
