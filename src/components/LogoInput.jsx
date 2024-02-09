@@ -1,28 +1,38 @@
-import { useEffect } from "react"
-import { useImageInput } from "../hooks/useImageInput"
 import { UserCircleIcon } from "@heroicons/react/20/solid"
 
-export function LogoInput({ label="Logo", imageUrl = "", onImageChange }) {
-  const { selectedImage, inputKey, handleImageUpload, removeImage } = useImageInput(imageUrl)
+export function LogoInput({ label="Logo", image, setImage }) {
 
-  useEffect(() => {
-    onImageChange(selectedImage)
-  }, [selectedImage, onImageChange])
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0]
+    if (file && file.type.match("image.*")) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setImage(e.target.result)
+      }
+      reader.readAsDataURL(file)
+    } else {
+      console.error("File is not an image.")
+    }
+  }
+
+
+  const removeImage = () => {
+    setImage("")
+  }
 
 
   return (
     <>
       <label
-        htmlFor="channel-logo"
         className="block text-sm font-medium leading-6 text-text"
       >
         {label}
       </label>
       <div className="mt-2 flex items-center gap-x-3">
         <div className="h-12 w-12 overflow-hidden rounded-full">
-          {selectedImage ? (
+          {image ? (
             <img
-              src={selectedImage}
+              src={image}
               alt="Selected"
               className="h-full w-full object-fill"
             />
@@ -31,7 +41,6 @@ export function LogoInput({ label="Logo", imageUrl = "", onImageChange }) {
           )}
         </div>
         <input
-          key={inputKey}
           type="file"
           accept="image/*"
           onChange={handleImageUpload}

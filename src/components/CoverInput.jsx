@@ -1,14 +1,24 @@
 import { PhotoIcon } from "@heroicons/react/20/solid"
-import { useEffect } from "react"
-import { useImageInput } from "../hooks/useImageInput"
 
-export function CoverInput({imageUrl = "", onImageChange}) {
-  const { selectedImage, inputKey, handleImageUpload, removeImage } =
-    useImageInput(imageUrl)
+export function CoverInput({image, setImage}) {
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0]
+    if (file && file.type.match("image.*")) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setImage(e.target.result)
+      }
+      reader.readAsDataURL(file)
+    } else {
+      console.error("File is not an image.")
+    }
+  }
 
-  useEffect(() => {
-    onImageChange(selectedImage)
-  }, [selectedImage, onImageChange])
+
+  const removeImage = () => {
+    setImage("")
+  }
+
 
   return (
     <>
@@ -19,10 +29,10 @@ export function CoverInput({imageUrl = "", onImageChange}) {
         Cover photo
       </label>
       <div className="mt-2 flex justify-center rounded-lg border border-dashed border-border px-6 py-10">
-        {selectedImage ? (
+        {image ? (
           <div className="flex flex-col gap-4">
             <img
-              src={selectedImage}
+              src={image}
               alt="Selected"
               className="object-fill"
             />
@@ -47,7 +57,6 @@ export function CoverInput({imageUrl = "", onImageChange}) {
               >
                 <span>Upload a file</span>
                 <input
-                  key={inputKey}
                   id="file-upload"
                   name="file-upload"
                   type="file"

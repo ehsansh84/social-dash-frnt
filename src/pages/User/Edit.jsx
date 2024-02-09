@@ -8,10 +8,13 @@ import { InlineRadio } from "../../components/InlineRadio"
 import { InputField } from "../../components/InputField"
 import { InputPhone } from "../../components/InputPhone"
 import { MessageTransition } from "../../components/MessageTransition"
-import { ProfileImageInput } from "../../components/ProfileImageInput"
 import { SelectMenu } from "../../components/SelectMenu"
-import {  useResource, useResourceList, useUpdateResource } from "../../hooks/useResources"
-
+import {
+  useResource,
+  useResourceList,
+  useUpdateResource,
+} from "../../hooks/useResources"
+import { LogoInput } from "../../components/LogoInput"
 
 const statuses = [
   { id: "enabled", title: "Enabled" },
@@ -38,7 +41,7 @@ export function Edit() {
   const updateSource = useUpdateResource("users")
   const { data } = useResourceList("roles")
   let roles = useMemo(() => data ?? [], [data])
-  roles = roles.map(r => ({id: r.id, name: r.name }))
+  roles = roles.map((r) => ({ id: r.id, name: r.name }))
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -108,7 +111,7 @@ export function Edit() {
 
     updateSource.mutate({
       id: userId,
-      data: bodyObject
+      data: bodyObject,
     })
   }
 
@@ -132,7 +135,7 @@ export function Edit() {
             <div className="border-b border-border pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="col-span-full flex items-center gap-x-8">
-                  <ProfileImageInput onImageChange={handlePicChange} imageUrl={pic} />
+                  <LogoInput image={pic} setImage={setPic} label="Profile Image" />
                 </div>
 
                 <div className="sm:col-span-4">

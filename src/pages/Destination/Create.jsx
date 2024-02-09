@@ -96,10 +96,6 @@ export function Create() {
     })
   }
 
-  const handleLogoChange = (newLogo) => {
-    setLogo(newLogo)
-  }
-
   const resetForm = () => {
     setSocialMedia("")
     setChannel("")
@@ -166,7 +162,7 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <LogoInput imageUrl={logo} onImageChange={handleLogoChange} />
+                  <LogoInput image={logo} setImage={setLogo} />
                 </div>
 
                 <div className="col-span-full">

@@ -113,10 +113,6 @@ export function Edit() {
     })
   }
 
-  const handleLogoChange = (newLogo) => {
-    setLogo(newLogo)
-  }
-
   return (
     <div className="border-t border-border pb-16">
       <Wrapper as="header" className="border-b border-border">
@@ -174,7 +170,7 @@ export function Edit() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <LogoInput imageUrl={logo} onImageChange={handleLogoChange} />
+                  <LogoInput image={logo} setImage={logo} />
                 </div>
 
                 <div className="col-span-full">

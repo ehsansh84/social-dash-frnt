@@ -182,7 +182,7 @@ export function Edit() {
                 </div>
 
                 <div className="col-span-full">
-                  <CoverInput imageUrl={coverUrl} onImageChange={setCoverUrl} />
+                  <CoverInput image={coverUrl} setImage={setCoverUrl} />
                 </div>
 
                 <div className="sm:col-span-4">

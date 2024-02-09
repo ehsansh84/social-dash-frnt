@@ -8,9 +8,9 @@ import { InlineRadio } from "../../components/InlineRadio"
 import { InputField } from "../../components/InputField"
 import { InputPhone } from "../../components/InputPhone"
 import { MessageTransition } from "../../components/MessageTransition"
-import { ProfileImageInput } from "../../components/ProfileImageInput"
 import { SelectMenu } from "../../components/SelectMenu"
 import { useCreateResource, useResourceList } from "../../hooks/useResources"
+import { LogoInput } from "../../components/LogoInput"
 
 const statuses = [
   { id: "enabled", title: "Enabled" },
@@ -94,10 +94,6 @@ export function Create() {
     })
   }
 
-  const handlePicChange = (newPic) => {
-    setPic(newPic)
-  }
-
   const resetForm = () => {
     setName("")
     setFamily("")
@@ -128,7 +124,7 @@ export function Create() {
             <div className="border-b border-border pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="col-span-full flex items-center gap-x-8">
-                  <ProfileImageInput onImageChange={handlePicChange} />
+                  <LogoInput label="Profile Picture" image={pic} setImage={setPic} />
                 </div>
 
                 <div className="sm:col-span-4">
