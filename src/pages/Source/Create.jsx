@@ -12,6 +12,7 @@ import { SelectMenu } from "../../components/SelectMenu"
 import { TextAreaField } from "../../components/TextAreaField"
 import { useCreateResource, useResourceList } from "../../hooks/useResources"
 import { InlineRadio } from "../../components/InlineRadio"
+// import { CropModal } from "../../components/CropModal"
 const crawlSchedules = [
   { id: "hourly", name: "Hourly" },
   { id: "daily", name: "Daily" },
@@ -36,6 +37,8 @@ export function Create() {
   const [description, setDescription] = useState("")
   const [logo, setLogo] = useState("")
   const [status, setStatus] = useState("disabled")
+
+  // const [isModalOpen, setIsModalOpen] = useState(false)
 
   const [error, setError] = useState(null)
 
@@ -250,6 +253,8 @@ export function Create() {
           </div>
         </form>
       </NarrowWrapper>
+      {/* {isModalOpen && <CropModal setIsModalOpen={setIsModalOpen} />}
+      <button onClick={() => setIsModalOpen(true)}>Toggle modal</button> */}
     </div>
   )
 }
