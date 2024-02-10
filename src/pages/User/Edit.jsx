@@ -15,6 +15,7 @@ import {
   useUpdateResource,
 } from "../../hooks/useResources"
 import { LogoInput } from "../../components/LogoInput"
+import { CropModal } from "../../components/CropModal"
 
 const statuses = [
   { id: "enabled", title: "Enabled" },
@@ -32,9 +33,12 @@ export function Edit() {
   const [role, setRole] = useState("")
   const [status, setStatus] = useState("enabled")
   const [pic, setPic] = useState("")
+  const [newPic, setNewPic] = useState("")
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [confirm, setConfirm] = useState("")
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const [error, setError] = useState(null)
 
@@ -77,6 +81,11 @@ export function Edit() {
     navigate,
     updateSource.error,
   ])
+
+  const handlePicSelected = (newPic) => {
+    setNewPic(newPic)
+    setIsModalOpen(true)
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -135,7 +144,18 @@ export function Edit() {
             <div className="border-b border-border pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="col-span-full flex items-center gap-x-8">
-                  <LogoInput image={pic} setImage={setPic} label="Profile Image" />
+                  <LogoInput
+                    image={pic}
+                    onImageSelected={handlePicSelected}
+                    setImage={setPic}
+                  />
+                  {isModalOpen && (
+                    <CropModal
+                      image={newPic}
+                      setIsModalOpen={setIsModalOpen}
+                      setImage={setPic}
+                    />
+                  )}
                 </div>
 
                 <div className="sm:col-span-4">

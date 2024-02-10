@@ -16,6 +16,7 @@ import {
   useUpdateResource,
 } from "../../hooks/useResources"
 import { InlineRadio } from "../../components/InlineRadio"
+import { CropModal } from "../../components/CropModal"
 
 const crawlSchedules = [
   { id: "hourly", name: "Hourly" },
@@ -41,7 +42,10 @@ export function Edit() {
   const [crawlId, setCrawlId] = useState("hourly")
   const [description, setDescription] = useState("")
   const [logo, setLogo] = useState("")
+  const [newLogo, setNewLogo] = useState("")
   const [status, setStatus] = useState("disabled")
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const [error, setError] = useState(null)
 
@@ -60,7 +64,6 @@ export function Edit() {
     }
     return []
   }, [socialMedia, accounts])
-
 
   useEffect(() => {
     if (source) {
@@ -95,6 +98,11 @@ export function Edit() {
     updateSource.isSuccess,
     updateSource.error,
   ])
+
+  const handleLogoSelected = (newLogo) => {
+    setNewLogo(newLogo)
+    setIsModalOpen(true)
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -187,7 +195,18 @@ export function Edit() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <LogoInput image={logo} setImage={setLogo} />
+                  <LogoInput
+                    image={logo}
+                    onImageSelected={handleLogoSelected}
+                    setImage={setLogo}
+                  />
+                  {isModalOpen && (
+                    <CropModal
+                      image={newLogo}
+                      setIsModalOpen={setIsModalOpen}
+                      setImage={setLogo}
+                    />
+                  )}
                 </div>
 
                 <div className="col-span-full">

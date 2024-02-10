@@ -21,6 +21,7 @@ export function Modal({ title="Modal", handleDismiss, children }) {
     <FocusLock returnFocus>
       <RemoveScroll>
         <div className="fixed inset-0 grid place-content-center p-4">
+        {/* eslint-disable-next-line */}
           <div
             className="absolute inset-0 bg-gray-500/75"
             onClick={handleDismiss}

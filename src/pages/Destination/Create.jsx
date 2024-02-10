@@ -11,6 +11,7 @@ import { MessageTransition } from "../../components/MessageTransition"
 import { SelectMenu } from "../../components/SelectMenu"
 import { TextAreaField } from "../../components/TextAreaField"
 import { useCreateResource, useResourceList } from "../../hooks/useResources"
+import { CropModal } from "../../components/CropModal"
 
 export function Create() {
   const { data } = useResourceList("accounts")
@@ -22,6 +23,9 @@ export function Create() {
   const [accountId, setAccountId] = useState("")
   const [description, setDescription] = useState("")
   const [logo, setLogo] = useState("")
+  const [newLogo, setNewLogo] = useState("")
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const [error, setError] = useState(null)
 
@@ -64,6 +68,11 @@ export function Create() {
     navigate,
     createResourceMutation.error,
   ])
+
+  const handleLogoSelected = (newLogo) => {
+    setNewLogo(newLogo)
+    setIsModalOpen(true)
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -162,7 +171,18 @@ export function Create() {
                 </div>
 
                 <div className="sm:col-span-4">
-                  <LogoInput image={logo} setImage={setLogo} />
+                  <LogoInput
+                    image={logo}
+                    onImageSelected={handleLogoSelected}
+                    setImage={setLogo}
+                  />
+                  {isModalOpen && (
+                    <CropModal
+                      image={newLogo}
+                      setIsModalOpen={setIsModalOpen}
+                      setImage={setLogo}
+                    />
+                  )}
                 </div>
 
                 <div className="col-span-full">

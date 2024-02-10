@@ -11,6 +11,7 @@ import { MessageTransition } from "../../components/MessageTransition"
 import { SelectMenu } from "../../components/SelectMenu"
 import { useCreateResource, useResourceList } from "../../hooks/useResources"
 import { LogoInput } from "../../components/LogoInput"
+import { CropModal } from "../../components/CropModal"
 
 const statuses = [
   { id: "enabled", title: "Enabled" },
@@ -25,16 +26,19 @@ export function Create() {
   const [role, setRole] = useState("")
   const [status, setStatus] = useState("enabled")
   const [pic, setPic] = useState("")
+  const [newPic, setNewPic] = useState("")
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [confirm, setConfirm] = useState("")
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const [error, setError] = useState(null)
 
   const createResourceMutation = useCreateResource("users")
   const { data } = useResourceList("roles")
   let roles = useMemo(() => data ?? [], [data])
-  roles = roles.map(r => ({id: r.id, name: r.name }))
+  roles = roles.map((r) => ({ id: r.id, name: r.name }))
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -58,6 +62,10 @@ export function Create() {
     createResourceMutation.error,
   ])
 
+  const handlePicSelected = (newPic) => {
+    setNewPic(newPic)
+    setIsModalOpen(true)
+  }
   const handleSubmit = async (event) => {
     event.preventDefault()
 
@@ -86,7 +94,7 @@ export function Create() {
       username,
       pic,
       status,
-      role_id: role
+      role_id: role,
     }
 
     createResourceMutation.mutate(bodyObject, {
@@ -124,7 +132,18 @@ export function Create() {
             <div className="border-b border-border pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="col-span-full flex items-center gap-x-8">
-                  <LogoInput label="Profile Picture" image={pic} setImage={setPic} />
+                  <LogoInput
+                    image={pic}
+                    onImageSelected={handlePicSelected}
+                    setImage={setPic}
+                  />
+                  {isModalOpen && (
+                    <CropModal
+                      image={newPic}
+                      setIsModalOpen={setIsModalOpen}
+                      setImage={setPic}
+                    />
+                  )}
                 </div>
 
                 <div className="sm:col-span-4">

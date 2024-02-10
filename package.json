@@ -41,6 +41,7 @@
     "pluralize": "^8.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-easy-crop": "^5.0.5",
     "react-focus-lock": "^2.9.8",
     "react-international-phone": "^4.0.4",
     "react-remove-scroll": "^2.5.7",
