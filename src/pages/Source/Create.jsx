@@ -10,7 +10,11 @@ import { LogoInput } from "../../components/LogoInput"
 import { MessageTransition } from "../../components/MessageTransition"
 import { SelectMenu } from "../../components/SelectMenu"
 import { TextAreaField } from "../../components/TextAreaField"
-import { useCreateResource, useResourceList } from "../../hooks/useResources"
+import {
+  useCreateResource,
+  useResourceList,
+  useUpload,
+} from "../../hooks/useResources"
 import { InlineRadio } from "../../components/InlineRadio"
 import { CropModal } from "../../components/CropModal"
 
@@ -38,6 +42,7 @@ export function Create() {
   const [description, setDescription] = useState("")
   const [logo, setLogo] = useState("")
   const [newLogo, setNewLogo] = useState("")
+  const [file, setFile] = useState(null)
   const [status, setStatus] = useState("disabled")
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -45,7 +50,7 @@ export function Create() {
   const [error, setError] = useState(null)
 
   const createResourceMutation = useCreateResource("sources")
-
+  const upload = useUpload()
   const navigate = useNavigate()
   const acceptableAccounts = useMemo(() => {
     if (socialMedia) {
@@ -89,6 +94,12 @@ export function Create() {
     setIsModalOpen(true)
   }
 
+  useEffect(() => {
+    if (file) {
+      upload.mutate(file)
+    }
+  }, [file])
+
   const handleSubmit = async (event) => {
     event.preventDefault()
 
@@ -117,9 +128,7 @@ export function Create() {
       user_id: "62d7a781d8f8d7627ce212d5",
     }
 
-    createResourceMutation.mutate(bodyObject, {
-      "Content-Type": "multipart/form-data",
-    })
+    createResourceMutation.mutate(bodyObject)
   }
 
   const resetForm = () => {
@@ -132,6 +141,8 @@ export function Create() {
     setCrawlId("hourly")
     setError(null)
   }
+
+  console.log(upload)
 
   return (
     <div className="border-t border-border pb-16">
@@ -192,9 +203,24 @@ export function Create() {
                     onImageSelected={handleLogoSelected}
                     setImage={setLogo}
                   />
-                  {isModalOpen && <CropModal 
-                  image={newLogo} setIsModalOpen={setIsModalOpen} setImage={setLogo}
-                  />}
+                  {isModalOpen && (
+                    <CropModal
+                      image={newLogo}
+                      setIsModalOpen={setIsModalOpen}
+                      setImage={setLogo}
+                      setFile={setFile}
+                    />
+                  )}
+                </div>
+
+                <div>
+                  {upload.isPending
+                    ? "Loading"
+                    : upload.isError
+                      ? "Error"
+                      : upload.isSuccess
+                        ? "Success"
+                        : "unknown"}
                 </div>
 
                 <div className="col-span-full">
