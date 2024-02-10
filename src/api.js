@@ -32,3 +32,16 @@ export const registerUser = (data, headers = {}) => {
   return axios.post(url, data, { headers }).then((res) => res.data)
 }
 
+export const upload = (file) => {
+  const url = `${API_CONFIG.baseUrl}${API_CONFIG.endpoints.upload}`
+  const formData = new FormData();
+  formData.append('file', file);
+
+  return axios
+    .post(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => res.data)
+}

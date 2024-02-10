@@ -6,6 +6,7 @@ import {
   deleteResource,
   fetchResourceList,
   registerUser,
+  upload
 } from "../api"
 
 export const useResourceList = (resourceName) => {
@@ -124,5 +125,20 @@ export const useRegisterUser = () => {
         ...sentData,
       })
     },
+  })
+}
+
+export const useUpload = () => {
+  // const queryClient = useQueryClient()
+  return useMutation({
+    mutationKey: "upload",
+    mutationFn: (file) => upload(file),
+    // onSuccess: (data, sentData) => {
+    //   // Update the user in the cache
+    //   queryClient.setQueryData("user", {
+    //     id: data.data.id,
+    //     ...sentData,
+    //   })
+    // },
   })
 }

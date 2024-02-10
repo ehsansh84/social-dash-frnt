@@ -11,5 +11,6 @@ export const API_CONFIG = {
     roles: "/role",
     permissions: "/permission",
     register: "/user/register",
+    upload: "/upload",
   },
 }
