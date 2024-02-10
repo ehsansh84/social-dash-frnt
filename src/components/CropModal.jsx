@@ -2,8 +2,9 @@ import { createPortal } from "react-dom"
 import { Modal } from "./Modal"
 import { useState } from "react"
 import Cropper from "react-easy-crop"
+import { dataURLtoFile } from "../utils"
 
-export function CropModal({ image, setIsModalOpen, setImage }) {
+export function CropModal({ image, setIsModalOpen, setImage, setFile }) {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [croppedArea, setCroppedArea] = useState(null)
@@ -35,6 +36,8 @@ export function CropModal({ image, setIsModalOpen, setImage }) {
       const dataURL = canvasEle.toDataURL("image/jpeg")
 
       setImage(dataURL)
+      const file = dataURLtoFile(dataURL, "image.jpeg")
+      setFile(file)
       setIsModalOpen(false)
     }
   }
